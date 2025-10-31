@@ -1,0 +1,21 @@
+# Environment variables
+export EDITOR="code --wait"
+export NVM_DIR="$HOME/.nvm"
+
+# Aliases
+alias ..="cd .."
+alias ...="cd ../.."
+alias awsume="source awsume"
+alias tf="terraform"
+alias tfi="tf init && ./dec.sh"
+
+# Autostart
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# AWSume: Auto-Complete function
+_awsume() {
+    local state
+    state=("${(@f)$(awsume-autocomplete)}")
+    compadd -- $state
+}
+compdef _awsume awsume
