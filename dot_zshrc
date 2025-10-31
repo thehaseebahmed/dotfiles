@@ -1,5 +1,5 @@
 # Environment variables
-export EDITOR="code --wait"
+export EDITOR="codium --wait"
 export NVM_DIR="$HOME/.nvm"
 
 # Aliases
