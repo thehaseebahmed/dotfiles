@@ -1,11 +1,14 @@
 packages:
-  apps:
-    - "vscodium"
-    - "zen"
-  cli:
-    - "font-zed-mono-nerd-font"
-    - "lazygit"
-    - "git"
+  darwin:
+    brews:
+      - "font-zed-mono-nerd-font"
+      - "lazygit"
+      - "nvm"
+      - "git"
+    casks:
+      - "vscodium"
+      - "zed"
+      - "zen"
   vscodium_extensions:
     - "angular.ng-template"
     - "bradlc.vscode-tailwindcss"

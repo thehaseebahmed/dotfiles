@@ -3,18 +3,11 @@ set -euo pipefail
 IFS=$'\n\t'
 
 main() {
-    {{ range .packages.apps -}}
-    app_install {{ . | quote }} --cask
+    {{ if eq .osid "darwin" -}}
+    app_installs_macos
     {{ end -}}
 
-    {{ range .packages.cli -}}
-    app_install {{ . | quote }}
-    {{ end -}}
-
-    {{ range .packages.vscodium_extensions -}}
-    info "Installing VS Codium extension: {{ . }}"
-    codium --install-extension {{ . | quote }} >/dev/null 2>&1 || error "Failed to install extension: {{ . | quote }}"
-    {{ end -}}
+    app_codium_install_exts
 }
 
 app_check_installed() {
@@ -22,7 +15,13 @@ app_check_installed() {
 
     exists_or_exit app_name
 
-    if eval "brew list | grep \"$app_name\" >/dev/null 2>&1"; then
+    local app_exists=false
+
+    {{ if eq .osid "darwin" -}}
+        app_exists=$(eval "brew list \"$app_name\" >/dev/null 2>&1")
+    {{ end -}}
+
+    if $app_exists; then
         warn "$app_name is already installed."
         return 1
     else
@@ -30,52 +29,51 @@ app_check_installed() {
     fi
 }
 
+app_codium_install_exts() {
+    if ! eval "command -v codium >/dev/null 2>&1"; then
+        error "VS Codium is not installed! Could not install extensions."
+        return 1
+    fi
+
+    {{ range .packages.vscodium_extensions -}}
+    info "Installing VS Codium extension: {{ . }}"
+    codium --install-extension {{ . | quote }} >/dev/null 2>&1 || error "Failed to install extension: {{ . | quote }}"
+    {{ end -}}
+}
+
 app_install() {
     local app_name="${1:-}"
-    local is_cask=$(has_flag "--cask" "$@")
+    local is_cask=false
 
     exists_or_exit app_name
+    has_flag "--cask" "$@" && is_cask=true
 
     app_check_installed "$app_name" || return 0
 
     info "Installing $app_name..."
 
-    if os_is_macos; then
+    {{ if eq .osid "darwin" -}}
         if $is_cask; then
             brew install --cask "$app_name"
         else
             brew install "$app_name"
         fi
-    else
-        error "Unsupported OS for installing $app_name. Please install it manually."
-        exit 1
-    fi
+
+        return 0
+    {{ end -}}
+    
+    error "Unsupported OS for installing $app_name. Please install it manually."
+    return 1
 }
 
-setup_vscodium() {
-    app_install "vscodium" "command -v codium >/dev/null 2>&1" --cask
+app_installs_macos() {
+    {{ range .packages.darwin.brews -}}
+    app_install {{ . | quote }} || error "Failed to install brew: {{ . | quote }}"
+    {{ end -}}
 
-    local extensions=(
-        "angular.ng-template"
-        "bradlc.vscode-tailwindcss"
-        "catppuccin.catppuccin-vsc-pack"
-        "christian-kohler.npm-intellisense"
-        "dbaeumer.vscode-eslint"
-        "esbenp.prettier-vscode"
-        "github.vscode-github-actions"
-        "hashicorp.terraform"
-        "illixion.vscode-vibrancy-continued"
-        "ms-playwright.playwright"
-        "ms-vscode.test-adapter-converter"
-        "redhat.vscode-yaml"
-        "wakatime.vscode-wakatime"
-        "yoavbls.pretty-ts-errors"
-    )
-
-    for extension in "${extensions[@]}"; do
-        info "Installing VS Codium extension: $extension"
-        codium --install-extension "$extension" >/dev/null 2>&1 || warn "Failed to install extension: $extension"
-    done
+    {{ range .packages.darwin.casks -}}
+    app_install {{ . | quote }} --cask || error "Failed to install cask: {{ . | quote }}"
+    {{ end -}}
 }
 
 # Assertion Helpers
