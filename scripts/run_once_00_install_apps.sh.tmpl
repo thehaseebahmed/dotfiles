@@ -3,19 +3,27 @@ set -euo pipefail
 IFS=$'\n\t'
 
 main() {
-    setup_nerd_font
-    setup_vscodium
+    {{ range .packages.apps -}}
+    app_install {{ . | quote }} --cask
+    {{ end -}}
+
+    {{ range .packages.cli -}}
+    app_install {{ . | quote }}
+    {{ end -}}
+
+    {{ range .packages.vscodium_extensions -}}
+    info "Installing VS Codium extension: {{ . }}"
+    codium --install-extension {{ . | quote }} >/dev/null 2>&1 || error "Failed to install extension: {{ . | quote }}"
+    {{ end -}}
 }
 
 app_check_installed() {
     local app_name="${1:-}"
-    local check_cmd="${2:-}"
 
     exists_or_exit app_name
-    exists_or_exit check_cmd
 
-    if eval "$check_cmd"; then
-        ok "$app_name is already installed."
+    if eval "brew list | grep \"$app_name\" >/dev/null 2>&1"; then
+        warn "$app_name is already installed."
         return 1
     else
         return 0
@@ -24,13 +32,11 @@ app_check_installed() {
 
 app_install() {
     local app_name="${1:-}"
-    local check_cmd="${2:-}"
     local is_cask=$(has_flag "--cask" "$@")
 
     exists_or_exit app_name
-    exists_or_exit check_cmd
 
-    app_check_installed "$app_name" "$check_cmd" || return 0
+    app_check_installed "$app_name" || return 0
 
     info "Installing $app_name..."
 
@@ -44,15 +50,6 @@ app_install() {
         error "Unsupported OS for installing $app_name. Please install it manually."
         exit 1
     fi
-}
-
-os_is_macos() {
-    command -v brew >/dev/null 2>&1
-}
-
-setup_nerd_font() {
-    local font="font-zed-mono-nerd-font"
-    app_install "$font" "brew list | grep $font >/dev/null 2>&1"
 }
 
 setup_vscodium() {
