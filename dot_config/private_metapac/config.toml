@@ -29,7 +29,7 @@ hostname_enabled_backends_enabled = true
 # Backends to enable per hostname. Subject to `hostname_enabled_backends_enabled`.
 # Default: None
 [hostname_enabled_backends]
-Haseebs-Manjaro-SL3 = ["arch", "cargo"]
+Haseebs-Manjaro-SL3 = ["arch", "cargo", "npm"]
 "Mac.lan" = ["brew", "cargo"]
 
 # Which group files will be used per hostname. Subject to `hostname_groups_enabled`.
