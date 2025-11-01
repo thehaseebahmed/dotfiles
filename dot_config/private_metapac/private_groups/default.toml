@@ -26,6 +26,9 @@ arch = [
     "git",
     "lazygit",
     "nvm",
+    "podman-compose",
+    "podman-docker",
+    { package = "podman", hooks = { after_sync = [ "systemctl", "--user", "enable", "--now", "podman.socket" ] }},
     "tailscale",
     "ttf-zed-mono-nerd",
     "vscodium"
@@ -36,6 +39,7 @@ brew = [
     "git",
     "lazygit",
     "nvm",
+    "podman",
     "tailscale",
     "vscodium",
     "zed",
