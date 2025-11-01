@@ -1,0 +1,58 @@
+# metapac's group files (like this one) should be placed in the following location
+# dependent on the operating system as specified in the `dirs` crate:
+# | Platform | Value                                     | Example                                                  |
+# | -------- | ----------------------------------------- | -------------------------------------------------------- |
+# | Linux    | $XDG_CONFIG_HOME or $HOME/.config/groups/ | /home/alice/.config/metapac/groups/                      |
+# | macOS    | $HOME/Library/Application Support/groups/ | /Users/Alice/Library/Application Support/metapac/groups/ |
+# | Windows  | {FOLDERID_RoamingAppData}\groups\         | C:\Users\Alice\AppData\Roaming\metapac\groups\           |
+#
+# The packages for each backend in group files can come in two formats, short-form
+# and long-form:
+#
+# short-form syntax is simply a string of the name of the package.
+#
+# long-form syntax is a table which contains several fields which can
+# optionally be set to specify install options on a per-package basis.
+# The "package" field in the table specifies the name of the package.
+#
+# For example, the following two packages are equivalent:
+# arch = [
+#  "metapac",
+#  { package = "metapac" }
+# ]
+
+arch = [
+    "1password",
+    "git",
+    "lazygit",
+    "nvm",
+    "tailscale",
+    "ttf-zed-mono-nerd",
+    "vscodium"
+]
+
+flatpak = [
+    "app.zen_browser.zen",
+    "dev.zed.Zed"
+]
+
+npm = [
+    "codex"
+]
+
+vscode = [
+    "angular.ng-template",
+    "bradlc.vscode-tailwindcss",
+    "catppuccin.catppuccin-vsc-pack",
+    "christian-kohler.npm-intellisense",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "github.vscode-github-actions",
+    "hashicorp.terraform",
+    "illixion.vscode-vibrancy-continued",
+    "ms-playwright.playwright",
+    "ms-vscode.test-adapter-converter",
+    "redhat.vscode-yaml",
+    "wakatime.vscode-wakatime",
+    "yoavbls.pretty-ts-errors",
+]
