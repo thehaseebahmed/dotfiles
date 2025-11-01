@@ -16,6 +16,8 @@ main() {
     install_metapac
 
     metapac_sync
+
+    install_tsui
 }
 
 arch_setup_chaotic_aur() {
@@ -57,6 +59,22 @@ install_metapac() {
     info "Installing metapac..."
     cargo install metapac
     ok "metapac installed."
+}
+
+install_tsui() {
+    if ! eval "command -v tailscale >/dev/null 2>&1"; then
+        warn "Skipping tsui install. Tailscale is not installed."
+        return 1
+    fi
+
+    if eval "command -v tsui >/dev/null 2>&1"; then
+        warn "tsui already installed."
+        return 0
+    fi
+
+    info "Installing tsui..."
+    curl -fsSL https://neuralink.com/tsui/install.sh | bash
+    ok "tsui installed."
 }
 
 metapac_sync() {

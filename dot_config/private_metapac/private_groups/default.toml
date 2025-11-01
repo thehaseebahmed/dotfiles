@@ -30,7 +30,7 @@ arch = [
     "podman-compose",
     "podman-docker",
     { package = "podman", hooks = { after_sync = [ "systemctl", "--user", "enable", "--now", "podman.socket" ] }},
-    "tailscale",
+    { package = "tailscale", hooks = { after_sync = [ "systemctl", "enable", "--now", "tailscaled" ] }},
     "ttf-zed-mono-nerd",
     "vscodium",
     "zed"
