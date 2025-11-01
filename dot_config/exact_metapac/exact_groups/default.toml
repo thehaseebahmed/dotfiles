@@ -54,9 +54,7 @@ flatpak = [
     "io.github.ungoogled_software.ungoogled_chromium"
 ]
 
-npm = [
-    "codex"
-]
+npm = []
 
 vscode = [
     "angular.ng-template",
