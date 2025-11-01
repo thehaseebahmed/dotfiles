@@ -6,41 +6,16 @@ main() {
     local pwd=$(pwd)
     info "OS Detected: {{ .osid | quote }}"
     info "Execution Dir: $pwd"
-    sudo echo ""
-
-    {{ if eq .osid "darwin" -}}
-    app_installs_macos
-    {{ end -}}
+    echo ""
 
     {{ if eq .osid "linux-manjaro" -}}
     arch_setup_chaotic_aur
-    arch_install_cargo
-    arch_install_metapac
     {{ end -}}
 
-    metapac sync
-}
+    install_cargo
+    install_metapac
 
-arch_install_cargo() {
-    if eval "command -v cargo >/dev/null 2>&1"; then
-        warn "cargo already installed."
-        return 0
-    fi
-
-    info "Installing cargo..."
-    curl https://sh.rustup.rs -sSf | sh
-    ok "cargo installed."
-}
-
-arch_install_metapac() {
-    if eval "command -v metapac >/dev/null 2>&1"; then
-        warn "metapac already installed."
-        return 0
-    fi
-
-    info "Installing metapac..."
-    cargo install metapac
-    ok "metapac installed."
+    metapac_sync
 }
 
 arch_setup_chaotic_aur() {
@@ -61,106 +36,38 @@ arch_setup_chaotic_aur() {
     sudo pacman -Sy
 }
 
-app_check_installed_macos() {
-    local app_name="${1:-}"
-
-    exists_or_exit app_name
-
-    if eval "brew list \"$app_name\" >/dev/null 2>&1"; then
-        warn "$app_name is already installed."
-        return 1
-    else
+install_cargo() {
+    if eval "command -v cargo >/dev/null 2>&1"; then
+        warn "cargo already installed."
         return 0
     fi
+
+    info "Installing cargo..."
+    curl https://sh.rustup.rs -sSf | sh
+    . "$HOME/.cargo/env"
+    ok "cargo installed."
 }
 
-app_codium_install_exts() {
-    if ! eval "command -v codium >/dev/null 2>&1"; then
-        error "VS Codium is not installed! Could not install extensions."
-        return 1
+install_metapac() {
+    if eval "command -v metapac >/dev/null 2>&1"; then
+        warn "metapac already installed."
+        return 0
     fi
 
-    {{ range .packages.vscodium_extensions -}}
-    info "Installing VS Codium extension: {{ . }}"
-    codium --install-extension {{ . | quote }} >/dev/null 2>&1 || error "Failed to install extension: {{ . | quote }}"
-    {{ end -}}
+    info "Installing metapac..."
+    cargo install metapac
+    ok "metapac installed."
 }
 
-app_install_macos() {
-    local app_name="${1:-}"
-    local is_cask=false
-    has_flag "--cask" "$@" && is_cask=true
-
-    exists_or_exit app_name
-
-    app_check_installed_macos "$app_name" || return 0
-
-    info "Installing $app_name..."
-
-    if $is_cask; then
-        brew install --cask "$app_name" >/dev/null 2>1
-    else
-        brew install "$app_name" >/dev/null 2>1
+metapac_sync() {
+    if ! eval "command -v metapac >/dev/null 2>&1"; then
+        error "Failed \"metapac sync\"! metapac is not installed."
+        return 0
     fi
 
-    return 0
-}
-
-app_installs_macos() {
-    {{ range .packages.darwin.brews -}}
-    app_install_macos {{ . | quote }} || error "Failed to install brew: {{ . | quote }}"
-    {{ end -}}
-
-    {{ range .packages.darwin.casks -}}
-    app_install_macos {{ . | quote }} --cask || error "Failed to install cask: {{ . | quote }}"
-    {{ end -}}
-}
-
-# Assertion Helpers
-exists_or_exit() {
-    local var_name="$1"
-    local var_value="${!var_name}"
-
-    if ! exists "$var_value"; then
-        error "Variable '$var_name' is not set or is empty. Exiting."
-        exit 1
-    fi
-}
-
-# File Helpers
-fexists() { [[ -e "$1" ]]; }
-
-# Misc
-has_flag() {
-  local flag="$1"
-  shift
-  for arg in "$@"; do
-    if [ "$arg" == "$flag" ]; then
-      return 0
-    fi
-  done
-  return 1
-}
-
-safe_run() {
-    local safe_mode="${1:-true}"
-    shift
-
-    if eq "$safe_mode" "false"; then
-        eval "$@"
-    else
-        echo "[DRY-RUN] $*"
-    fi
-}
-
-# String
-contains() {
-    local value="$1"
-    shift
-
-    local to_find=("$@")
-    local pattern=$(IFS='|'; echo "${to_find[*]}")
-    [[ "$value" =~ ($pattern) ]]
+    info "Syncing packages..."
+    metapac s
+    ok "Package sync complete."
 }
 
 # Output Helpers
@@ -168,9 +75,5 @@ info()  { echo "[INFO] $1"; } #gum style --foreground "#9bcefd" --bold "[INFO] $
 warn()  { echo "[WARN] $1"; } #gum style --foreground "#ffd166" --bold "[WARN] $1"; }
 error() { echo "[ERROR] $1"; } #gum style --foreground "#e0005a" --bold "[ERROR] $1"; }
 ok()    { echo "[OK] $1"; } #gum style --foreground "#829e2e" --bold "[OK] $1"; }
-
-# Variable Helpers
-exists() { [[ -n "$1" ]]; }
-eq() { [[ "$1" == "$2" ]]; }
 
 main "$@"

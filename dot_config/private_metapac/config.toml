@@ -13,11 +13,11 @@
 #
 # See the README.md or run `metapac backends` for the list of backend names.
 # Default: false
-# hostname_enabled_backends_enabled = false
+hostname_enabled_backends_enabled = true
 
 # Backends to enable. Subject to `hostname_enabled_backends_enabled`.
 # Default: []
-enabled_backends = ["arch", "cargo"]
+# enabled_backends = ["arch", "cargo"]
 
 # If this is `false` all toml files recursively found in the groups folder
 # will be used as group files.
@@ -28,8 +28,9 @@ enabled_backends = ["arch", "cargo"]
 
 # Backends to enable per hostname. Subject to `hostname_enabled_backends_enabled`.
 # Default: None
-# [hostname_enabled_backends]
-# Haseebs-Manjaro-SL3 = ["arch", "cargo"]
+[hostname_enabled_backends]
+Haseebs-Manjaro-SL3 = ["arch", "cargo"]
+"Mac.lan" = ["brew", "cargo"]
 
 # Which group files will be used per hostname. Subject to `hostname_groups_enabled`.
 # Relative paths are relative to the groups folder.

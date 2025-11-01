@@ -31,6 +31,17 @@ arch = [
     "vscodium"
 ]
 
+brew = [
+    "font-zed-mono-nerd-font",
+    "git",
+    "lazygit",
+    "nvm",
+    "tailscale",
+    "vscodium",
+    "zed",
+    "zen"
+]
+
 flatpak = [
     "app.zen_browser.zen",
     "dev.zed.Zed"
