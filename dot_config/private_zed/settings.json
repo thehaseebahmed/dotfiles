@@ -7,6 +7,17 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "auto_install_extensions": {
+    "angular": true,
+    "catppuccin-blur": true,
+    "catppuccin-icons": true,
+    "csharp": true,
+    "html": true,
+    "scss": true,
+    "terraform": true,
+    "toml": true,
+    "wakatime": true
+  },
   "icon_theme": "Catppuccin Mocha",
   "telemetry": {
     "diagnostics": false,
