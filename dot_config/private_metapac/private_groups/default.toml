@@ -31,7 +31,8 @@ arch = [
     { package = "podman", hooks = { after_sync = [ "systemctl", "--user", "enable", "--now", "podman.socket" ] }},
     "tailscale",
     "ttf-zed-mono-nerd",
-    "vscodium"
+    "vscodium",
+    "zed"
 ]
 
 brew = [
@@ -48,7 +49,6 @@ brew = [
 
 flatpak = [
     "app.zen_browser.zen",
-    "dev.zed.Zed"
 ]
 
 npm = [
