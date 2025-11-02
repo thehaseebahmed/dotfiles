@@ -14,9 +14,11 @@ main() {
 
     install_cargo
     install_metapac
+    install_uv
 
     metapac_sync
 
+    install_specify_cli # because metapac doesn't support uv installs with --from
     install_tsui
 }
 
@@ -75,6 +77,28 @@ install_tsui() {
     info "Installing tsui..."
     curl -fsSL https://neuralink.com/tsui/install.sh | bash
     ok "tsui installed."
+}
+
+install_uv() {
+    if eval "command -v uv >/dev/null 2>&1"; then
+        warn "uv already installed."
+        return 0
+    fi
+
+    info "Installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ok "uv installed."
+}
+
+install_specify_cli() {
+    if eval "command -v specify-cli >/dev/null 2>&1"; then
+        warn "specify-cli already installed."
+        return 0
+    fi
+
+    info "Installing specify-cli..."
+    uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+    ok "specify-cli installed."
 }
 
 metapac_sync() {
