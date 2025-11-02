@@ -30,7 +30,7 @@ hostname_groups_enabled = true
 # Default: None
 [hostname_enabled_backends]
 Haseebs-Manjaro-SL3 = ["arch", "cargo", "npm"]
-"Mac.lan" = ["brew", "cargo"]
+"Mac.lan" = ["brew", "cargo", "npm"]
 
 # Which group files will be used per hostname. Subject to `hostname_groups_enabled`.
 # Relative paths are relative to the groups folder.
