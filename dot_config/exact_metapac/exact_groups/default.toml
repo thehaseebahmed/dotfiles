@@ -23,6 +23,7 @@
 
 arch = [
     "1password",
+    "bat",
     "git",
     "lazygit",
     "nvm",
@@ -36,6 +37,7 @@ arch = [
 ]
 
 brew = [
+    "bat",
     "font-zed-mono-nerd-font",
     "git",
     "lazygit",
