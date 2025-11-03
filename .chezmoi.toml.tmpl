@@ -10,3 +10,6 @@ encryption = "age"
 
 [data]
     osid = {{ $osid | quote }}
+
+[hooks.read-source-state.pre]
+    command = ".local/share/chezmoi/.install-enc-command.sh"
