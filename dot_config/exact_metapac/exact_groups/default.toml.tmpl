@@ -1,0 +1,74 @@
+arch = [
+    "1password",
+    "bat",
+    "git",
+    "lazygit",
+    "nvm",
+    "podman-compose",
+    "podman-docker",
+    { package = "podman", hooks = { after_sync = [
+        "systemctl",
+        "--user",
+        "enable",
+        "--now",
+        "podman.socket",
+    ] } },
+    { package = "tailscale", hooks = { after_sync = [
+        "systemctl",
+        "enable",
+        "--now",
+        "tailscaled",
+    ] } },
+    "ttf-zed-mono-nerd",
+    "vscodium",
+    "zed",
+]
+
+brew = [
+    "1password",
+    "bat",
+    "font-zed-mono-nerd-font",
+    "git",
+    "lazygit",
+    "nvm",
+    "podman",
+    "podman-compose",
+    "podman-desktop",
+    "visual-studio-code",
+    "zed",
+    "zen",
+]
+
+flatpak = [
+    "app.zen_browser.zen",
+    "io.github.ungoogled_software.ungoogled_chromium",
+]
+
+npm = [
+    {{- if eq .chezmoi.fqdnHostname "Mac.lan" }}
+    "@github/copilot",
+    {{ end -}}
+    "@fission-ai/openspec",
+    "opencode-ai"
+]
+
+vscode = [
+    "angular.ng-template",
+    "bradlc.vscode-tailwindcss",
+    "catppuccin.catppuccin-vsc-pack",
+    "christian-kohler.npm-intellisense",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "github.vscode-github-actions",
+    "hashicorp.terraform",
+    "illixion.vscode-vibrancy-continued",
+    "ms-playwright.playwright",
+    "ms-vscode.test-adapter-converter",
+    "redhat.vscode-yaml",
+    "tamasfe.even-better-toml",
+    "wakatime.vscode-wakatime",
+    "yoavbls.pretty-ts-errors",
+    {{ if eq .chezmoi.fqdnHostname "Mac.lan" }}
+    "ms-windows-ai-studio.windows-ai-studio",
+    {{ end -}}
+]

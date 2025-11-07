@@ -61,6 +61,6 @@
   "terminal.integrated.gpuAcceleration": "off",
   "window.autoDetectColorScheme": false,
   "window.systemColorTheme": "dark",
-  "workbench.activityBar.location": "hidden",
-  "window.titleBarStyle": "custom"
+  "window.titleBarStyle": "custom",
+  "workbench.activityBar.location": "hidden"
 }
