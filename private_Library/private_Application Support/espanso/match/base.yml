@@ -1,0 +1,66 @@
+# espanso match file
+
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+# You can use this file to define the base matches (aka snippets)
+# that will be available in every application when using espanso.
+
+# Matches are substitution rules: when you type the "trigger" string
+# it gets replaced by the "replace" string.
+
+# yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/match.schema.json
+
+matches:
+  # Bash Helpers
+  - trigger: ":czma"
+    replace: "chezmoi apply -v"
+  - trigger: ":czmc"
+    replace: "chezmoi cd"
+  - trigger: ":czme"
+    replace: "chezmoi edit"
+  - trigger: ":czmu"
+    replace: "chezmoi update -v"
+  - trigger: ":ls"
+    replace: "ls -al"
+  - trigger: ":npmrs"
+    replace: "npm run start"
+  - trigger: ":pdcs"
+    replace: "podman compose stop"
+  - trigger: ":pdcu"
+    replace: "podman compose up -d --build "
+  - trigger: ":tf"
+    replace: "terraform"
+  - trigger: ":tfi"
+    replace: "terraform init && ./dec.sh"
+
+  # Common
+  - trigger: ":thaw"
+    replace: "http://thehaseebahmed.com"
+
+  # Simple text replacement
+  - trigger: ":espanso"
+    replace: "Hi there!"
+
+  # NOTE: espanso uses YAML to define matches, so pay attention to the indentation!
+
+  # But matches can also be dynamic:
+
+  # Print the current date
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%m/%d/%Y"
+
+  # Print the output of a shell command
+  - trigger: ":shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo 'Hello from your shell'"
+
+  # And much more! For more information, visit the docs: https://espanso.org/docs/
