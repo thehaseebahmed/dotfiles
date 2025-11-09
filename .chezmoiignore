@@ -1,0 +1,11 @@
+{{- if ne .chezmoi.os "darwin" }}
+Library/
+{{ end -}}
+{{- if ne .chezmoi.os "linux" }}
+.config/
+**/*.sh
+{{ end -}}
+{{- if ne .chezmoi.os "windows" }}
+AppData/
+**/*.ps1
+{{ end -}}
