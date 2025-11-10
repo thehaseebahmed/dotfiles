@@ -22,7 +22,7 @@ enabled_backends = [
     "brew",
     {{ else if eq .osid "linux-manjaro" }}
     "arch",
-    {{ else if eq .chezmoi.os "windows" }}
+    {{ else if eq .osid "windows" }}
     "winget",
     {{ end -}}
     "cargo",

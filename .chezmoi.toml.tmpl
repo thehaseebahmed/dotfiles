@@ -13,7 +13,7 @@ encryption = "age"
     osid = {{ $osid | quote }}
 
 [hooks.read-source-state.pre]
-    {{- if eq .chezmoi.os "windows" }}
+    {{- if eq .osid "windows" }}
     command = "powershell.exe"
     args = ["-ExecutionPolicy", "Bypass", "-File", ".local\\share\\chezmoi\\.install-enc-command.ps1"]
     {{ else }}

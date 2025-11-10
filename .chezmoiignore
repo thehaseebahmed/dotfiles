@@ -1,11 +1,11 @@
-{{- if ne .chezmoi.os "darwin" }}
+{{- if ne .osid "darwin" }}
 Library/
 {{ end -}}
-{{- if ne .chezmoi.os "linux" }}
+{{- if ne .osid "linux" }}
 .config/
 **/*.sh
 {{ end -}}
-{{- if ne .chezmoi.os "windows" }}
+{{- if ne .osid "windows" }}
 AppData/
 **/*.ps1
 {{ end -}}

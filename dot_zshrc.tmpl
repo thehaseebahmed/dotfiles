@@ -1,6 +1,7 @@
 # Environment variables
 {{ if eq .chezmoi.fqdnHostname "Mac.lan" }}
 export CURL_CA_BUNDLE="/Users/Shared/zscaler-cert.pem"
+export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
 export NODE_EXTRA_CA_CERTS="/Users/Shared/zscaler-cert.pem"
 export REQUESTS_CA_BUNDLE="/Users/Shared/zscaler-cert.pem"
 export SSL_CERT_FILE="/Users/Shared/zscaler-cert.pem"
@@ -15,16 +16,6 @@ export NVM_DIR="$HOME/.nvm"
 alias ..="cd .."
 alias ...="cd ../.."
 alias awsume="source awsume"
-alias czma="chezmoi apply -v"
-alias czmc="chezmoi cd"
-alias czme="chezmoi edit"
-alias czmu="chezmoi update -v"
-alias ls="ls -al"
-alias npmrs="npm run start"
-alias pdcs="podman compose stop"
-alias pdcu="podman compose up -d"
-alias tf="terraform"
-alias tfi="tf init && ./dec.sh"
 
 # Autostart
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
