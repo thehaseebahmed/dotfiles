@@ -1,7 +1,6 @@
 # Environment variables
 {{ if eq .chezmoi.fqdnHostname "Mac.lan" }}
 export CURL_CA_BUNDLE="/Users/Shared/zscaler-cert.pem"
-export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
 export NODE_EXTRA_CA_CERTS="/Users/Shared/zscaler-cert.pem"
 export REQUESTS_CA_BUNDLE="/Users/Shared/zscaler-cert.pem"
 export SSL_CERT_FILE="/Users/Shared/zscaler-cert.pem"
@@ -29,3 +28,10 @@ _awsume() {
 compdef _awsume awsume
 
 . "$HOME/.local/bin/env"
+
+# Dotnet Version Manager
+{{- if eq .osid "darwin" }}
+if [ -f "$HOME/Library/Application Support/dnvm/env" ]; then
+    . "$HOME/Library/Application Support/dnvm/env"
+fi
+{{ end -}}
