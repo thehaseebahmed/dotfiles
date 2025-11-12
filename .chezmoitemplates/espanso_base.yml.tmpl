@@ -12,6 +12,10 @@
 
 matches:
   # Bash Helpers
+  - trigger: ":dcs"
+    replace: "docker compose stop"
+  - trigger: ":dcu"
+    replace: "docker compose up -d --build "
   - trigger: ":czma"
     replace: "chezmoi apply -v"
   - trigger: ":czmc"
@@ -47,7 +51,7 @@ matches:
 
   # Print the current date
   - trigger: ":date"
-    replace: {{ "{{mydate}}" }}
+    replace: "{{ "{{mydate}}" }}"
     vars:
       - name: mydate
         type: date
@@ -56,7 +60,7 @@ matches:
 
   # Print the output of a shell command
   - trigger: ":shell"
-    replace: {{ "{{output}}" }}
+    replace: "{{ "{{output}}" }}"
     vars:
       - name: output
         type: shell
