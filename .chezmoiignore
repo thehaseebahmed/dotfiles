@@ -1,11 +1,16 @@
 {{- if ne .osid "darwin" }}
 Library/
 {{ end -}}
+
 {{- if ne .osid "linux" }}
 .config/
-**/*.sh
 {{ end -}}
+
 {{- if ne .osid "windows" }}
 AppData/
 **/*.ps1
+{{ end -}}
+
+{{- if eq .osid "windows" }}
+**/*.sh
 {{ end -}}
