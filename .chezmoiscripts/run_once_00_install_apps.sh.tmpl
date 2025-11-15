@@ -12,12 +12,20 @@ main() {
     arch_setup_chaotic_aur
     {{ end -}}
 
+    # Build/Development Tools
+    echo ""
+    info "Setup Build/Development Tools..."
     install_dnvm
     install_cargo
     install_metapac
     install_uv
 
-    install_specify_cli # because metapac doesn't support uv installs with --from
+    # Applications
+    echo ""
+    info "Setup Apps..."
+    {{ if eq .osid "linux-manjaro" -}}
+    install_espanso
+    {{ end -}}
     install_tsui
 }
 
@@ -37,6 +45,30 @@ arch_setup_chaotic_aur() {
 
     info "Updating pacman..."
     sudo pacman -Sy
+}
+
+install_espanso() {
+    if eval "command -v espanso >/dev/null 2>&1"; then    
+        warn "espanso already installed."
+        return 0
+    fi
+
+    info "Installing espanso..."
+    
+    # Create the $HOME/opt destination folder
+    mkdir -p ~/opt
+    # Download the AppImage inside it
+    wget -O ~/opt/Espanso.AppImage 'https://github.com/espanso/espanso/releases/latest/download/Espanso-X11.AppImage'
+    # Make it executable
+    chmod u+x ~/opt/Espanso.AppImage
+    # Create the "espanso" command alias
+    sudo ~/opt/Espanso.AppImage env-path register
+    # Register espanso as a systemd service (required only once)
+    espanso service register
+    # Start espanso
+    espanso start
+
+    ok "espanso installed."
 }
 
 install_dnvm() {

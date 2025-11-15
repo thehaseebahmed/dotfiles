@@ -2,7 +2,7 @@
 Library/
 {{ end -}}
 
-{{- if ne .osid "linux" }}
+{{- if ne .osid "linux-manjaro" }}
 .config/
 {{ end -}}
 
