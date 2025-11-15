@@ -34,4 +34,8 @@ compdef _awsume awsume
 if [ -f "$HOME/Library/Application Support/dnvm/env" ]; then
     . "$HOME/Library/Application Support/dnvm/env"
 fi
+{{- else if eq .osid "linux-manjaro" }}
+if [ -f "$HOME/.local/share/dnvm/env" ]; then
+    . "$HOME/.local/share/dnvm/env"
+fi
 {{ end -}}
