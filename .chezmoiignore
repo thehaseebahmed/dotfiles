@@ -23,4 +23,8 @@ AppData/
 !.zshrc
 !.config/
 !.config/**
+
+# Allowed scripts for homelab
+!.chezmoiscripts/
+!.chezmoiscripts/run_once_00_install_apps_homelab.sh.tmpl
 {{ end -}}
