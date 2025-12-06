@@ -14,3 +14,13 @@ AppData/
 {{- if eq .osid "windows" }}
 **/*.sh
 {{ end -}}
+
+{{- if hasPrefix "homelab-" .chezmoi.hostname }}
+# Homelab machines: ignore everything, then allowlist specific configs
+*
+
+# Allowed configs for homelab
+!.zshrc
+!.config/
+!.config/**
+{{ end -}}
