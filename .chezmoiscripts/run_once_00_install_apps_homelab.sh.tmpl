@@ -1,0 +1,22 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+main() {
+    local pwd=$(pwd)
+    info "OS Detected: {{ .osid | quote }}"
+    info "Hostname: {{ .chezmoi.hostname | quote }}"
+    info "Execution Dir: $pwd"
+    echo ""
+
+    # TODO: Add homelab-specific installations here
+    info "Homelab setup complete."
+}
+
+# Output Helpers
+info()  { echo "[INFO] $1"; }
+warn()  { echo "[WARN] $1"; }
+error() { echo "[ERROR] $1"; }
+ok()    { echo "[OK] $1"; }
+
+main "$@"
