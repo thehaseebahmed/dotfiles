@@ -1,0 +1,17 @@
+{
+    "appearance.searchResultListLayout": "compact",
+    "appearance.themeName": "Fluent UI Web",
+    "extensions.enabledExtensionIds": [
+        "CurrencyConversion",
+        "Calculator",
+        "ApplicationSearch",
+        "UeliCommand"
+    ],
+    "general.hotkey": "Alt+Space",
+    "general.searchHistory.enabled": true,
+    "general.tray.showIcon": false,
+    "keyboardAndMouse.dragAndDropEnabled": true,
+    "window.acrylicOpacity": 0.7,
+    "window.alwaysOnTop": false,
+    "window.backgroundMaterial": "Acrylic"
+}

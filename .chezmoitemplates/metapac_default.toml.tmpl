@@ -44,6 +44,7 @@ flatpak = [
     "io.github.ungoogled_software.ungoogled_chromium",
 ]
 
+
 npm = [
     "@fission-ai/openspec",
     "opencode-ai"
@@ -73,10 +74,18 @@ vscode = [
 
 winget = [
     "AgileBits.1Password",
-    "CoreyButler.NVMforWindows",
+    { package = "CoreyButler.NVMforWindows", hooks = { after_sync = [ "nvm install lts;", " nvm use lts;" ] } },
     "Espanso.Espanso",
     "Git.Git",
     "JesseDuffield.lazygit",
     "OliverSchwendener.ueli",
+    "Rufus.Rufus",
+    "Termius.Termius",
     "VSCodium.VSCodium",
+    "Warp.Warp",
+    "Zen-Team.Zen-Browser",
+    {{ if eq .chezmoi.fqdnHostname "Haseebs-SER9" }}
+    "Canva.Affinity",
+    "ZedIndustries.Zed",
+    {{ end -}}
 ]
