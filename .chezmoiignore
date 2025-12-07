@@ -1,4 +1,4 @@
-.ssh # Should only be copied on homelab servers
+.ssh/authorized_keys # Should only be copied on homelab servers
 
 {{- if ne .osid "darwin" }}
 Library/
@@ -23,6 +23,7 @@ AppData/
 
 # Allowed configs for homelab
 !.gitconfig
+!.ssh/authorized_keys
 
 # Allowed scripts for homelab
 !.chezmoiscripts/run_once_00_install_apps_homelab.sh.tmpl

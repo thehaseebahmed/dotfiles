@@ -46,7 +46,7 @@ flatpak = [
 
 npm = [
     "@fission-ai/openspec",
-    {{- if ne .osid "windows" }}
+    {{ if ne .osid "windows" }}
     "opencode-ai"
     {{ end -}}
 ]

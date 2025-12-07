@@ -1,0 +1,7 @@
+Host *
+    ServerAliveInterval 60
+
+Host homelab-002
+    HostName homelab-002.lykoi-mark.ts.net
+    User tha
+    IdentityFile ~/.ssh/id_ed25519
