@@ -44,10 +44,11 @@ flatpak = [
     "io.github.ungoogled_software.ungoogled_chromium",
 ]
 
-
 npm = [
     "@fission-ai/openspec",
+    {{- if ne .osid "windows" }}
     "opencode-ai"
+    {{ end -}}
 ]
 
 vscode = [
@@ -73,6 +74,7 @@ vscode = [
 ]
 
 winget = [
+    "Anthropic.ClaudeCode",
     "AgileBits.1Password",
     { package = "CoreyButler.NVMforWindows", hooks = { after_sync = [ "nvm install lts;", " nvm use lts;" ] } },
     "Espanso.Espanso",
@@ -80,6 +82,7 @@ winget = [
     "JesseDuffield.lazygit",
     "OliverSchwendener.ueli",
     "Rufus.Rufus",
+    "SST.OpenCode",
     "Termius.Termius",
     "VSCodium.VSCodium",
     "Warp.Warp",
