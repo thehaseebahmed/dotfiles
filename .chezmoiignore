@@ -1,3 +1,5 @@
+.ssh # Should only be copied on homelab servers
+
 {{- if ne .osid "darwin" }}
 Library/
 {{ end -}}
