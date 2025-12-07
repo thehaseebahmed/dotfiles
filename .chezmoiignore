@@ -17,11 +17,11 @@ AppData/
 
 {{- if hasPrefix "homelab-" .chezmoi.fqdnHostname }}
 # Homelab machines: ignore everything, then allowlist specific configs
-*
+**/*
 
 # Allowed configs for homelab
+!.gitconfig
 
 # Allowed scripts for homelab
-!.chezmoiscripts/
 !.chezmoiscripts/run_once_00_install_apps_homelab.sh.tmpl
 {{ end -}}
