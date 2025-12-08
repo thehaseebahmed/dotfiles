@@ -1,0 +1,10 @@
+[Unit]
+Description=GitHub Actions Runner Target
+Documentation=https://github.com/thehaseebahmed/docker-github-actions-runner
+{{- $count := .github_runner.instance_count | int }}
+{{- range $i := until $count }}
+Wants=github-runner@{{ add $i 1 }}.service
+{{- end }}
+
+[Install]
+WantedBy=multi-user.target

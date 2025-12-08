@@ -1,0 +1,17 @@
+services:
+    vaultwarden:
+        container_name: vaultwarden
+        image: vaultwarden/server:latest
+        restart: always
+        network_mode: bridge
+        ports:
+            - 8090:80
+        volumes:
+            - vaultwarden_data:/data
+        env_file:
+            - .env
+            
+volumes:
+    vaultwarden_data:
+        name: vaultwarden_data
+        external: true
