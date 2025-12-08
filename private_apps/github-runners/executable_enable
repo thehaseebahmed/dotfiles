@@ -1,0 +1,6 @@
+sudo cp github-runner@.service /etc/systemd/system/
+sudo cp github-runner.target /etc/systemd/system/
+
+sudo docker pull thehaseebahmed/github-runner:latest
+sudo systemctl daemon-reload
+sudo systemctl enable --now github-runner.target

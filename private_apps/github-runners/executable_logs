@@ -1,0 +1,1 @@
+sudo journalctl -u 'github-runner@*' -f

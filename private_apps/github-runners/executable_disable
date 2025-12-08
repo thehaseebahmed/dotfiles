@@ -1,0 +1,5 @@
+sudo systemctl stop github-runner.target
+sudo rm /etc/systemd/system/github-runner@.service
+sudo rm /etc/systemd/system/github-runner.target
+
+sudo systemctl daemon-reload

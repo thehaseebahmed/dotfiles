@@ -1,0 +1,37 @@
+[Unit]
+Description=GitHub Actions Runner (Ephemeral) - Instance %i
+After=docker.service
+Requires=docker.service
+PartOf=github-runner.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=10
+TimeoutStartSec=0
+
+# Load environment variables from instance-specific file
+EnvironmentFile=/home/tha/apps/github-runners/.env
+
+# Pull latest image before starting (optional, comment out if not needed)
+ExecStartPre=-/usr/bin/docker pull ${DOCKER_IMAGE:-thehaseebahmed/github-runner:latest}
+
+# Remove any existing container with the same name
+ExecStartPre=-/usr/bin/docker rm -f github-runner-%i
+
+# Start the ephemeral runner
+ExecStart=/usr/bin/docker run --rm \
+    --name github-runner-%i \
+    --env-file /home/tha/apps/github-runners/.env \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    $DOCKER_IMAGE
+
+# Cleanup on stop
+ExecStop=/usr/bin/docker stop -t 30 github-runner-%i
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=github-runner.target
