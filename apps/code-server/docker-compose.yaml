@@ -1,0 +1,16 @@
+services:
+    code-server:
+        container_name: code-server
+        image: lscr.io/linuxserver/code-server:latest
+        restart: always
+        network_mode: bridge
+        ports:
+            - 8443:8443
+        volumes:
+            - code-server_config:/config
+            - /home/tha:/config/workspace/tha
+        env_file:
+            - .env
+volumes:
+    code-server_config:
+        name: code-server_config
