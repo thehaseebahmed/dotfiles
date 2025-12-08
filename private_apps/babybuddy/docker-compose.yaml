@@ -1,0 +1,18 @@
+services:
+    babybuddy:
+        container_name: babybuddy
+        image: lscr.io/linuxserver/babybuddy:latest
+        restart: always
+        network_mode: bridge
+        ports:
+            - 8001:8000
+        volumes:
+            - babybuddy_config:/config
+        environment:
+            PUID: "1000"
+            PGID: "1000"
+            TZ: "Europe/Amsterdam"
+            CSRF_TRUSTED_ORIGINS: "https://babybuddy.lykoi-mark.ts.net"
+volumes:
+    babybuddy_config:
+        name: babybuddy_config
