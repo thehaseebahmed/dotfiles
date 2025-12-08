@@ -26,5 +26,6 @@ AppData/
 !.ssh/authorized_keys
 
 # Allowed scripts for homelab
-!.chezmoiscripts/run_once_00_install_apps_homelab.sh.tmpl
+!.chezmoiscripts
+!.chezmoiscripts/*_homelab.*
 {{ end -}}
