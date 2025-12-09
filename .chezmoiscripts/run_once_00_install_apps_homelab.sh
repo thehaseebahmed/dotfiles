@@ -12,9 +12,24 @@ main() {
     # Applications
     echo ""
     info "Setup Apps..."
+    install_rclone
     install_restic
 
     info "Homelab setup complete."
+}
+
+install_rclone() {
+    if eval "command -v rclone >/dev/null 2>&1"; then
+        warn "rclone already installed."
+        return 0
+    fi
+
+    info "Installing rclone..."
+
+    # Download latest binary
+    sudo -v ; curl https://rclone.org/install.sh | sudo bash
+
+    ok "rclone installed."
 }
 
 install_restic() {

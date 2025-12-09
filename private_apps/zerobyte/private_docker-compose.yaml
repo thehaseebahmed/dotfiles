@@ -11,6 +11,7 @@ services:
             - /etc/localtime:/etc/localtime:ro
             - /run/docker/plugins:/run/docker/plugins
             - /var/run/docker.sock:/var/run/docker.sock
+            - /home/tha/.config/rclone:/root/.config/rclone:ro
             - /AppData:/AppData
         environment:
             TZ: "Europe/Amsterdam"
