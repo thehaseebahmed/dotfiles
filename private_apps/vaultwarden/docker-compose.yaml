@@ -7,11 +7,10 @@ services:
         ports:
             - 8090:80
         volumes:
-            - vaultwarden_data:/data
+            - zb-kocSY:/data
         env_file:
             - .env
             
 volumes:
-    vaultwarden_data:
-        name: vaultwarden_data
+    zb-kocSY:
         external: true
