@@ -26,7 +26,10 @@ main() {
     {{ if eq .osid "linux-manjaro" -}}
     install_espanso
     {{ end -}}
+
+    {{ if ne .chezmoi.fqdnHostname "Mac.lan" -}}
     install_tsui
+    {{ end -}}
 }
 
 arch_setup_chaotic_aur() {
