@@ -1,15 +1,27 @@
-.bashrc
-.ssh/authorized_keys # Should only be copied on homelab servers
-apps
+# Global ignores
+setup-git-hooks.sh
 
+# Configs for Homelab machines, so ignored on all others
+.bashrc
+.chezmoiscripts/*_homelab.*
+.ssh/authorized_keys
+apps/*
+
+# Linux
+{{- if ne .osid "linux-manjaro" }}
+.config/*
+{{ end -}}
+
+# MacOS
 {{- if ne .osid "darwin" }}
 Library/
 {{ end -}}
 
-{{- if ne .osid "linux-manjaro" }}
-.config/
+{{- if eq .osid "darwin" }}
+!.config/ziit/
 {{ end -}}
 
+# Windows
 {{- if ne .osid "windows" }}
 AppData/
 **/*.ps1
@@ -19,6 +31,7 @@ AppData/
 **/*.sh
 {{ end -}}
 
+# Homelab Machines
 {{- if hasPrefix "homelab-" .chezmoi.fqdnHostname }}
 # Homelab machines: ignore everything, then allowlist specific configs
 **/*
@@ -27,12 +40,9 @@ AppData/
 !.bashrc
 !.gitconfig
 !.ssh/authorized_keys
-!apps/
-!apps/**
 !apps/**/*.yaml
 !apps/**/.env
 
 # Allowed scripts for homelab
-!.chezmoiscripts
 !.chezmoiscripts/*_homelab.*
 {{ end -}}
