@@ -15,6 +15,8 @@ main() {
     install_rclone
     install_restic
     install_tailscale
+    install_podman
+    install_portainer_agent
 
     info "Homelab setup complete."
 }
@@ -68,6 +70,51 @@ install_tailscale() {
     curl -fsSL https://tailscale.com/install.sh | sh
 
     ok "tailscale installed."
+}
+
+install_podman() {
+    if eval "command -v podman >/dev/null 2>&1"; then
+        warn "podman already installed."
+        return 0
+    fi
+
+    info "Installing podman..."
+
+    # Install podman from official repositories (Debian 11+/Ubuntu 20.10+)
+    sudo apt-get update
+    sudo apt-get install -y podman
+
+    ok "podman installed."
+}
+
+install_portainer_agent() {
+    if podman ps -a --format "{{.Names}}" | grep -q "^portainer_agent$" 2>/dev/null; then
+        warn "portainer_agent container already exists."
+        return 0
+    fi
+
+    if ! eval "command -v podman >/dev/null 2>&1"; then
+        error "podman is not installed. Install podman first."
+        return 1
+    fi
+
+    info "Installing portainer agent..."
+
+    # Deploy Portainer Agent with podman
+    # Port 9001: Agent communication port (must be accessible from Portainer Server)
+    # Socket mount: Podman socket to Docker socket path (what Agent expects)
+    # Volume mount: Podman volumes to Docker volumes path (what Agent expects)
+    podman run -d \
+        -p 9001:9001 \
+        --name portainer_agent \
+        --restart=always \
+        --privileged \
+        -v /run/podman/podman.sock:/var/run/docker.sock \
+        -v /var/lib/containers/storage/volumes:/var/lib/docker/volumes \
+        portainer/agent:lts
+
+    ok "portainer agent installed and running on port 9001."
+    info "Connect from Portainer Server using this host's IP:9001"
 }
 
 # Output Helpers
