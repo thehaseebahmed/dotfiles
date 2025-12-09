@@ -14,6 +14,7 @@ main() {
     info "Setup Apps..."
     install_rclone
     install_restic
+    install_tailscale
 
     info "Homelab setup complete."
 }
@@ -54,6 +55,19 @@ install_restic() {
     rm -f /tmp/restic.bz2
 
     ok "restic installed."
+}
+
+install_tailscale() {
+    if eval "command -v tailscale >/dev/null 2>&1"; then
+        warn "tailscale already installed."
+        return 0
+    fi
+
+    info "Installing tailscale..."
+
+    curl -fsSL https://tailscale.com/install.sh | sh
+
+    ok "tailscale installed."
 }
 
 # Output Helpers
