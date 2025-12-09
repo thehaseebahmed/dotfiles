@@ -1,3 +1,4 @@
+.bashrc
 .ssh/authorized_keys # Should only be copied on homelab servers
 apps
 
@@ -23,6 +24,7 @@ AppData/
 **/*
 
 # Allowed configs for homelab
+!.bashrc
 !.gitconfig
 !.ssh/authorized_keys
 !apps/
