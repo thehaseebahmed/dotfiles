@@ -1,19 +1,19 @@
 services:
     plex:
+        image: lscr.io/linuxserver/plex:latest
         container_name: plex
-        image: plexinc/pms-docker:latest
         restart: always
         network_mode: host
+        env_file: .env
+        
+        devices:
+            - dev/dri:/dev/dri
+
         volumes:
-            - plex_transcode:/transcode
             - zb-P1o4k:/config
-            - zb-6Q5xn:/data
-        environment:
-            TZ: "Europe/Amsterdam"
+            - zb-6Q5xn:/medias 
             
 volumes:
-    plex_transcode:
-        name: plex_transcode
     zb-P1o4k:
         external: true
     zb-6Q5xn:
