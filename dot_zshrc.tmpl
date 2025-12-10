@@ -39,3 +39,14 @@ if [ -f "$HOME/.local/share/dnvm/env" ]; then
     . "$HOME/.local/share/dnvm/env"
 fi
 {{ end -}}
+
+#Bitwarden SSH Agent
+BITWARDEN_SSH_AGENT="$HOME/.bitwarden-ssh-agent.sock"
+if [ -S "$BITWARDEN_SSH_AGENT" ]; then
+    export SSH_AUTH_SOCK="$BITWARDEN_SSH_AGENT"
+fi
+
+BITWARDEN_FLATPAK_SSH_AGENT="$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock"
+if [ -S "$BITWARDEN_FLATPAK_SSH_AGENT" ]; then
+    export SSH_AUTH_SOCK="$BITWARDEN_FLATPAK_SSH_AGENT"
+fi
