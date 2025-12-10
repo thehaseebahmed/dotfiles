@@ -5,14 +5,16 @@ services:
         restart: always
         network_mode: host
         volumes:
-            - plex_config:/config
             - plex_transcode:/transcode
-            # Mount your media directory below (uncomment and adjust path):
-            # - /path/to/your/media:/data
+            - zb-P1o4k:/config
+            - zb-6Q5xn:/data
         environment:
             TZ: "Europe/Amsterdam"
+            
 volumes:
-    plex_config:
-        name: plex_config
     plex_transcode:
         name: plex_transcode
+    zb-P1o4k:
+        external: true
+    zb-6Q5xn:
+        external: true
