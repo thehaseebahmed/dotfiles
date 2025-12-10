@@ -1,0 +1,18 @@
+services:
+    plex:
+        container_name: plex
+        image: plexinc/pms-docker:latest
+        restart: always
+        network_mode: host
+        volumes:
+            - plex_config:/config
+            - plex_transcode:/transcode
+            # Mount your media directory below (uncomment and adjust path):
+            # - /path/to/your/media:/data
+        environment:
+            TZ: "Europe/Amsterdam"
+volumes:
+    plex_config:
+        name: plex_config
+    plex_transcode:
+        name: plex_transcode
