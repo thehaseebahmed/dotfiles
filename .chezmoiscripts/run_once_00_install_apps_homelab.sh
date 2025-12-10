@@ -16,6 +16,7 @@ main() {
     install_restic
     install_tailscale
     install_podman
+    install_podman_compose
     install_portainer_agent
 
     info "Homelab setup complete."
@@ -85,6 +86,20 @@ install_podman() {
     sudo apt-get install -y podman
 
     ok "podman installed."
+}
+
+install_podman_compose() {
+    if eval "command -v podman-compose >/dev/null 2>&1"; then
+        warn "podman-compose already installed."
+        return 0
+    fi
+
+    info "Installing podman-compose..."
+    sudo apt-get update
+    sudo apt-get install -y python3 python3-pip
+    sudo pip3 install podman-compose
+
+    ok "podman-compose installed."
 }
 
 install_portainer_agent() {
