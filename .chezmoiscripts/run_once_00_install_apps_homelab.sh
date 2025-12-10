@@ -88,7 +88,7 @@ install_podman() {
 }
 
 install_portainer_agent() {
-    if podman ps -a --format "{{.Names}}" | grep -q "^portainer_agent$" 2>/dev/null; then
+    if sudo podman ps -a --format "{{.Names}}" | grep -q "^portainer_agent$" 2>/dev/null; then
         warn "portainer_agent container already exists."
         return 0
     fi
@@ -104,14 +104,14 @@ install_portainer_agent() {
     # Port 9001: Agent communication port (must be accessible from Portainer Server)
     # Socket mount: Podman socket to Docker socket path (what Agent expects)
     # Volume mount: Podman volumes to Docker volumes path (what Agent expects)
-    podman run -d \
+    sudo podman run -d \
         -p 9001:9001 \
         --name portainer_agent \
         --restart=always \
         --privileged \
         -v /run/podman/podman.sock:/var/run/docker.sock \
         -v /var/lib/containers/storage/volumes:/var/lib/docker/volumes \
-        portainer/agent:lts
+        docker.io/portainer/agent:lts
 
     ok "portainer agent installed and running on port 9001."
     info "Connect from Portainer Server using this host's IP:9001"
