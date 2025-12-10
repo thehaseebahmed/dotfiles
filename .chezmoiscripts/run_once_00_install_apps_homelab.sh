@@ -15,8 +15,7 @@ main() {
     install_rclone
     install_restic
     install_tailscale
-    install_podman
-    install_podman_compose
+    install_docker
     install_portainer_agent
 
     info "Homelab setup complete."
@@ -73,43 +72,50 @@ install_tailscale() {
     ok "tailscale installed."
 }
 
-install_podman() {
-    if eval "command -v podman >/dev/null 2>&1"; then
-        warn "podman already installed."
+install_docker() {
+    if eval "command -v docker >/dev/null 2>&1"; then
+        warn "docker already installed."
         return 0
     fi
 
-    info "Installing podman..."
-
-    # Install podman from official repositories (Debian 11+/Ubuntu 20.10+)
+    info "Installing Docker..."
+    
+    # Remove conflicting packages
     sudo apt-get update
-    sudo apt-get install -y podman
+    sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-doc podman-docker containerd runc | cut -f1)
 
-    ok "podman installed."
-}
+    # Add Docker's official GPG key:
+    sudo apt update
+    sudo apt install ca-certificates curl
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-install_podman_compose() {
-    if eval "command -v podman-compose >/dev/null 2>&1"; then
-        warn "podman-compose already installed."
-        return 0
-    fi
+    # Add the repository to Apt sources:
+    sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/debian
+Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
 
-    info "Installing podman-compose..."
-    sudo apt-get update
-    sudo apt-get install -y python3 python3-pip
-    sudo pip3 install podman-compose
+    sudo apt update
 
-    ok "podman-compose installed."
+    # Install docker packages
+    sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+    ok "Docker installed. Log out and back in for group changes to take effect."
 }
 
 install_portainer_agent() {
-    if sudo podman ps -a --format "{{.Names}}" | grep -q "^portainer_agent$" 2>/dev/null; then
+    if sudo docker ps -a --format "{{.Names}}" | grep -q "^portainer_agent$" 2>/dev/null; then
         warn "portainer_agent container already exists."
         return 0
     fi
 
-    if ! eval "command -v podman >/dev/null 2>&1"; then
-        error "podman is not installed. Install podman first."
+    if ! eval "command -v docker >/dev/null 2>&1"; then
+        error "docker is not installed. Install docker first."
         return 1
     fi
 
@@ -119,14 +125,14 @@ install_portainer_agent() {
     # Port 9001: Agent communication port (must be accessible from Portainer Server)
     # Socket mount: Podman socket to Docker socket path (what Agent expects)
     # Volume mount: Podman volumes to Docker volumes path (what Agent expects)
-    sudo podman run -d \
+    sudo docker run -d \
         -p 9001:9001 \
         --name portainer_agent \
         --restart=always \
-        --privileged \
-        -v /run/podman/podman.sock:/var/run/docker.sock \
-        -v /var/lib/containers/storage/volumes:/var/lib/docker/volumes \
-        docker.io/portainer/agent:lts
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        -v /var/lib/docker/volumes:/var/lib/docker/volumes \
+        -v /:/host \
+        portainer/agent:2.33.5
 
     ok "portainer agent installed and running on port 9001."
     info "Connect from Portainer Server using this host's IP:9001"
