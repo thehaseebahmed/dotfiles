@@ -16,7 +16,10 @@ main() {
     install_restic
     install_tailscale
     install_docker
+
+    {{ if ne .chezmoi.fqdnHostname "homelab-002" -}}
     install_portainer_agent
+    {{ end -}}
 
     info "Homelab setup complete."
 }
