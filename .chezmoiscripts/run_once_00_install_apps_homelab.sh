@@ -17,10 +17,6 @@ main() {
     install_tailscale
     install_docker
 
-    {{ if ne .chezmoi.fqdnHostname "homelab-002" -}}
-    install_portainer_agent
-    {{ end -}}
-
     info "Homelab setup complete."
 }
 
@@ -109,36 +105,6 @@ EOF
     sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
     ok "Docker installed. Log out and back in for group changes to take effect."
-}
-
-install_portainer_agent() {
-    if sudo docker ps -a --format "{{.Names}}" | grep -q "^portainer_agent$" 2>/dev/null; then
-        warn "portainer_agent container already exists."
-        return 0
-    fi
-
-    if ! eval "command -v docker >/dev/null 2>&1"; then
-        error "docker is not installed. Install docker first."
-        return 1
-    fi
-
-    info "Installing portainer agent..."
-
-    # Deploy Portainer Agent with podman
-    # Port 9001: Agent communication port (must be accessible from Portainer Server)
-    # Socket mount: Podman socket to Docker socket path (what Agent expects)
-    # Volume mount: Podman volumes to Docker volumes path (what Agent expects)
-    sudo docker run -d \
-        -p 9001:9001 \
-        --name portainer_agent \
-        --restart=always \
-        -v /var/run/docker.sock:/var/run/docker.sock \
-        -v /var/lib/docker/volumes:/var/lib/docker/volumes \
-        -v /:/host \
-        portainer/agent:2.33.5
-
-    ok "portainer agent installed and running on port 9001."
-    info "Connect from Portainer Server using this host's IP:9001"
 }
 
 # Output Helpers
