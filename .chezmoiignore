@@ -42,8 +42,7 @@ AppData/
 !.ssh/authorized_keys
 !apps
 !apps/*
-!apps/**/*.yaml
-!apps/**/.env
+!apps/**/*.*
 
 # Allowed scripts for homelab
 !.chezmoiscripts/*_homelab.*
