@@ -1,15 +1,23 @@
 services:
     vaultwarden:
-        container_name: vaultwarden
         image: vaultwarden/server:latest
+        container_name: vaultwarden
         restart: always
+        
         network_mode: bridge
         ports:
-            - 8090:80
+            - 9080:80
+        
         volumes:
             - zb-kocSY:/data
-        env_file:
-            - .env
+            
+        env_file: .env
+        
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 1024M
             
 volumes:
     zb-kocSY:

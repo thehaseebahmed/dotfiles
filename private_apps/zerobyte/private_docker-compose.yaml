@@ -3,9 +3,11 @@ services:
         container_name: zerobyte
         image: ghcr.io/nicotsx/zerobyte:v0.15
         restart: always
+        
         network_mode: bridge
         ports:
             - 4096:4096
+        
         volumes:
             - /var/lib/zerobyte:/var/lib/zerobyte:rshared
             - /etc/localtime:/etc/localtime:ro
@@ -13,9 +15,18 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
             - /home/tha/.config/rclone:/root/.config/rclone:ro
             - /AppData:/AppData
+        
         environment:
             TZ: "Europe/Amsterdam"
+        
         cap_add:
             - SYS_ADMIN
+
         devices:
             - /dev/fuse:/dev/fuse
+        
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 1024M
