@@ -205,7 +205,9 @@ volumes:
   zb-3PwGI:
       external: true
   zb-P1o4k:
+      external: true
   zb-cxnfU:
+      external: true
 
 networks:
   arr-stack:
