@@ -1,0 +1,41 @@
+#!/bin/bash
+# Enable boot logger services
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SERVICE_DIR="/etc/systemd/system"
+
+echo "🔧 Installing Boot Logger services..."
+
+# Copy service files
+sudo cp "$SCRIPT_DIR/boot-logger.service" "$SERVICE_DIR/"
+sudo cp "$SCRIPT_DIR/boot-logger-shutdown.service" "$SERVICE_DIR/"
+
+# Reload systemd
+sudo systemctl daemon-reload
+
+# Enable and start boot logger
+sudo systemctl enable boot-logger.service
+echo "✓ boot-logger.service enabled"
+
+# Enable shutdown marker
+sudo systemctl enable boot-logger-shutdown.service
+echo "✓ boot-logger-shutdown.service enabled"
+
+# Create initial clean shutdown marker
+sudo touch /var/run/boot-tracker-clean-shutdown
+
+# Ensure log file exists with proper permissions
+sudo touch /var/log/boot-tracker.log
+sudo chmod 644 /var/log/boot-tracker.log
+
+echo ""
+echo "✅ Boot Logger services installed and enabled"
+echo ""
+echo "The service will:"
+echo "  • Log every system boot"
+echo "  • Detect abnormal shutdowns/crashes"
+echo "  • Track kernel panics, thermal issues, and power problems"
+echo ""
+echo "View logs with: ~/apps/boot-logger/logs"
+echo "Check status with: ~/apps/boot-logger/status"

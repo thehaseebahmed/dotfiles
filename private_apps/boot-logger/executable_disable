@@ -1,0 +1,28 @@
+#!/bin/bash
+# Disable boot logger services
+set -euo pipefail
+
+SERVICE_DIR="/etc/systemd/system"
+
+echo "🛑 Disabling Boot Logger services..."
+
+# Disable services
+sudo systemctl disable boot-logger.service 2>/dev/null || true
+sudo systemctl disable boot-logger-shutdown.service 2>/dev/null || true
+
+echo "✓ Services disabled"
+
+# Remove service files
+sudo rm -f "$SERVICE_DIR/boot-logger.service"
+sudo rm -f "$SERVICE_DIR/boot-logger-shutdown.service"
+
+echo "✓ Service files removed"
+
+# Reload systemd
+sudo systemctl daemon-reload
+
+echo ""
+echo "✅ Boot Logger services disabled and removed"
+echo ""
+echo "Note: Log file /var/log/boot-tracker.log has been preserved"
+echo "To remove it: sudo rm /var/log/boot-tracker.log"

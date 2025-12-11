@@ -1,0 +1,18 @@
+[Unit]
+Description=Boot Logger - Track system boots and detect abnormal shutdowns
+After=network.target systemd-journald.service
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+ExecStart=/home/tha/apps/boot-logger/boot-logger.sh
+RemainAfterExit=no
+StandardOutput=journal
+StandardError=journal
+
+# Security settings
+PrivateTmp=yes
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=multi-user.target

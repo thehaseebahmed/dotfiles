@@ -1,0 +1,26 @@
+#!/bin/bash
+# Check boot logger service status
+set -euo pipefail
+
+echo "📊 Boot Logger Status"
+echo "════════════════════════════════════════════════════════════"
+echo ""
+
+# Check boot logger service
+echo "🔵 Boot Logger Service:"
+sudo systemctl status boot-logger.service --no-pager -l || true
+echo ""
+
+# Check shutdown marker service
+echo "🔵 Shutdown Marker Service:"
+sudo systemctl status boot-logger-shutdown.service --no-pager -l || true
+echo ""
+
+# Show recent boot events
+if [ -f /var/log/boot-tracker.log ]; then
+    echo "📝 Recent Boot Events:"
+    echo "────────────────────────────────────────────────────────────"
+    sudo tail -n 30 /var/log/boot-tracker.log
+else
+    echo "⚠️  No boot log found at /var/log/boot-tracker.log"
+fi

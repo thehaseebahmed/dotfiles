@@ -1,0 +1,56 @@
+#!/bin/bash
+# View boot logger logs
+set -euo pipefail
+
+BOOT_LOG="/var/log/boot-tracker.log"
+
+if [ ! -f "$BOOT_LOG" ]; then
+    echo "⚠️  No boot log found at $BOOT_LOG"
+    echo "The service may not have run yet."
+    exit 1
+fi
+
+# Parse arguments
+FOLLOW=false
+LINES=50
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -f|--follow)
+            FOLLOW=true
+            shift
+            ;;
+        -n|--lines)
+            LINES="$2"
+            shift 2
+            ;;
+        -a|--all)
+            LINES="all"
+            shift
+            ;;
+        *)
+            echo "Usage: $0 [-f|--follow] [-n|--lines NUM] [-a|--all]"
+            echo ""
+            echo "Options:"
+            echo "  -f, --follow     Follow log output (like tail -f)"
+            echo "  -n, --lines NUM  Show last NUM lines (default: 50)"
+            echo "  -a, --all        Show entire log file"
+            exit 1
+            ;;
+    esac
+done
+
+# Show logs
+if [ "$FOLLOW" = true ]; then
+    echo "📝 Following boot logger (Ctrl+C to exit)..."
+    echo ""
+    sudo tail -f "$BOOT_LOG"
+elif [ "$LINES" = "all" ]; then
+    echo "📝 Complete Boot Log:"
+    echo "════════════════════════════════════════════════════════════"
+    sudo cat "$BOOT_LOG"
+else
+    echo "📝 Last $LINES lines of boot log:"
+    echo "════════════════════════════════════════════════════════════"
+    sudo tail -n "$LINES" "$BOOT_LOG"
+fi
