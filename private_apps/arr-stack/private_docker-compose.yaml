@@ -3,8 +3,9 @@ services:
     container_name: bazarr
     image: ghcr.io/hotio/bazarr
     restart: always
-    
-    network_mode: bridge
+
+    networks:
+      - arr-stack
     ports:
       - "6767:6767"
     
@@ -23,8 +24,9 @@ services:
     container_name: lidarr
     image: ghcr.io/hotio/lidarr
     restart: always
-    
-    network_mode: bridge
+
+    networks:
+      - arr-stack
     ports:
       - "8686:8686"
     
@@ -42,8 +44,9 @@ services:
     container_name: overseerr
     image: ghcr.io/hotio/overseerr
     restart: always
-    
-    network_mode: bridge
+
+    networks:
+      - arr-stack
     ports:
       - "5055:5055"
     
@@ -60,8 +63,9 @@ services:
     container_name: prowlarr
     image: ghcr.io/hotio/prowlarr
     restart: always
-    
-    network_mode: bridge
+
+    networks:
+      - arr-stack
     ports:
       - "9696:9696"
         
@@ -78,8 +82,9 @@ services:
     container_name: plex
     image: ghcr.io/hotio/plex
     restart: always
-    
-    network_mode: bridge
+
+    networks:
+      - arr-stack
     ports:
       - "32400:32400"
 
@@ -103,8 +108,9 @@ services:
     container_name: qbittorrent
     image: ghcr.io/hotio/qbittorrent
     restart: always
-    
-    network_mode: bridge
+
+    networks:
+      - arr-stack
     ports:
       - "8080:8080"
     
@@ -124,8 +130,9 @@ services:
     container_name: qui
     image: ghcr.io/hotio/qui
     restart: always
-    
-    network_mode: bridge
+
+    networks:
+      - arr-stack
     ports:
       - "7476:7476"
     
@@ -142,8 +149,9 @@ services:
     container_name: radarr
     image: ghcr.io/hotio/radarr
     restart: always
-    
-    network_mode: bridge
+
+    networks:
+      - arr-stack
     ports:
       - "7878:7878"
     
@@ -161,8 +169,9 @@ services:
     container_name: sonarr
     image: ghcr.io/hotio/sonarr
     restart: always
-    
-    network_mode: bridge
+
+    networks:
+      - arr-stack
     ports:
       - "8989:8989"
     
@@ -197,6 +206,10 @@ volumes:
       external: true
   zb-P1o4k:
   zb-cxnfU:
+
+networks:
+  arr-stack:
+    driver: bridge
 
 
 
