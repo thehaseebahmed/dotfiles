@@ -58,18 +58,33 @@ main() {
         fi
 
         # Check for kernel panic
-        if journalctl -b -1 -k --no-pager 2>/dev/null | grep -i "panic\|oops\|segfault" >/dev/null; then
+        PANIC_LINES=$(journalctl -b -1 -k --no-pager 2>/dev/null | grep -i "panic\|oops\|segfault" || true)
+        if [ -n "$PANIC_LINES" ]; then
             log_message "🔥 KERNEL PANIC OR CRASH DETECTED in previous boot"
+            log_message "Matching lines:"
+            echo "$PANIC_LINES" | while read -r line; do
+                log_message "  $line"
+            done
         fi
 
         # Check for overheating
-        if journalctl -b -1 -k --no-pager 2>/dev/null | grep -i "thermal\|temperature\|overheat" >/dev/null; then
+        THERMAL_LINES=$(journalctl -b -1 -k --no-pager 2>/dev/null | grep -i "thermal\|temperature\|overheat" || true)
+        if [ -n "$THERMAL_LINES" ]; then
             log_message "🌡️  THERMAL ISSUES detected in previous boot"
+            log_message "Matching lines:"
+            echo "$THERMAL_LINES" | while read -r line; do
+                log_message "  $line"
+            done
         fi
 
         # Check for power issues
-        if journalctl -b -1 --no-pager 2>/dev/null | grep -i "power\|battery\|acpi" | grep -i "critical\|fail\|error" >/dev/null; then
+        POWER_LINES=$(journalctl -b -1 --no-pager 2>/dev/null | grep -i "power\|battery\|acpi" | grep -i "critical\|fail\|error" || true)
+        if [ -n "$POWER_LINES" ]; then
             log_message "⚡ POWER ISSUES detected in previous boot"
+            log_message "Matching lines:"
+            echo "$POWER_LINES" | while read -r line; do
+                log_message "  $line"
+            done
         fi
     fi
 
