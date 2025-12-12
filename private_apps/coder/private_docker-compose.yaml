@@ -1,0 +1,51 @@
+services:
+  coder:
+    image: ${CODER_REPO:-ghcr.io/coder/coder}:${CODER_VERSION:-latest}
+    name: coder
+
+    ports:
+      - "7080:7080"
+
+    environment:
+      CODER_HTTP_ADDRESS: "0.0.0.0:7080"
+      CODER_ACCESS_URL: "http://${HOSTNAME}.lykoi-mark.ts.net"
+    
+    group_add:
+      - "998" # docker group on host
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Run "docker volume rm coder_coder_home" to reset the dev tunnel url (https://abc.xyz.try.coder.app).
+      # This volume is not required in a production environment - you may safely remove it.
+      # Coder can recreate all the files it needs on restart.
+      #- coder_home:/home/coder
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    # Minimum supported version is 13.
+    # More versions here: https://hub.docker.com/_/postgres
+    image: "postgres:17"
+    name: "coder-postgres"
+    # Uncomment the next two lines to allow connections to the database from outside the server.
+    #ports:
+    #  - "5432:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-coder} # The PostgreSQL default database (automatically created at first launch)
+    volumes:
+      - zb-mIe40:/var/lib/postgresql/data # Use "docker volume rm coder_coder_data" to reset Coder
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-username} -d ${POSTGRES_DB:-coder}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  zb-mIe40:
+    external: true
