@@ -1,7 +1,7 @@
 services:
   coder:
     image: ${CODER_REPO:-ghcr.io/coder/coder}:${CODER_VERSION:-latest}
-    name: coder
+    container_name: coder
 
     ports:
       - "7080:7080"
@@ -27,7 +27,7 @@ services:
     # Minimum supported version is 13.
     # More versions here: https://hub.docker.com/_/postgres
     image: "postgres:17"
-    name: "coder-postgres"
+    container_name: "coder-db"
     # Uncomment the next two lines to allow connections to the database from outside the server.
     #ports:
     #  - "5432:5432"
