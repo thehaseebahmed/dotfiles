@@ -20,6 +20,7 @@ alias awsume="source awsume"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # AWSume: Auto-Complete function
+autoload -Uz compinit && compinit
 _awsume() {
     local state
     state=("${(@f)$(awsume-autocomplete)}")
@@ -27,7 +28,10 @@ _awsume() {
 }
 compdef _awsume awsume
 
-. "$HOME/.local/bin/env"
+# ??
+if [ -f "$HOME/.local/bin/env" ]; then
+    . "$HOME/.local/bin/env"
+fi
 
 # Dotnet Version Manager
 {{- if eq .osid "darwin" }}
@@ -39,6 +43,16 @@ if [ -f "$HOME/.local/share/dnvm/env" ]; then
     . "$HOME/.local/share/dnvm/env"
 fi
 {{ end -}}
+
+# Load Angular CLI autocompletion.
+if eval "command -v ng >/dev/null 2>&1"; then
+    source <(ng completion script)
+fi
+
+# Chromium
+if eval "command -v chromium >/dev/null 2>&1"; then
+    export CHROME_BIN=$(which chromium)
+fi
 
 #Bitwarden SSH Agent
 BITWARDEN_SSH_AGENT="$HOME/.bitwarden-ssh-agent.sock"
