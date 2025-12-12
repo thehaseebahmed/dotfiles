@@ -6,6 +6,7 @@ services:
     ports:
       - "7080:7080"
 
+    env_file: .env
     environment:
       CODER_HTTP_ADDRESS: "0.0.0.0:7080"
       CODER_ACCESS_URL: "http://${HOSTNAME}.lykoi-mark.ts.net"
@@ -31,6 +32,7 @@ services:
     # Uncomment the next two lines to allow connections to the database from outside the server.
     #ports:
     #  - "5432:5432"
+    env_file: .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-coder} # The PostgreSQL default database (automatically created at first launch)
     volumes:
