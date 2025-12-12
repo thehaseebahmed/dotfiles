@@ -39,6 +39,7 @@ AppData/
 # Allowed configs for homelab
 !.bashrc
 !.gitconfig
+!.ssh
 !.ssh/authorized_keys
 !apps
 !apps/*
