@@ -1,11 +1,8 @@
 # docker-compose.yaml
-
-# Include zerobyte first (must be before services that depend on it)
 include:
   - path: zerobyte/docker-compose.yaml
-
-{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
   - path: arcane/docker-compose.yaml
+{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
   #- path: babybuddy/docker-compose.yaml
   #- path: code-server/docker-compose.yaml
   - path: coder/docker-compose.yaml
@@ -14,8 +11,6 @@ include:
   #- path: trips/docker-compose.yaml
   - path: vaultwarden/docker-compose.yaml
   - path: ziit/docker-compose.yaml
-
 {{- else if eq .chezmoi.fqdnHostname "homelab-003" }}
-  - path: arcane/docker-compose.yaml
   - path: arr-stack/docker-compose.yaml
 {{- end }}
