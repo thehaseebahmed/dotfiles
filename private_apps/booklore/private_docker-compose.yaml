@@ -44,7 +44,7 @@ services:
 
     depends_on:
       zerobyte:
-        condition: service_healthy
+        condition: service_started
 
     healthcheck:
       test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost" ]
