@@ -223,37 +223,26 @@ services:
 
 volumes:
   zb-tyEON:
-    name: zb-tyEON
     external: true
   zb-yu_2y:
-    name: zb-yu_2y
     external: true
   zb-kQWx1:
-    name: zb-kQWx1
     external: true
   zb-u3UTp:
-    name: zb-u3UTp
     external: true
   zb-Gv2lz:
-    name: zb-Gv2lz
     external: true
   zb-fv7AD:
-    name: zb-fv7AD
     external: true
   zb-8Va75:
-    name: zb-8Va75
     external: true
   zb-qPSBH:
-    name: zb-qPSBH
     external: true
   zb-3PwGI:
-    name: zb-3PwGI
     external: true
   zb-P1o4k:
-    name: zb-P1o4k
     external: true
   zb-cxnfU:
-    name: zb-cxnfU
     external: true
 
 networks:

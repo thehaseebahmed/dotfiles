@@ -48,4 +48,5 @@ volumes:
 
 networks:
   ziit-network:
+    name: ziit-network
     driver: bridge
