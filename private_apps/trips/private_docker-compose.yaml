@@ -10,6 +10,10 @@ services:
             - zb-zDT8X:/app/storage
         environment:
             TZ: "Europe/Amsterdam"
+
+        depends_on:
+            zerobyte:
+                condition: service_started
 volumes:
     zb-zDT8X:
         external: true
