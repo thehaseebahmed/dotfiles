@@ -10,3 +10,4 @@ After cloning this repository, run the setup script to install git hooks:
 ```
 
 This installs a pre-commit hook that prevents accidental commits of secrets (API keys, tokens, etc.). See [CLAUDE.md](CLAUDE.md) for detailed documentation.
+
