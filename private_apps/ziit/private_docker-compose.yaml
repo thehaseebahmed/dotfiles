@@ -1,6 +1,7 @@
 services:
   app:
     image: ghcr.io/0pandadev/ziit:v1.1.1
+    container_name: ziit
     restart: unless-stopped
     networks:
       - ziit-network
@@ -14,17 +15,26 @@ services:
     
   postgres:
     image: timescale/timescaledb-ha:pg17
+    container_name: ziit-db
     restart: unless-stopped
     env_file: postgres.env
+    
     volumes:
       - zb-Rk6VM:/var/lib/postgresql/data
+    
+    depends_on:
+      zerobyte:
+        condition: service_started
+    
     post_start:
       - command: chown -R 1000:1000 /var/lib/postgresql/data
         user: root
+    
     networks:
       ziit-network:
         aliases:
           - postgres
+
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d ziit"]
       interval: 10s

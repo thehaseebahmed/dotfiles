@@ -37,6 +37,10 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-coder} # The PostgreSQL default database (automatically created at first launch)
     volumes:
       - zb-mIe40:/var/lib/postgresql/data # Use "docker volume rm coder_coder_data" to reset Coder
+        
+    depends_on:
+      zerobyte:
+          condition: service_started
 
     healthcheck:
       test:

@@ -19,6 +19,10 @@ services:
       - UMASK=002
       - TZ=Europe/Amsterdam
       - WEBUI_PORTS=6767/tcp,6767/udp
+        
+    depends_on:
+      zerobyte:
+        condition: service_started
 
   lidarr:
     container_name: lidarr
@@ -39,6 +43,10 @@ services:
       - PGID=1000
       - UMASK=002
       - TZ=Europe/Amsterdam
+        
+    depends_on:
+      zerobyte:
+        condition: service_started
 
   overseerr:
     container_name: overseerr
@@ -58,6 +66,10 @@ services:
       - PGID=1000
       - UMASK=002
       - TZ=Europe/Amsterdam
+        
+    depends_on:
+      zerobyte:
+        condition: service_started
 
   prowlarr:
     container_name: prowlarr
@@ -77,6 +89,10 @@ services:
       - PGID=1000
       - UMASK=002
       - TZ=Europe/Amsterdam
+        
+    depends_on:
+      zerobyte:
+        condition: service_started
 
   plex:
     container_name: plex
@@ -103,6 +119,10 @@ services:
       - zb-P1o4k:/config
       - zb-cxnfU:/transcode
       - zb-3PwGI:/data
+        
+    depends_on:
+      zerobyte:
+        condition: service_started
 
   qbittorrent:
     container_name: qbittorrent
@@ -125,6 +145,10 @@ services:
       - TZ=Europe/Amsterdam
       - WEBUI_PORTS=8080/tcp,8080/udp
       - LIBTORRENT=v1
+        
+    depends_on:
+      zerobyte:
+        condition: service_started
   
   qui:
     container_name: qui
@@ -144,6 +168,10 @@ services:
     
     volumes:
       - zb-fv7AD:/config
+        
+    depends_on:
+      zerobyte:
+        condition: service_started
 
   radarr:
     container_name: radarr
@@ -164,6 +192,10 @@ services:
     volumes:
       - zb-8Va75:/config
       - zb-3PwGI:/data
+        
+    depends_on:
+      zerobyte:
+        condition: service_started
 
   sonarr:
     container_name: sonarr
@@ -184,6 +216,10 @@ services:
     volumes:
       - zb-qPSBH:/config
       - zb-3PwGI:/data
+        
+    depends_on:
+      zerobyte:
+        condition: service_started
 
 volumes:
   zb-tyEON:

@@ -12,6 +12,10 @@ services:
             - zb-kocSY:/data
             
         env_file: .env
+
+        depends_on:
+            zerobyte:
+                condition: service_started
         
         deploy:
             resources:

@@ -12,8 +12,7 @@ services:
     
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - arcane-data:/app/data
-      - ~/apps:/data/projects
+      - zb-kIQJP:/app/data
     
     env_file: .env
     environment:
@@ -24,7 +23,11 @@ services:
       - LOG_JSON=false
       - OIDC_ENABLED=false
       - DATABASE_URL=file:data/arcane.db?_pragma=journal_mode(WAL)&_pragma=busy_timeout(2500)&_txlock=immediate
+        
+    depends_on:
+      zerobyte:
+        condition: service_started
 
 volumes:
-  arcane-data:
-    driver: local
+  zb-kIQJP:
+    external: true
