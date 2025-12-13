@@ -1,0 +1,30 @@
+#!/bin/bash
+# Tailscale Serve Configuration for Docker Containers
+# This script configures Tailscale to serve all Docker containers
+
+# Common services (all homelabs)
+sudo tailscale serve --service="svc:zerobyte" --https=443 http://127.0.0.1:4096
+sudo tailscale serve --service="svc:arcane" --https=443 http://127.0.0.1:3552
+
+{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
+# Homelab-002 specific services
+sudo tailscale serve --service="svc:coder" --https=443 http://127.0.0.1:7080
+sudo tailscale serve --service="svc:mssql" --https=443 http://127.0.0.1:1433
+sudo tailscale serve --service="svc:vaultwarden" --https=443 http://127.0.0.1:9080
+sudo tailscale serve --service="svc:ziit" --https=443 http://127.0.0.1:3000
+
+{{- else if eq .chezmoi.fqdnHostname "homelab-003" }}
+# Homelab-003 specific services (arr-stack)
+sudo tailscale serve --service="svc:bazarr" --https=443 http://127.0.0.1:6767
+sudo tailscale serve --service="svc:lidarr" --https=443 http://127.0.0.1:8686
+sudo tailscale serve --service="svc:overseerr" --https=443 http://127.0.0.1:5055
+sudo tailscale serve --service="svc:prowlarr" --https=443 http://127.0.0.1:9696
+sudo tailscale serve --service="svc:plex" --https=443 http://127.0.0.1:32400
+sudo tailscale serve --service="svc:qbittorrent" --https=443 http://127.0.0.1:8080
+sudo tailscale serve --service="svc:qui" --https=443 http://127.0.0.1:7476
+sudo tailscale serve --service="svc:radarr" --https=443 http://127.0.0.1:7878
+sudo tailscale serve --service="svc:sonarr" --https=443 http://127.0.0.1:8989
+
+{{- end }}
+
+echo "Tailscale serve configuration completed successfully!"
