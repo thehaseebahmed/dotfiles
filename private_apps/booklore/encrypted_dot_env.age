@@ -1,0 +1,13 @@
+# BookLore Database Configuration
+# MariaDB configuration
+MARIADB_ROOT_PASSWORD=changeme_root_password
+MARIADB_DATABASE=booklore
+MARIADB_USER=booklore
+MARIADB_PASSWORD=changeme_booklore_password
+
+# BookLore Spring Boot configuration
+SPRING_DATASOURCE_USERNAME=booklore
+SPRING_DATASOURCE_PASSWORD=changeme_booklore_password
+
+# BookLore configuration
+BOOKLORE_PORT=6060

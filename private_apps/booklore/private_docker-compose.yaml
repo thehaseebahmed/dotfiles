@@ -1,0 +1,85 @@
+services:
+  booklore:
+    image: ghcr.io/booklore-app/booklore:latest
+    container_name: booklore
+    restart: always
+
+    networks:
+      - booklore-network
+    ports:
+      - "6060:6060"
+
+    env_file: .env
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/booklore
+
+    volumes:
+      - zb-booklore-data:/app/data
+      - zb-booklore-books:/books
+      - zb-booklore-bookdrop:/bookdrop
+
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+    deploy:
+      resources:
+        limits:
+          cpus: '1.00'
+          memory: 2048M
+
+  mariadb:
+    image: mariadb:11.4.5
+    container_name: booklore-db
+    restart: always
+
+    env_file: .env
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+
+    volumes:
+      - zb-booklore-mariadb:/var/lib/mysql
+
+    networks:
+      booklore-network:
+        aliases:
+          - mariadb
+
+    depends_on:
+      zerobyte:
+        condition: service_started
+
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+
+volumes:
+  zb-booklore-data:
+    external: true
+  zb-booklore-books:
+    external: true
+  zb-booklore-bookdrop:
+    external: true
+  zb-booklore-mariadb:
+    external: true
+
+networks:
+  booklore-network:
+    name: booklore-network
+    driver: bridge
