@@ -1,0 +1,62 @@
+services:
+  booklore:
+    image: booklore/booklore:latest
+    container_name: booklore
+    restart: unless-stopped
+    
+    ports:
+      - "${BOOKLORE_PORT}:${BOOKLORE_PORT}"
+
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    
+    volumes:
+      - zb-oG5aI:/app/data
+      - zb-kWxx5:/books
+      - /home/tha/bookdrop:/bookdrop
+
+    environment:
+      - USER_ID=${APP_USER_ID}
+      - GROUP_ID=${APP_GROUP_ID}
+      - TZ=${TZ}
+      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_USERNAME=${DB_USER}
+      - DATABASE_PASSWORD=${DB_PASSWORD}
+      - BOOKLORE_PORT=${BOOKLORE_PORT}
+
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:11.4.5
+    container_name: booklore-db
+    restart: unless-stopped
+
+    environment:
+      - PUID=${DB_USER_ID}
+      - PGID=${DB_GROUP_ID}
+      - TZ=${TZ}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    
+    volumes:
+      - zb-49iWm:/config
+
+    depends_on:
+      zerobyte:
+        condition: service_healthy
+
+    healthcheck:
+      test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  zb-49iWm:
+    external: true
+  zb-oG5aI:
+    external: true
+  zb-kWxx5:
+    external: true
+  

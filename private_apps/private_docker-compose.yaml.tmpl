@@ -13,4 +13,5 @@ include:
   - path: ziit/docker-compose.yaml
 {{- else if eq .chezmoi.fqdnHostname "homelab-003" }}
   - path: arr-stack/docker-compose.yaml
+  - path: booklore/docker-compose.yaml
 {{- end }}

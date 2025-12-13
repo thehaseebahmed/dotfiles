@@ -1,0 +1,16 @@
+# BookLore Application Settings
+APP_USER_ID=1000
+APP_GROUP_ID=1000
+TZ=Europe/Amsterdam
+BOOKLORE_PORT=6060
+
+# Database Connection (BookLore)
+DATABASE_URL=jdbc:mariadb://mariadb:3306/booklore
+DB_USER=booklore
+DB_PASSWORD=ChangeMe_BookLoreApp_2025!
+
+# MariaDB Container Settings
+DB_USER_ID=1000
+DB_GROUP_ID=1000
+MYSQL_ROOT_PASSWORD=ChangeMe_MariaDBRoot_2025!
+MYSQL_DATABASE=booklore
