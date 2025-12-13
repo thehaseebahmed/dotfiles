@@ -12,8 +12,8 @@ services:
     
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - zb-kIQJP:/app/data
-    
+      - arcane-data:/app/data
+
     env_file: .env
     environment:
       - APP_URL="http://$HOSTNAME.lykoi-mark.ts.net"
@@ -23,11 +23,7 @@ services:
       - LOG_JSON=false
       - OIDC_ENABLED=false
       - DATABASE_URL=file:data/arcane.db?_pragma=journal_mode(WAL)&_pragma=busy_timeout(2500)&_txlock=immediate
-        
-    depends_on:
-      zerobyte:
-        condition: service_started
 
 volumes:
-  zb-kIQJP:
-    external: true
+  arcane-data:
+    name: arcane-data
