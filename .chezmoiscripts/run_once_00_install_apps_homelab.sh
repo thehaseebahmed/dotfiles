@@ -119,6 +119,9 @@ EOF
     # Install docker packages
     sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+    sudo usermod -aG docker $USER
+    newgrp docker
+
     ok "Docker installed. Log out and back in for group changes to take effect."
 }
 
