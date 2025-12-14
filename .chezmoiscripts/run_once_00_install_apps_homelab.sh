@@ -16,23 +16,35 @@ main() {
     install_restic
     install_tailscale
     install_docker
+    install_dev_tools
 
     info "Homelab setup complete."
 }
 
-install_minimal_dev_env() {
-    if eval "command -v gh >/dev/null 2>&1"; then
-        warn "minimal dev setup already done."
-        return 0
+install_dev_tools() {
+    if eval "{ command -v gh && command -v nvim && command -v lazygit && command -v lazydocker; } >/dev/null 2>&1"; then
+        warn "dev tools installed."
+	return 0
     fi
 
-    info "Starting minimal dev setup..."
+    info "Installing dev tools..."
 
-    # Download latest binary
+    VERSION=$(sed 's/\..*//' /etc/debian_version)
     sudo apt update
-    sudo apt install gh lazygit nvim
+    sudo apt install -y gh neovim
 
-    ok "Minimal dev setup is done."
+    if $VERSION gt 12; then
+        sudo apt install -y lazygit
+    else
+        LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+        curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+        tar xf lazygit.tar.gz lazygit
+        sudo install lazygit -D -t /usr/local/bin/
+    fi
+
+    curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
+
+    ok "dev tools are installed."
 }
 
 install_rclone() {
