@@ -1,6 +1,6 @@
 #!/bin/bash
-# setup-media-dirs.sh
-# Creates the directory structure for arr-stack media management
+# setup-media-dirs_homelab.sh
+# Creates the directory structure for arr-stack media management on homelab devices
 
 set -e
 
