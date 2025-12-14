@@ -4,34 +4,30 @@
 
 set -e
 
-MEDIA_ROOT="${HOME}/volumes/media"
+DATA_ROOT="${HOME}/volumes/data"
 
-echo "Creating media directory structure at ${MEDIA_ROOT}..."
-
-# Create main directories
-mkdir -p "${MEDIA_ROOT}/torrents"
-mkdir -p "${MEDIA_ROOT}/data"
+echo "Creating data directory structure at ${DATA_ROOT}..."
 
 # Create subdirectories in torrents
-mkdir -p "${MEDIA_ROOT}/torrents/music"
-mkdir -p "${MEDIA_ROOT}/torrents/movies"
-mkdir -p "${MEDIA_ROOT}/torrents/tv"
-mkdir -p "${MEDIA_ROOT}/torrents/books"
+mkdir -p "${DATA_ROOT}/torrents/music"
+mkdir -p "${DATA_ROOT}/torrents/movies"
+mkdir -p "${DATA_ROOT}/torrents/tv"
+mkdir -p "${DATA_ROOT}/torrents/books"
 
-# Create subdirectories in data
-mkdir -p "${MEDIA_ROOT}/data/music"
-mkdir -p "${MEDIA_ROOT}/data/movies"
-mkdir -p "${MEDIA_ROOT}/data/tv"
-mkdir -p "${MEDIA_ROOT}/data/books"
+# Create subdirectories in media
+mkdir -p "${DATA_ROOT}/media/music"
+mkdir -p "${DATA_ROOT}/media/movies"
+mkdir -p "${DATA_ROOT}/media/tv"
+mkdir -p "${DATA_ROOT}/media/books"
 
 # Set permissions
-chmod -R 755 "${MEDIA_ROOT}"
+chmod -R 755 "${DATA_ROOT}"
 
-echo "✓ Media directory structure created successfully!"
+echo "✓ Data directory structure created successfully!"
 echo ""
 echo "Directory structure:"
-tree -L 3 "${MEDIA_ROOT}" 2>/dev/null || find "${MEDIA_ROOT}" -type d | sed 's|[^/]*/| |g'
+tree -L 3 "${DATA_ROOT}" 2>/dev/null || find "${DATA_ROOT}" -type d | sed 's|[^/]*/| |g'
 echo ""
 echo "Usage:"
 echo "  - torrents/: qBittorrent download location"
-echo "  - data/: Organized media for Plex and *arr apps"
+echo "  - media/: Organized media for Plex and *arr apps"
