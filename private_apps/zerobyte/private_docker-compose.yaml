@@ -1,10 +1,9 @@
 services:
     zerobyte:
-        container_name: zerobyte
         image: ghcr.io/nicotsx/zerobyte:v0.15
-        restart: always
+        container_name: zerobyte
+        restart: unless-stopped
         
-        network_mode: bridge
         ports:
             - 4096:4096
         
@@ -14,7 +13,7 @@ services:
             - /run/docker/plugins:/run/docker/plugins
             - /var/run/docker.sock:/var/run/docker.sock
             - /home/tha/.config/rclone:/root/.config/rclone:ro
-            - /AppData:/AppData
+            - ~/volumes:/volumes
         
         environment:
             TZ: "Europe/Amsterdam"

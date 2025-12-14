@@ -1,8 +1,8 @@
 services:
   bazarr:
-    container_name: bazarr
     image: ghcr.io/hotio/bazarr
-    restart: always
+    container_name: bazarr
+    restart: unless-stopped
 
     networks:
       - arr-stack
@@ -10,8 +10,8 @@ services:
       - "6767:6767"
     
     volumes:
-      - zb-tyEON:/config
-      - zb-3PwGI:/data
+      - ~/volumes/bazarr/config:/config
+      - ~/volumes/bazarr/data:/data
     
     environment:
       - PUID=1000
@@ -19,10 +19,6 @@ services:
       - UMASK=002
       - TZ=Europe/Amsterdam
       - WEBUI_PORTS=6767/tcp,6767/udp
-        
-    depends_on:
-      zerobyte:
-        condition: service_started
 
   bookshelf:
     image: ghcr.io/pennydreadful/bookshelf:hardcover
@@ -35,22 +31,18 @@ services:
       - 8787:8787
 
     volumes:
-      - zb-PRbWv:/config
-      - zb-3PwGI:/data
+      - ~/volumes/bookshelf/config:/config
+      - ~/volumes/bookshelf/data:/data
 
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Amsterdam
 
-    depends_on:
-      zerobyte:
-        condition: service_started
-
   lidarr:
-    container_name: lidarr
     image: ghcr.io/hotio/lidarr
-    restart: always
+    container_name: lidarr
+    restart: unless-stopped
 
     networks:
       - arr-stack
@@ -58,23 +50,19 @@ services:
       - "8686:8686"
     
     volumes:
-      - zb-yu_2y:/config
-      - zb-3PwGI:/data
+      - ~/volumes/lidarr/config:/config
+      - ~/volumes/lidarr/data:/data
     
     environment:
       - PUID=1000
       - PGID=1000
       - UMASK=002
       - TZ=Europe/Amsterdam
-        
-    depends_on:
-      zerobyte:
-        condition: service_started
 
   overseerr:
-    container_name: overseerr
     image: ghcr.io/hotio/overseerr
-    restart: always
+    container_name: overseerr
+    restart: unless-stopped
 
     networks:
       - arr-stack
@@ -82,21 +70,17 @@ services:
       - "5055:5055"
     
     volumes:
-      - zb-kQWx1:/config
+      - ~/volumes/overseerr/config:/config
     
     environment:
       - PUID=1000
       - PGID=1000
       - UMASK=002
       - TZ=Europe/Amsterdam
-        
-    depends_on:
-      zerobyte:
-        condition: service_started
 
   prowlarr:
-    container_name: prowlarr
     image: ghcr.io/hotio/prowlarr
+    container_name: prowlarr
     restart: always
 
     networks:
@@ -105,22 +89,18 @@ services:
       - "9696:9696"
         
     volumes:
-      - zb-u3UTp:/config
+      - ~/volumes/prowlarr/config:/config
         
     environment:
       - PUID=1000
       - PGID=1000
       - UMASK=002
       - TZ=Europe/Amsterdam
-        
-    depends_on:
-      zerobyte:
-        condition: service_started
 
   plex:
-    container_name: plex
     image: ghcr.io/hotio/plex
-    restart: always
+    container_name: plex
+    restart: unless-stopped
 
     networks:
       - arr-stack
@@ -133,24 +113,20 @@ services:
       - UMASK=002
       - TZ=Europe/Amsterdam
       # - PLEX_CLAIM_TOKEN
-      - PLEX_ADVERTISE_URL=plex.lykoi-mark.ts.net
+      # - PLEX_ADVERTISE_URL=plex.lykoi-mark.ts.net
       # - PLEX_NO_AUTH_NETWORKS=
       - PLEX_BETA_INSTALL=false
       - PLEX_PURGE_CODECS=false
     
     volumes:
-      - zb-P1o4k:/config
-      - zb-cxnfU:/transcode
-      - zb-3PwGI:/data
-        
-    depends_on:
-      zerobyte:
-        condition: service_started
+      - ~/volumes/plex/config:/config
+      - ~/volumes/plex/transcode:/transcode
+      - ~/volumes/plex/data:/data
 
   qbittorrent:
-    container_name: qbittorrent
     image: ghcr.io/hotio/qbittorrent
-    restart: always
+    container_name: qbittorrent
+    restart: unless-stopped
 
     networks:
       - arr-stack
@@ -158,8 +134,8 @@ services:
       - "8080:8080"
     
     volumes:
-      - zb-Gv2lz:/config
-      - zb-3PwGI:/data
+      - ~/volumes/qbittorrent/config:/config
+      - ~/volumes/qbittorrent/data:/data
     
     environment:
       - PUID=1000
@@ -168,15 +144,11 @@ services:
       - TZ=Europe/Amsterdam
       - WEBUI_PORTS=8080/tcp,8080/udp
       - LIBTORRENT=v1
-        
-    depends_on:
-      zerobyte:
-        condition: service_started
   
   qui:
-    container_name: qui
     image: ghcr.io/hotio/qui
-    restart: always
+    container_name: qui
+    restart: unless-stopped
 
     networks:
       - arr-stack
@@ -190,16 +162,12 @@ services:
       - TZ=Europe/Amsterdam
     
     volumes:
-      - zb-fv7AD:/config
-        
-    depends_on:
-      zerobyte:
-        condition: service_started
+      - ~/volumes/qui/config:/config
 
   radarr:
-    container_name: radarr
     image: ghcr.io/hotio/radarr
-    restart: always
+    container_name: radarr
+    restart: unless-stopped
 
     networks:
       - arr-stack
@@ -213,17 +181,13 @@ services:
       - TZ=Europe/Amsterdam
     
     volumes:
-      - zb-8Va75:/config
-      - zb-3PwGI:/data
-        
-    depends_on:
-      zerobyte:
-        condition: service_started
+      - ~/volumes/radarr/config:/config
+      - ~/volumes/radarr/data:/data
 
   sonarr:
-    container_name: sonarr
     image: ghcr.io/hotio/sonarr
-    restart: always
+    container_name: sonarr
+    restart: unless-stopped
 
     networks:
       - arr-stack
@@ -237,45 +201,10 @@ services:
       - TZ=Europe/Amsterdam
     
     volumes:
-      - zb-qPSBH:/config
-      - zb-3PwGI:/data
+      - ~/volumes/sonarr/config:/config
+      - ~/volumes/sonarr/data:/data
         
-    depends_on:
-      zerobyte:
-        condition: service_started
-
-volumes:
-  zb-tyEON:
-    external: true
-  zb-yu_2y:
-    external: true
-  zb-kQWx1:
-    external: true
-  zb-u3UTp:
-    external: true
-  zb-Gv2lz:
-    external: true
-  zb-fv7AD:
-    external: true
-  zb-8Va75:
-    external: true
-  zb-qPSBH:
-    external: true
-  zb-3PwGI:
-    external: true
-  zb-P1o4k:
-    external: true
-  zb-cxnfU:
-    external: true
-  zb-PRbWv:
-    external: true
-
 networks:
   arr-stack:
     name: arr-stack
     driver: bridge
-
-
-
-
-
