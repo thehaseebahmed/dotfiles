@@ -11,7 +11,7 @@ services:
 
     volumes:
       - ~/volumes/lidarr/config:/config
-      - ~/volumes/lidarr/data:/data
+      - ~/volumes/media:/media
 
     environment:
       - PUID=1000
