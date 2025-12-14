@@ -149,6 +149,56 @@ docker-volume-copy() {
     fi
 }
 
+docker-volume-to-dir() {
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: docker-volume-to-dir <source-volume> <dest-directory>"
+        echo "Example: docker-volume-to-dir my_data_vol ~/backup/data"
+        return 1
+    fi
+
+    local source_vol="$1"
+    local dest_dir="$2"
+    local temp_container="volume-to-dir-temp-$$"
+
+    echo "Copying data from volume '$source_vol' to directory '$dest_dir'..."
+
+    # Verify source volume exists
+    if ! sudo docker volume inspect "$source_vol" >/dev/null 2>&1; then
+        echo "Error: Source volume '$source_vol' does not exist"
+        return 1
+    fi
+
+    # Create destination directory if it doesn't exist
+    if [ ! -d "$dest_dir" ]; then
+        echo "Creating destination directory '$dest_dir'..."
+        mkdir -p "$dest_dir"
+    fi
+
+    # Get absolute path of destination directory
+    dest_dir=$(cd "$dest_dir" && pwd)
+
+    # Create a temporary container with source volume
+    echo "Creating temporary container..."
+    sudo docker create --name "$temp_container" -v "$source_vol:/src" alpine true
+
+    # Copy data from volume to local directory
+    echo "Copying data..."
+    sudo docker cp "$temp_container:/src/." "$dest_dir/"
+
+    local exit_code=$?
+
+    # Clean up temporary container
+    echo "Cleaning up..."
+    sudo docker rm "$temp_container" >/dev/null 2>&1
+
+    if [ $exit_code -eq 0 ]; then
+        echo "Successfully copied data from '$source_vol' to '$dest_dir'"
+    else
+        echo "Error: Failed to copy data"
+        return 1
+    fi
+}
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
