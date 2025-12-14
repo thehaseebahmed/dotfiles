@@ -1,18 +1,6 @@
-# arr-stack - Media Management Stack
-# This compose file orchestrates all arr-stack services using individual compose files
-# All services share the arr-stack network for inter-service communication
-
-include:
-  - path: bazarr-compose.yaml      # Subtitle management
-  - path: bookshelf-compose.yaml   # Ebook library management
-  - path: lidarr-compose.yaml      # Music collection management
-  - path: overseerr-compose.yaml   # Media request management
-  - path: prowlarr-compose.yaml    # Indexer manager for *arr apps
-  - path: plex-compose.yaml        # Media server
-  - path: qbittorrent-compose.yaml # Torrent client
-  - path: qui-compose.yaml         # qBittorrent UI
-  - path: radarr-compose.yaml      # Movie collection management
-  - path: sonarr-compose.yaml      # TV show collection management
+# arr-stack - Network Definition
+# This file defines the shared arr-stack network for all media management services
+# Individual services are included directly in the main docker-compose.yaml
 
 networks:
   arr-stack:
