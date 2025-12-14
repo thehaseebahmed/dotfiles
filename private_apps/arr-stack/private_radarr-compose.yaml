@@ -18,8 +18,3 @@ services:
     volumes:
       - ~/volumes/radarr/config:/config
       - ~/volumes/radarr/data:/data
-
-networks:
-  arr-stack:
-    name: arr-stack
-    external: true

@@ -18,8 +18,3 @@ services:
     volumes:
       - ~/volumes/sonarr/config:/config
       - ~/volumes/sonarr/data:/data
-
-networks:
-  arr-stack:
-    name: arr-stack
-    external: true

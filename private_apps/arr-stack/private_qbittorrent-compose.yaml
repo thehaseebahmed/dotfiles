@@ -20,8 +20,3 @@ services:
       - TZ=Europe/Amsterdam
       - WEBUI_PORTS=8080/tcp,8080/udp
       - LIBTORRENT=v1
-
-networks:
-  arr-stack:
-    name: arr-stack
-    external: true
