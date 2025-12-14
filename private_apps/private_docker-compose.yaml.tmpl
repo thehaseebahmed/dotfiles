@@ -1,11 +1,8 @@
-# docker-compose.yaml
 include:
   - path: zerobyte/docker-compose.yaml
   - path: arcane/docker-compose.yaml
 {{- if eq .chezmoi.fqdnHostname "homelab-001" }}
-  # arr-stack network definition
-  - path: arr-stack/docker-compose.yaml
-  # arr-stack services (excluding qui, bookshelf, lidarr)
+  - path: arr-stack/network-compose.yaml
   - path: arr-stack/bazarr-compose.yaml
   - path: arr-stack/overseerr-compose.yaml
   - path: arr-stack/prowlarr-compose.yaml
@@ -14,18 +11,12 @@ include:
   - path: arr-stack/radarr-compose.yaml
   - path: arr-stack/sonarr-compose.yaml
 {{- else if eq .chezmoi.fqdnHostname "homelab-002" }}
-  #- path: babybuddy/docker-compose.yaml
-  #- path: code-server/docker-compose.yaml
   - path: coder/docker-compose.yaml
   - path: mssql/docker-compose.yaml
-  #- path: n8n/docker-compose.yaml
-  #- path: trips/docker-compose.yaml
   - path: vaultwarden/docker-compose.yaml
   - path: ziit/docker-compose.yaml
 {{- else if eq .chezmoi.fqdnHostname "homelab-003" }}
-  # arr-stack network definition
-  - path: arr-stack/docker-compose.yaml
-  # arr-stack services (all)
+  - path: arr-stack/network-compose.yaml
   - path: arr-stack/bazarr-compose.yaml
   - path: arr-stack/bookshelf-compose.yaml
   - path: arr-stack/lidarr-compose.yaml

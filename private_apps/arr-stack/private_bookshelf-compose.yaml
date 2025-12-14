@@ -11,7 +11,7 @@ services:
 
     volumes:
       - ~/volumes/bookshelf/config:/config
-      - ~/volumes/media:/media
+      - ~/volumes/data:/data
 
     environment:
       - PUID=1000

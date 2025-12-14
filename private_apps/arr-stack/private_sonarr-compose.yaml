@@ -17,4 +17,4 @@ services:
 
     volumes:
       - ~/volumes/sonarr/config:/config
-      - ~/volumes/media:/media
+      - ~/volumes/data:/data

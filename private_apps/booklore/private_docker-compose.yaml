@@ -13,7 +13,7 @@ services:
     
     volumes:
       - ~/volumes/booklore/data:/app/data
-      - ~/volumes/booklore/books:/books
+      - ~/volumes/data/media/books:/books
       - ~/volumes/booklore/bookdrop:/bookdrop
 
     environment:

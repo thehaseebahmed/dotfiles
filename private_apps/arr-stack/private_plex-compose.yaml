@@ -23,4 +23,4 @@ services:
     volumes:
       - ~/volumes/plex/config:/config
       - ~/volumes/plex/transcode:/transcode
-      - ~/volumes/media/data:/data
+      - ~/volumes/data/media:/data
