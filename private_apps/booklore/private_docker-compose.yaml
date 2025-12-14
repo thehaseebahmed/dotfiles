@@ -12,9 +12,9 @@ services:
         condition: service_healthy
     
     volumes:
-      - zb-oG5aI:/app/data
-      - zb-kWxx5:/books
-      - /home/tha/bookdrop:/bookdrop
+      - ~/volumes/booklore/data:/app/data
+      - ~/volumes/booklore/books:/books
+      - ~/volumes/booklore/bookdrop:/bookdrop
 
     environment:
       - USER_ID=${APP_USER_ID}
@@ -40,11 +40,7 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
     
     volumes:
-      - zb-49iWm:/config
-
-    depends_on:
-      zerobyte:
-        condition: service_started
+      - ~/volumes/booklore-db/config:/config
 
     healthcheck:
       test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost" ]
@@ -52,11 +48,3 @@ services:
       timeout: 5s
       retries: 10
 
-volumes:
-  zb-49iWm:
-    external: true
-  zb-oG5aI:
-    external: true
-  zb-kWxx5:
-    external: true
-  
