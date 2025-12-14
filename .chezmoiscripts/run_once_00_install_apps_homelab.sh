@@ -20,6 +20,21 @@ main() {
     info "Homelab setup complete."
 }
 
+install_minimal_dev_env() {
+    if eval "command -v gh >/dev/null 2>&1"; then
+        warn "minimal dev setup already done."
+        return 0
+    fi
+
+    info "Starting minimal dev setup..."
+
+    # Download latest binary
+    sudo apt update
+    sudo apt install gh lazygit nvim
+
+    ok "Minimal dev setup is done."
+}
+
 install_rclone() {
     if eval "command -v rclone >/dev/null 2>&1"; then
         warn "rclone already installed."
