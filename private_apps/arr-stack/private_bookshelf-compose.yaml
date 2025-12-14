@@ -1,0 +1,24 @@
+services:
+  bookshelf:
+    image: ghcr.io/pennydreadful/bookshelf:hardcover
+    container_name: bookshelf
+    restart: unless-stopped
+
+    networks:
+      - arr-stack
+    ports:
+      - 8787:8787
+
+    volumes:
+      - ~/volumes/bookshelf/config:/config
+      - ~/volumes/bookshelf/data:/data
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+
+networks:
+  arr-stack:
+    name: arr-stack
+    external: true
