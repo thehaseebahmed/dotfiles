@@ -214,9 +214,9 @@ fi
 alias cza='chezmoi apply -v'
 alias czd='chezmoi diff'
 
-alias dcd='sudo docker compose down'
-alias dcr='sudo docker compose down && sudo docker compose up -d'
-alias dcu='sudo docker compose up -d'
+alias dcd='docker compose down'
+alias dcr='docker compose down && sudo docker compose up -d'
+alias dcu='docker compose up -d'
 
 alias tssc='sudo tailscale serve set-config --all'
 alias tsss='sudo tailscale serve status --json'
