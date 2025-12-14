@@ -11,7 +11,7 @@ services:
 
     volumes:
       - ~/volumes/qbittorrent/config:/config
-      - ~/volumes/qbittorrent/data:/data
+      - ~/volumes/media/torrents:/torrents
 
     environment:
       - PUID=1000

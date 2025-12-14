@@ -17,4 +17,4 @@ services:
 
     volumes:
       - ~/volumes/radarr/config:/config
-      - ~/volumes/radarr/data:/data
+      - ~/volumes/media:/media

@@ -11,7 +11,7 @@ services:
 
     volumes:
       - ~/volumes/bazarr/config:/config
-      - ~/volumes/bazarr/data:/data
+      - ~/volumes/media:/media
 
     environment:
       - PUID=1000
