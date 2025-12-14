@@ -17,8 +17,3 @@ services:
 
     volumes:
       - ~/volumes/qui/config:/config
-
-networks:
-  arr-stack:
-    name: arr-stack
-    external: true

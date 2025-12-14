@@ -19,8 +19,3 @@ services:
       - UMASK=002
       - TZ=Europe/Amsterdam
       - WEBUI_PORTS=6767/tcp,6767/udp
-
-networks:
-  arr-stack:
-    name: arr-stack
-    external: true

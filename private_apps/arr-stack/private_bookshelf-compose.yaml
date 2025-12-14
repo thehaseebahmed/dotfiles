@@ -17,8 +17,3 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Amsterdam
-
-networks:
-  arr-stack:
-    name: arr-stack
-    external: true
