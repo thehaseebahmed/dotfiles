@@ -19,6 +19,7 @@ sudo tailscale serve --service="svc:ziit" --https=443 http://127.0.0.1:3000
 {{- else if eq .chezmoi.fqdnHostname "homelab-003" }}
 # Homelab-003 specific services (arr-stack)
 sudo tailscale serve --service="svc:bazarr" --https=443 http://127.0.0.1:6767
+sudo tailscale serve --service="svc:bookshelf" --https=443 http://127.0.0.1:8787
 sudo tailscale serve --service="svc:booklore" --https=443 http://127.0.0.1:6060
 sudo tailscale serve --service="svc:lidarr" --https=443 http://127.0.0.1:8686
 sudo tailscale serve --service="svc:overseerr" --https=443 http://127.0.0.1:5055

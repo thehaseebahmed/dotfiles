@@ -24,6 +24,29 @@ services:
       zerobyte:
         condition: service_started
 
+  bookshelf:
+    image: ghcr.io/pennydreadful/bookshelf:hardcover
+    container_name: bookshelf
+    restart: unless-stopped
+
+    networks:
+      - arr-stack
+    ports:
+      - 8787:8787
+
+    volumes:
+      - zb-PRbWv:/config
+      - zb-3PwGI:/data
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+
+    depends_on:
+      zerobyte:
+        condition: service_started
+
   lidarr:
     container_name: lidarr
     image: ghcr.io/hotio/lidarr
@@ -243,6 +266,8 @@ volumes:
   zb-P1o4k:
     external: true
   zb-cxnfU:
+    external: true
+  zb-PRbWv:
     external: true
 
 networks:
