@@ -2,7 +2,9 @@
 include:
   - path: zerobyte/docker-compose.yaml
   - path: arcane/docker-compose.yaml
-{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
+{{- if eq .chezmoi.fqdnHostname "homelab-001" }}
+  - path: arr-stack/docker-compose.yaml
+{{- else if eq .chezmoi.fqdnHostname "homelab-002" }}
   #- path: babybuddy/docker-compose.yaml
   #- path: code-server/docker-compose.yaml
   - path: coder/docker-compose.yaml
