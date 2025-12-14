@@ -3,7 +3,16 @@ include:
   - path: zerobyte/docker-compose.yaml
   - path: arcane/docker-compose.yaml
 {{- if eq .chezmoi.fqdnHostname "homelab-001" }}
+  # arr-stack network definition
   - path: arr-stack/docker-compose.yaml
+  # arr-stack services (excluding qui, bookshelf, lidarr)
+  - path: arr-stack/bazarr-compose.yaml
+  - path: arr-stack/overseerr-compose.yaml
+  - path: arr-stack/prowlarr-compose.yaml
+  - path: arr-stack/plex-compose.yaml
+  - path: arr-stack/qbittorrent-compose.yaml
+  - path: arr-stack/radarr-compose.yaml
+  - path: arr-stack/sonarr-compose.yaml
 {{- else if eq .chezmoi.fqdnHostname "homelab-002" }}
   #- path: babybuddy/docker-compose.yaml
   #- path: code-server/docker-compose.yaml
@@ -14,6 +23,18 @@ include:
   - path: vaultwarden/docker-compose.yaml
   - path: ziit/docker-compose.yaml
 {{- else if eq .chezmoi.fqdnHostname "homelab-003" }}
+  # arr-stack network definition
   - path: arr-stack/docker-compose.yaml
+  # arr-stack services (all)
+  - path: arr-stack/bazarr-compose.yaml
+  - path: arr-stack/bookshelf-compose.yaml
+  - path: arr-stack/lidarr-compose.yaml
+  - path: arr-stack/overseerr-compose.yaml
+  - path: arr-stack/prowlarr-compose.yaml
+  - path: arr-stack/plex-compose.yaml
+  - path: arr-stack/qbittorrent-compose.yaml
+  - path: arr-stack/qui-compose.yaml
+  - path: arr-stack/radarr-compose.yaml
+  - path: arr-stack/sonarr-compose.yaml
   - path: booklore/docker-compose.yaml
 {{- end }}
