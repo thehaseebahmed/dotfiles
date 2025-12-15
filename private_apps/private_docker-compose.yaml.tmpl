@@ -12,6 +12,9 @@ include:
 {{- else if eq .chezmoi.fqdnHostname "homelab-002" }}
   - path: coder/docker-compose.yaml
   - path: mssql/docker-compose.yaml
+  #- path: n8n/docker-compose.yaml
+  #- path: trips/docker-compose.yaml
+  - path: pocket-id/docker-compose.yml
   - path: vaultwarden/docker-compose.yaml
   - path: ziit/docker-compose.yaml
 {{- else if eq .chezmoi.fqdnHostname "homelab-003" }}
