@@ -1,19 +1,15 @@
 services:
     trips:
-        container_name: trips
         image: ghcr.io/itskovacs/trip:1
-        restart: always
-        network_mode: bridge
+        container_name: trips
+        restart: unless-stopped
+
         ports:
             - 8060:8000
+
         volumes:
-            - zb-zDT8X:/app/storage
+          - ~/volumes/trips:/app/storage
+
         environment:
             TZ: "Europe/Amsterdam"
 
-        depends_on:
-            zerobyte:
-                condition: service_started
-volumes:
-    zb-zDT8X:
-        external: true

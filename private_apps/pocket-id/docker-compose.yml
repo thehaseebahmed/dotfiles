@@ -1,8 +1,8 @@
 services:
   pocket-id:
     image: ghcr.io/pocket-id/pocket-id:v1
+    container_name: pocket-id
     restart: unless-stopped
-    env_file: .env
     
     ports:
       - 1411:1411
@@ -10,7 +10,9 @@ services:
     volumes:
       - /home/tha/volumes/pocket-id/data:/app/data
     
-      # Optional healthcheck
+    env_file: .env
+
+    # Optional healthcheck
     healthcheck:
       test: [ "CMD", "/app/pocket-id", "healthcheck" ]
       interval: 1m30s

@@ -7,9 +7,10 @@ services:
       - "7080:7080"
 
     env_file: .env
+
     environment:
       CODER_HTTP_ADDRESS: "0.0.0.0:7080"
-      CODER_ACCESS_URL: "http://${HOSTNAME}.lykoi-mark.ts.net"
+      CODER_ACCESS_URL: "https://coder.lykoi-mark.ts.net"
     
     group_add:
       - "998" # docker group on host
@@ -29,18 +30,17 @@ services:
     # More versions here: https://hub.docker.com/_/postgres
     image: "postgres:17"
     container_name: "coder-db"
+
     # Uncomment the next two lines to allow connections to the database from outside the server.
     #ports:
     #  - "5432:5432"
+
     env_file: .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-coder} # The PostgreSQL default database (automatically created at first launch)
+
     volumes:
-      - zb-mIe40:/var/lib/postgresql/data # Use "docker volume rm coder_coder_data" to reset Coder
-        
-    depends_on:
-      zerobyte:
-          condition: service_started
+      - ~/volumes/coder-db:/var/lib/postgresql/data # Use "docker volume rm coder_coder_data" to reset Coder
 
     healthcheck:
       test:
@@ -52,6 +52,3 @@ services:
       timeout: 5s
       retries: 5
 
-volumes:
-  zb-mIe40:
-    external: true

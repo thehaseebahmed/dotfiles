@@ -1,30 +1,29 @@
 services:
-  app:
+  ziit:
     image: ghcr.io/0pandadev/ziit:v1.1.1
     container_name: ziit
     restart: unless-stopped
+
     networks:
       - ziit-network
     ports:
       - "3000:3000"
+
     env_file: app.env
     
     depends_on:
-      postgres:
+      ziit-db:
         condition: service_healthy
     
-  postgres:
+  ziit-db:
     image: timescale/timescaledb-ha:pg17
     container_name: ziit-db
     restart: unless-stopped
+
     env_file: postgres.env
     
     volumes:
-      - zb-Rk6VM:/var/lib/postgresql/data
-    
-    depends_on:
-      zerobyte:
-        condition: service_started
+      - ~/volumes/ziit-db:/var/lib/postgresql/data
     
     post_start:
       - command: chown -R 1000:1000 /var/lib/postgresql/data
@@ -42,11 +41,8 @@ services:
       retries: 5
       start_period: 10s
 
-volumes:
-  zb-Rk6VM:
-    external: true
-
 networks:
   ziit-network:
     name: ziit-network
     driver: bridge
+
