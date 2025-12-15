@@ -15,9 +15,9 @@ export NVM_DIR="$HOME/.nvm"
 alias ..="cd .."
 alias ...="cd ../.."
 alias awsume="source awsume"
-alias hl1="ssh homelab-001.lykoi-mark.ts.net"
-alias hl2="ssh homelab-002.lykoi-mark.ts.net"
-alias hl3="ssh homelab-003.lykoi-mark.ts.net"
+alias hl1="ssh tha@homelab-001.lykoi-mark.ts.net"
+alias hl2="ssh tha@homelab-002.lykoi-mark.ts.net"
+alias hl3="ssh tha@homelab-003.lykoi-mark.ts.net"
 
 # Autostart
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -37,11 +37,11 @@ if [ -f "$HOME/.local/bin/env" ]; then
 fi
 
 # Dotnet Version Manager
-{{- if eq .osid "darwin" }}
+{{ if eq .osid "darwin" }}
 if [ -f "$HOME/Library/Application Support/dnvm/env" ]; then
     . "$HOME/Library/Application Support/dnvm/env"
 fi
-{{- else if eq .osid "linux-manjaro" }}
+{{ else if eq .osid "linux-manjaro" }}
 if [ -f "$HOME/.local/share/dnvm/env" ]; then
     . "$HOME/.local/share/dnvm/env"
 fi
