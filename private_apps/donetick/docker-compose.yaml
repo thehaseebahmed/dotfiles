@@ -1,0 +1,19 @@
+services:
+  donetick:
+    image: donetick/donetick
+    container_name: donetick
+    restart: unless-stopped
+    
+    ports:
+      - 2021:2021
+    
+    volumes:
+      - ~/volumes/donetick/data:/donetick-data
+      - ~/volumes/donetick/config:/config
+    
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - DT_ENV=selfhosted
+      - DT_SQLITE_PATH=/donetick-data/donetick.db
+      

@@ -11,6 +11,7 @@ include:
   - path: arr-stack/sonarr-compose.yaml
 {{- else if eq .chezmoi.fqdnHostname "homelab-002" }}
   - path: coder/docker-compose.yaml
+  - path: donetick/docker-compose.yaml
   - path: mssql/docker-compose.yaml
   - path: n8n/docker-compose.yaml
   - path: trips/docker-compose.yaml
