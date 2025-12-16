@@ -10,6 +10,7 @@ include:
   - path: arr-stack/radarr-compose.yaml
   - path: arr-stack/sonarr-compose.yaml
 {{- else if eq .chezmoi.fqdnHostname "homelab-002" }}
+  - path: affine/docker-compose.yml
   - path: coder/docker-compose.yaml
   - path: donetick/docker-compose.yaml
   - path: mssql/docker-compose.yaml
