@@ -1,0 +1,39 @@
+services:
+  linkwarden-db:
+    image: postgres:16-alpine
+    container_name: linkwarden-db
+    restart: unless-stopped
+    
+    env_file: .env
+    
+    volumes:
+      - ~/volumes/linkwarden-db:/var/lib/postgresql/data
+  
+  linkwarden:
+    container_name: linkwarden
+    env_file: .env
+    environment:
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@linkwarden-db:5432/postgres
+    restart: unless-stopped
+    image: ghcr.io/linkwarden/linkwarden:latest
+    
+    ports:
+      - 3002:3000
+    
+    volumes:
+      - ~/volumes/linkwarden/data:/data/data
+    
+    depends_on:
+      - linkwarden-db
+      - meilisearch
+  
+  meilisearch:
+    image: getmeili/meilisearch:v1.12.8
+    container_name: meilisearch
+    restart: unless-stopped
+    
+    env_file:
+      - .env
+    
+    volumes:
+      - ~/volumes/meilisearch/data:/meili_data
