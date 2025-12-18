@@ -1,6 +1,6 @@
 services:
     zerobyte:
-      image: ghcr.io/nicotsx/zerobyte:v0.15
+      image: ghcr.io/nicotsx/zerobyte:v0.19.0
       container_name: zerobyte
       restart: unless-stopped
         
@@ -10,12 +10,12 @@ services:
       volumes:
           - /var/lib/zerobyte:/var/lib/zerobyte:rshared
           - /etc/localtime:/etc/localtime:ro
-          - /run/docker/plugins:/run/docker/plugins
-          - /var/run/docker.sock:/var/run/docker.sock
           - /home/tha/.config/rclone:/root/.config/rclone:ro
           - ~/volumes:/volumes
         
       environment:
+          PUID: 1000
+          PGID: 1000
           TZ: "Europe/Amsterdam"
         
       cap_add:
