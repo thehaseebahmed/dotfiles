@@ -1,6 +1,6 @@
 services:
   qui:
-    image: ghcr.io/hotio/qui
+    image: ghcr.io/hotio/qui:release-1.10.0
     container_name: qui
     restart: unless-stopped
 
