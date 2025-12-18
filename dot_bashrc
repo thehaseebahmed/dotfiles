@@ -199,6 +199,58 @@ docker-volume-to-dir() {
     fi
 }
 
+rclone-webdav-up() {
+    local dir="${1:-/srv/rclone-webdav}"
+    local port="${2:-8080}"
+    local user="${3:-webdav}"
+    local session="rclone-webdav"
+
+    # Check if tmux is installed
+    if ! command -v tmux >/dev/null 2>&1; then
+        echo "Error: tmux is not installed. Please install tmux first."
+        return 1
+    fi
+
+    mkdir -p "$dir"
+
+    # If tmux session exists, ask user what to do
+    if tmux has-session -t "$session" 2>/dev/null; then
+        echo "A tmux session named '$session' already exists."
+        read -p "Do you want to close it and start a new one? (y/N): " answer
+
+        case "$answer" in
+            [Yy]* )
+                echo "Closing existing tmux session..."
+                tmux kill-session -t "$session"
+                ;;
+            * )
+                echo "Keeping existing session. No new server started."
+                return 0
+                ;;
+        esac
+    fi
+
+    # Generate a strong random password
+    local pass
+    pass="$(tr -dc A-Za-z0-9 </dev/urandom | head -c 20)"
+
+    echo "Directory: $dir"
+    echo "Port:      $port"
+    echo "Username:  $user"
+    echo "Password:  $pass"
+    echo "tmux session: $session"
+
+    # Create a fresh tmux session
+    tmux new-session -d -s "$session"
+
+    # Start rclone inside tmux
+    tmux send-keys -t "$session" \
+        "rclone serve webdav '$dir' --addr ':$port' --user '$user' --pass '$pass' --vfs-cache-mode writes" C-m
+
+    echo "rclone WebDAV started inside tmux session '$session'"
+}
+
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
