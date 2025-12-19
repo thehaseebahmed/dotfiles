@@ -1,6 +1,7 @@
 include:
   - path: zerobyte/docker-compose.yaml
   - path: arcane/docker-compose.yaml
+  - path: diun/docker-compose.yaml
 {{- if eq .chezmoi.fqdnHostname "homelab-001" }}
   - path: arr-stack/network-compose.yaml
   - path: arr-stack/bazarr-compose.yaml
