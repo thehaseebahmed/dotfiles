@@ -22,3 +22,5 @@ services:
           cpus: '0.5'
           memory: 512M
 
+    labels:
+      - "diun.enable=true"
