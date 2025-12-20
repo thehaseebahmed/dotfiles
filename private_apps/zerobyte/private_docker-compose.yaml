@@ -1,6 +1,6 @@
 services:
     zerobyte:
-      image: ghcr.io/nicotsx/zerobyte:v0.19.0
+      image: ghcr.io/nicotsx/zerobyte:latest
       container_name: zerobyte
       restart: unless-stopped
         
@@ -24,8 +24,12 @@ services:
       devices:
           - /dev/fuse:/dev/fuse
         
+
       deploy:
-          resources:
-            limits:
-              cpus: '0.50'
-              memory: 1024M
+        resources:
+          limits:
+            cpus: '0.5'
+            memory: 512M
+
+      labels:
+        - "diun.enable=true"
