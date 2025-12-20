@@ -16,4 +16,12 @@ services:
       - PGID=1000
       - DT_ENV=selfhosted
       - DT_SQLITE_PATH=/donetick-data/donetick.db
-      
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+    labels:
+      - "diun.enable=true"      
