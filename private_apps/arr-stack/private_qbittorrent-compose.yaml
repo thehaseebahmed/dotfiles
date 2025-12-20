@@ -1,0 +1,23 @@
+services:
+  qbittorrent:
+    image: ghcr.io/hotio/qbittorrent
+    container_name: qbittorrent
+    restart: unless-stopped
+
+    networks:
+      - arr-stack
+    ports:
+      - "8080:8080"
+
+    volumes:
+      - ~/volumes/qbittorrent/config:/config
+      - ~/volumes/data/torrents:/torrents
+      - ~/volumes/data:/data
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Amsterdam
+      - WEBUI_PORTS=8080/tcp,8080/udp
+      - LIBTORRENT=v1

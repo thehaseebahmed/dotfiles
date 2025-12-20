@@ -1,0 +1,19 @@
+services:
+  qui:
+    image: ghcr.io/hotio/qui:release-1.10.0
+    container_name: qui
+    restart: unless-stopped
+
+    networks:
+      - arr-stack
+    ports:
+      - "7476:7476"
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Amsterdam
+
+    volumes:
+      - ~/volumes/qui/config:/config

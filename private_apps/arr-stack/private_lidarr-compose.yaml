@@ -1,0 +1,20 @@
+services:
+  lidarr:
+    image: ghcr.io/hotio/lidarr
+    container_name: lidarr
+    restart: unless-stopped
+
+    networks:
+      - arr-stack
+    ports:
+      - "8686:8686"
+
+    volumes:
+      - ~/volumes/lidarr/config:/config
+      - ~/volumes/data:/data
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Amsterdam

@@ -2,14 +2,13 @@ services:
     vaultwarden:
         image: vaultwarden/server:latest
         container_name: vaultwarden
-        restart: always
+        restart: unless-stopped
         
-        network_mode: bridge
         ports:
             - 9080:80
         
         volumes:
-            - zb-kocSY:/data
+            - ~/volumes/vaultwarden/data:/data
             
         env_file: .env
         
@@ -18,7 +17,4 @@ services:
                 limits:
                     cpus: '0.50'
                     memory: 1024M
-            
-volumes:
-    zb-kocSY:
-        external: true
+

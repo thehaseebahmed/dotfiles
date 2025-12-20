@@ -1,0 +1,8 @@
+# arr-stack - Network Definition
+# This file defines the shared arr-stack network for all media management services
+# Individual services are included directly in the main docker-compose.yaml
+
+networks:
+  arr-stack:
+    name: arr-stack
+    driver: bridge

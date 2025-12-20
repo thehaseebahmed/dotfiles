@@ -1,0 +1,26 @@
+services:
+  plex:
+    image: ghcr.io/hotio/plex
+    container_name: plex
+    restart: unless-stopped
+
+    networks:
+      - arr-stack
+    ports:
+      - "32400:32400"
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Amsterdam
+      # - PLEX_CLAIM_TOKEN
+      # - PLEX_ADVERTISE_URL=plex.lykoi-mark.ts.net
+      # - PLEX_NO_AUTH_NETWORKS=
+      - PLEX_BETA_INSTALL=false
+      - PLEX_PURGE_CODECS=false
+
+    volumes:
+      - ~/volumes/plex/config:/config
+      - ~/volumes/plex/transcode:/transcode
+      - ~/volumes/data/media:/data

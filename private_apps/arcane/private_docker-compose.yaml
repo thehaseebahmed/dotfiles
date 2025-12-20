@@ -8,23 +8,19 @@ services:
     restart: unless-stopped
     
     ports:
-      - 80:3552
+      - 3552:3552
     
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - arcane-data:/app/data
-      - ~/apps:/data/projects
-    
-    env_file: .env
-    environment:
-      - APP_URL="http://$HOSTNAME.lykoi-mark.ts.net"
-      - PUID=1000
-      - PGID=1000
-      - LOG_LEVEL=info
-      - LOG_JSON=false
-      - OIDC_ENABLED=false
-      - DATABASE_URL=file:data/arcane.db?_pragma=journal_mode(WAL)&_pragma=busy_timeout(2500)&_txlock=immediate
+      - ~/volumes/arcane:/app/data
 
-volumes:
-  arcane-data:
-    driver: local
+    env_file: .env
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+    labels:
+      - "diun.enable=true"

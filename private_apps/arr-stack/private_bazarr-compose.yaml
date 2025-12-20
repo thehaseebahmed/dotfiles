@@ -1,0 +1,21 @@
+services:
+  bazarr:
+    image: ghcr.io/hotio/bazarr
+    container_name: bazarr
+    restart: unless-stopped
+
+    networks:
+      - arr-stack
+    ports:
+      - "6767:6767"
+
+    volumes:
+      - ~/volumes/bazarr/config:/config
+      - ~/volumes/data:/data
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Amsterdam
+      - WEBUI_PORTS=6767/tcp,6767/udp

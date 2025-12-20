@@ -1,17 +1,17 @@
 services:
     n8n:
-        container_name: n8n
         image: n8nio/n8n:latest
-        restart: always
-        network_mode: bridge
+        container_name: n8n
+        
+        restart: unless-stopped
+
         ports:
             - 5678:5678
+
         volumes:
-            - n8n_data:/home/node/.n8n
+            - ~/volumes/n8n:/home/node/.n8n
+        
         environment:
             GENERIC_TIMEZONE: "UTC"
             TZ: "Europe/Amsterdam"
-volumes:
-    n8n_data:
-        name: n8n_data
-        external: true
+

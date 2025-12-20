@@ -149,6 +149,108 @@ docker-volume-copy() {
     fi
 }
 
+docker-volume-to-dir() {
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: docker-volume-to-dir <source-volume> <dest-directory>"
+        echo "Example: docker-volume-to-dir my_data_vol ~/backup/data"
+        return 1
+    fi
+
+    local source_vol="$1"
+    local dest_dir="$2"
+    local temp_container="volume-to-dir-temp-$$"
+
+    echo "Copying data from volume '$source_vol' to directory '$dest_dir'..."
+
+    # Verify source volume exists
+    if ! sudo docker volume inspect "$source_vol" >/dev/null 2>&1; then
+        echo "Error: Source volume '$source_vol' does not exist"
+        return 1
+    fi
+
+    # Create destination directory if it doesn't exist
+    if [ ! -d "$dest_dir" ]; then
+        echo "Creating destination directory '$dest_dir'..."
+        mkdir -p "$dest_dir"
+    fi
+
+    # Get absolute path of destination directory
+    dest_dir=$(cd "$dest_dir" && pwd)
+
+    # Create a temporary container with source volume
+    echo "Creating temporary container..."
+    sudo docker create --name "$temp_container" -v "$source_vol:/src" alpine true
+
+    # Copy data from volume to local directory
+    echo "Copying data..."
+    sudo docker cp "$temp_container:/src/." "$dest_dir/"
+
+    local exit_code=$?
+
+    # Clean up temporary container
+    echo "Cleaning up..."
+    sudo docker rm "$temp_container" >/dev/null 2>&1
+
+    if [ $exit_code -eq 0 ]; then
+        echo "Successfully copied data from '$source_vol' to '$dest_dir'"
+    else
+        echo "Error: Failed to copy data"
+        return 1
+    fi
+}
+
+rclone-webdav-up() {
+    local dir="${1:-/srv/rclone-webdav}"
+    local port="${2:-8080}"
+    local user="${3:-webdav}"
+    local session="rclone-webdav"
+
+    # Check if tmux is installed
+    if ! command -v tmux >/dev/null 2>&1; then
+        echo "Error: tmux is not installed. Please install tmux first."
+        return 1
+    fi
+
+    mkdir -p "$dir"
+
+    # If tmux session exists, ask user what to do
+    if tmux has-session -t "$session" 2>/dev/null; then
+        echo "A tmux session named '$session' already exists."
+        read -p "Do you want to close it and start a new one? (y/N): " answer
+
+        case "$answer" in
+            [Yy]* )
+                echo "Closing existing tmux session..."
+                tmux kill-session -t "$session"
+                ;;
+            * )
+                echo "Keeping existing session. No new server started."
+                return 0
+                ;;
+        esac
+    fi
+
+    # Generate a strong random password
+    local pass
+    pass="$(tr -dc A-Za-z0-9 </dev/urandom | head -c 20)"
+
+    echo "Directory: $dir"
+    echo "Port:      $port"
+    echo "Username:  $user"
+    echo "Password:  $pass"
+    echo "tmux session: $session"
+
+    # Create a fresh tmux session
+    tmux new-session -d -s "$session"
+
+    # Start rclone inside tmux
+    tmux send-keys -t "$session" \
+        "rclone serve webdav '$dir' --addr ':$port' --user '$user' --pass '$pass' --vfs-cache-mode writes" C-m
+
+    echo "rclone WebDAV started inside tmux session '$session'"
+}
+
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -159,3 +261,17 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# Custom aliases
+alias cza='chezmoi apply -v'
+alias czd='chezmoi diff'
+
+alias dcd='docker compose down'
+alias dcr='docker compose down && sudo docker compose up -d'
+alias dcu='docker compose up -d'
+
+alias stn='sudo systemctl start stress-weekly.service'
+alias stt='systemctl list-timers stress-weekly.timer'
+
+alias tssc='sudo tailscale serve set-config --all'
+alias tsss='sudo tailscale serve status --json'
