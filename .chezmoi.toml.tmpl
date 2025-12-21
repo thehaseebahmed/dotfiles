@@ -3,6 +3,13 @@
 {{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- end -}}
 
+{{- $tsn := "lykoi-mark.ts.net" -}}
+{{- $tsnUrl := printf "http://%s.%s" .chezmoi.hostname $tsn -}}
+{{- $publicUrl := $tsnUrl -}}
+{{- if eq .chezmoi.hostname "homelab-002" -}}
+{{-   $publicUrl = printf "https://homelab.%s" $tsn -}}
+{{- end -}}
+
 encryption = "age"
 [age]
     command = "rage"
@@ -11,6 +18,9 @@ encryption = "age"
 
 [data]
     osid = {{ $osid | quote }}
+    publicUrl = {{ $publicUrl | quote }}
+    tsn = {{ $tsn | quote }}
+    tsnUrl = {{ $tsnUrl | quote }}
 
 [hooks.read-source-state.pre]
     {{- if eq $osid "windows" }}
