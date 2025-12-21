@@ -21,7 +21,7 @@ services:
       - DIUN_WATCH_JITTER=30s
       - DIUN_PROVIDERS_DOCKER=true
 
-{{ if eq .hostname "homelab-002" }}
+{{ if eq .chezmoi.hostname "homelab-002" }}
     labels:
       - "diun.enable=true"
 {{ end }}

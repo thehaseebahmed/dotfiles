@@ -5,6 +5,7 @@ setup-git-hooks.sh
 .bashrc
 .chezmoiscripts/*_homelab.*
 .ssh/authorized_keys
+apps
 
 # Linux
 {{- if ne .osid "linux-manjaro" }}
@@ -40,6 +41,9 @@ AppData/
 !.gitconfig
 !.ssh
 !.ssh/authorized_keys
+!apps
+!apps/**
+!apps/**/*.*
 
 # Allowed scripts for homelab
 !.chezmoiscripts/*_homelab.*
