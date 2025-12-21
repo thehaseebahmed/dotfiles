@@ -22,8 +22,7 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
-
-{{- if eq .chezmoi.hostname "homelab-002" }}
+{{ if eq .chezmoi.hostname "homelab-002" }}
     labels:
       - "diun.enable=true"
 {{ end }}
