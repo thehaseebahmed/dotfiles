@@ -31,5 +31,7 @@ services:
             cpus: '0.5'
             memory: 512M
 
+{{ if eq .hostname "homelab-002" }}
       labels:
         - "diun.enable=true"
+{{ end }}
