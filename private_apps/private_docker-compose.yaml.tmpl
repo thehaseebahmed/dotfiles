@@ -5,6 +5,8 @@ include:
 {{- if eq .chezmoi.fqdnHostname "homelab-001" }}
   - path: arr-stack/network-compose.yaml
   - path: arr-stack/bazarr-compose.yaml
+  - path: arr-stack/bookshelf-compose.yaml
+  - path: arr-stack/overseerr-compose.yaml
   - path: arr-stack/prowlarr-compose.yaml
   - path: arr-stack/plex-compose.yaml
   - path: arr-stack/qbittorrent-compose.yaml
@@ -12,7 +14,6 @@ include:
   - path: arr-stack/sonarr-compose.yaml
 {{- else if eq .chezmoi.fqdnHostname "homelab-002" }}
   - path: affine/docker-compose.yml
-  - path: arr-stack/qui-compose.yaml
   - path: booklore/docker-compose.yaml
   - path: coder/docker-compose.yaml
   - path: donetick/docker-compose.yaml
@@ -26,7 +27,6 @@ include:
   - path: arr-stack/network-compose.yaml
   - path: arr-stack/bazarr-compose.yaml
   - path: arr-stack/bookshelf-compose.yaml
-  - path: arr-stack/lidarr-compose.yaml
   - path: arr-stack/overseerr-compose.yaml
   - path: arr-stack/prowlarr-compose.yaml
   - path: arr-stack/plex-compose.yaml
