@@ -1,4 +1,5 @@
 include:
+  - path: tsdproxy/docker-compose.yaml
   - path: zerobyte/docker-compose.yaml
   - path: arcane/docker-compose.yaml
   - path: diun/docker-compose.yaml
@@ -12,6 +13,7 @@ include:
   - path: arr-stack/sonarr-compose.yaml
 {{- else if eq .chezmoi.fqdnHostname "homelab-002" }}
   - path: affine/docker-compose.yml
+  - path: booklore/docker-compose.yaml
   - path: coder/docker-compose.yaml
   - path: donetick/docker-compose.yaml
   - path: linkwarden/docker-compose.yml
@@ -32,5 +34,4 @@ include:
   - path: arr-stack/qui-compose.yaml
   - path: arr-stack/radarr-compose.yaml
   - path: arr-stack/sonarr-compose.yaml
-  - path: booklore/docker-compose.yaml
 {{- end }}

@@ -13,6 +13,7 @@ sudo tailscale serve --service="svc:homelab" --https=443 http://127.0.0.1:3552
 # Homelab-002 specific services
 sudo tailscale serve --service="svc:affine" --https=443 http://127.0.0.1:3010
 sudo tailscale serve --service="svc:coder" --https=443 http://127.0.0.1:7080
+sudo tailscale serve --service="svc:booklore" --https=443 http://127.0.0.1:6060
 sudo tailscale serve --service="svc:donetick" --https=443 http://127.0.0.1:2021
 sudo tailscale serve --service="svc:linkwarden" --https=443 http://127.0.0.1:3002
 sudo tailscale serve --service="svc:mssql" --https=443 http://127.0.0.1:1433
@@ -24,7 +25,6 @@ sudo tailscale serve --service="svc:ziit" --https=443 http://127.0.0.1:3000
 # Homelab-003 specific services (arr-stack)
 sudo tailscale serve --service="svc:bazarr" --https=443 http://127.0.0.1:6767
 sudo tailscale serve --service="svc:bookshelf" --https=443 http://127.0.0.1:8787
-sudo tailscale serve --service="svc:booklore" --https=443 http://127.0.0.1:6060
 sudo tailscale serve --service="svc:lidarr" --https=443 http://127.0.0.1:8686
 sudo tailscale serve --service="svc:overseerr" --https=443 http://127.0.0.1:5055
 sudo tailscale serve --service="svc:prowlarr" --https=443 http://127.0.0.1:9696
