@@ -5,6 +5,8 @@
 # Zerobyte service (dynamic naming based on homelab number)
 {{- $homelabNumber := trimPrefix "homelab-" .chezmoi.hostname }}
 sudo tailscale serve --service="svc:resilio-{{ $homelabNumber }}" --https=443 http://127.0.0.1:8888
+sudo tailscale serve --service="svc:resilio-{{ $homelabNumber }}" --http=55555 http://127.0.0.1:55555
+sudo tailscale serve --service="svc:resilio-{{ $homelabNumber }}" --https=55555 http://127.0.0.1:55555
 sudo tailscale serve --service="svc:syncthing-{{ $homelabNumber }}" --https=443 http://127.0.0.1:8384
 sudo tailscale serve --service="svc:zerobyte-{{ $homelabNumber }}" --https=443 http://127.0.0.1:4096
 
