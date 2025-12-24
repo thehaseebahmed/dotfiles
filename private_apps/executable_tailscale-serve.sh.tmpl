@@ -5,40 +5,28 @@
 # Zerobyte service (dynamic naming based on homelab number)
 {{- $homelabNumber := trimPrefix "homelab-" .chezmoi.hostname }}
 sudo tailscale serve --service="svc:resilio-{{ $homelabNumber }}" --https=443 http://127.0.0.1:8888
-sudo tailscale serve --service="svc:resilio-{{ $homelabNumber }}" --http=55555 http://127.0.0.1:55555
-sudo tailscale serve --service="svc:resilio-{{ $homelabNumber }}" --https=55555 http://127.0.0.1:55555
-sudo tailscale serve --service="svc:syncthing-{{ $homelabNumber }}" --https=443 http://127.0.0.1:8384
 sudo tailscale serve --service="svc:zerobyte-{{ $homelabNumber }}" --https=443 http://127.0.0.1:4096
-
 {{- if eq .chezmoi.fqdnHostname "homelab-002" }}
-# Arcane service (only on homelab-002)
-sudo tailscale serve --service="svc:homelab" --https=443 http://127.0.0.1:3552
-
-# Homelab-002 specific services
 sudo tailscale serve --service="svc:affine" --https=443 http://127.0.0.1:3010
 sudo tailscale serve --service="svc:coder" --https=443 http://127.0.0.1:7080
 sudo tailscale serve --service="svc:booklore" --https=443 http://127.0.0.1:6060
 sudo tailscale serve --service="svc:donetick" --https=443 http://127.0.0.1:2021
-sudo tailscale serve --service="svc:jellyfin" --https=443 http://127.0.0.1:8096
+sudo tailscale serve --service="svc:homelab" --https=443 http://127.0.0.1:3552
 sudo tailscale serve --service="svc:linkwarden" --https=443 http://127.0.0.1:3002
 sudo tailscale serve --service="svc:mssql" --https=443 http://127.0.0.1:1433
 sudo tailscale serve --service="svc:pocket-id" --https=443 http://127.0.0.1:1411
 sudo tailscale serve --service="svc:vaultwarden" --https=443 http://127.0.0.1:9080
 sudo tailscale serve --service="svc:ziit" --https=443 http://127.0.0.1:3000
-
 {{- else if eq .chezmoi.fqdnHostname "homelab-003" }}
-# Homelab-003 specific services (arr-stack)
 sudo tailscale serve --service="svc:bazarr" --https=443 http://127.0.0.1:6767
 sudo tailscale serve --service="svc:bookshelf" --https=443 http://127.0.0.1:8787
 sudo tailscale serve --service="svc:lidarr" --https=443 http://127.0.0.1:8686
 sudo tailscale serve --service="svc:overseerr" --https=443 http://127.0.0.1:5055
 sudo tailscale serve --service="svc:prowlarr" --https=443 http://127.0.0.1:9696
-sudo tailscale serve --service="svc:plex" --https=443 http://127.0.0.1:32400
 sudo tailscale serve --service="svc:qbittorrent" --https=443 http://127.0.0.1:8080
 sudo tailscale serve --service="svc:qui" --https=443 http://127.0.0.1:7476
 sudo tailscale serve --service="svc:radarr" --https=443 http://127.0.0.1:7878
 sudo tailscale serve --service="svc:sonarr" --https=443 http://127.0.0.1:8989
-
 {{- end }}
 
 echo "Tailscale serve configuration completed successfully!"
