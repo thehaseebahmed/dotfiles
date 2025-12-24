@@ -23,11 +23,11 @@ mkdir -p "${DATA_ROOT}/media/books"
 # Set permissions
 chmod -R 755 "${DATA_ROOT}"
 
-echo "✓ Data directory structure created successfully!"
+echo "[OK] Data directory structure created successfully!"
 echo ""
 echo "Directory structure:"
 tree -L 3 "${DATA_ROOT}" 2>/dev/null || find "${DATA_ROOT}" -type d | sed 's|[^/]*/| |g'
 echo ""
 echo "Usage:"
-echo "  - torrents/: qBittorrent download location"
-echo "  - media/: Organized media for Plex and *arr apps"
+echo "  - torrents/: download location"
+echo "  - media/: organized media for media server apps"

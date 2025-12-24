@@ -46,5 +46,5 @@ AppData/
 !apps/**/*.*
 
 # Allowed scripts for homelab
-!.chezmoiscripts/*_homelab.*
+!.chezmoiscripts/*_homelab_*
 {{ end -}}
