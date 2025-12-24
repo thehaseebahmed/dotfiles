@@ -3,7 +3,7 @@ setup-git-hooks.sh
 
 # Configs for Homelab machines, so ignored on all others
 .bashrc
-.chezmoiscripts/*_homelab_*
+.chezmoiscripts/homelab_*
 .ssh/authorized_keys
 apps
 
@@ -46,5 +46,5 @@ AppData/
 !apps/**/*.*
 
 # Allowed scripts for homelab
-!.chezmoiscripts/*_homelab_*
+!.chezmoiscripts/homelab_*
 {{ end -}}
