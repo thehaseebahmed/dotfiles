@@ -1,0 +1,16 @@
+services:
+  stirling-pdf:
+    image: stirlingtools/stirling-pdf:latest
+    container_name: stirling-pdf
+    
+    ports:
+      - '8080:8080'
+    
+    volumes:
+      - ~/volumes/stirling-pdf/configs:/configs
+    
+    environment:
+      - PUID=1000
+      - PGID=1000
+    
+    restart: unless-stopped
