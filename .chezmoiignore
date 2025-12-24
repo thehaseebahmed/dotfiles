@@ -3,7 +3,7 @@ setup-git-hooks.sh
 
 # Configs for Homelab machines, so ignored on all others
 .bashrc
-.chezmoiscripts/*_homelab.*
+.chezmoiscripts/*_homelab_*
 .ssh/authorized_keys
 apps
 
