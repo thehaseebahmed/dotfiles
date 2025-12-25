@@ -1,0 +1,17 @@
+services:
+    profilarr:
+        image: santiagosayshey/profilarr:latest
+        container_name: profilarr
+
+        ports:
+            - 6868:6868
+
+        volumes:
+            - /path/to/your/data:/config
+
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Europe/Amsterdam
+
+        restart: unless-stopped
