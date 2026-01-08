@@ -1,0 +1,20 @@
+alias ..="cd .."
+alias ...="cd ../.."
+alias awsume="source awsume"
+
+alias cza='chezmoi apply -v'
+alias czd='chezmoi diff'
+
+alias dcd='docker compose down'
+alias dcr='docker compose down && sudo docker compose up -d'
+alias dcu='docker compose up -d'
+
+alias hl1="ssh tha@homelab-001.lykoi-mark.ts.net"
+alias hl2="ssh tha@homelab-002.lykoi-mark.ts.net"
+alias hl3="ssh tha@homelab-003.lykoi-mark.ts.net"
+
+alias stn='sudo systemctl start stress-weekly.service'
+alias stt='systemctl list-timers stress-weekly.timer'
+
+alias tssc='sudo tailscale serve set-config --all'
+alias tsss='sudo tailscale serve status --json'
