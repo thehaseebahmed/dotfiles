@@ -1,5 +1,5 @@
 # Environment variables
-{{ if eq .chezmoi.fqdnHostname "Mac.lan" }}
+{{ if eq .chezmoi.fqdnHostname "haseebs-macbook.lan" }}
 export CURL_CA_BUNDLE="/Users/Shared/zscaler-cert.pem"
 export NODE_EXTRA_CA_CERTS="/Users/Shared/zscaler-cert.pem"
 export REQUESTS_CA_BUNDLE="/Users/Shared/python_cacert+zscaler.pem"
@@ -12,12 +12,11 @@ export EDITOR="codium --wait"
 export NVM_DIR="$HOME/.nvm"
 
 # Aliases
-alias ..="cd .."
-alias ...="cd ../.."
-alias awsume="source awsume"
-alias hl1="ssh tha@homelab-001.lykoi-mark.ts.net"
-alias hl2="ssh tha@homelab-002.lykoi-mark.ts.net"
-alias hl3="ssh tha@homelab-003.lykoi-mark.ts.net"
+if [ -f ~/.sh-aliases ]; then
+    source ~/.sh-aliases
+else
+    echo "[WARN] bash aliases could not be loaded"
+fi
 
 # Autostart
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -40,10 +39,14 @@ fi
 {{ if eq .osid "darwin" }}
 if [ -f "$HOME/Library/Application Support/dnvm/env" ]; then
     . "$HOME/Library/Application Support/dnvm/env"
+else
+    echo "[WARN] dnvm could not be loaded"
 fi
 {{ else if eq .osid "linux-manjaro" }}
 if [ -f "$HOME/.local/share/dnvm/env" ]; then
     . "$HOME/.local/share/dnvm/env"
+else
+    echo "[WARN] dnvm could not be loaded"
 fi
 {{ end -}}
 
@@ -57,10 +60,17 @@ if eval "command -v chromium >/dev/null 2>&1"; then
     export CHROME_BIN=$(which chromium)
 fi
 
-#Bitwarden SSH Agent
+# Bitwarden SSH Agent
+{{- if eq .chezmoi.fqdnHostname "haseebs-macbook.lan" }}
+BITWARDEN_SSH_AGENT="/Users/$USER/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock"
+{{- else }}
 BITWARDEN_SSH_AGENT="$HOME/.bitwarden-ssh-agent.sock"
+{{- end }}
+
 if [ -S "$BITWARDEN_SSH_AGENT" ]; then
     export SSH_AUTH_SOCK="$BITWARDEN_SSH_AGENT"
+else
+    echo "[WARN] bitwarden ssh agent could not be loaded"
 fi
 
 BITWARDEN_FLATPAK_SSH_AGENT="$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock"

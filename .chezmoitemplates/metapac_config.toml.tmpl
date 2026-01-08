@@ -42,14 +42,14 @@ hostname_groups_enabled = false
 # Default: None
 # [hostname_enabled_backends]
 # Haseebs-Manjaro-SL3 = ["arch", "cargo", "npm", "vscode"]
-# "Mac.lan" = ["brew", "cargo", "npm", "vscode"]
+# "haseebs-macbook.lan" = ["brew", "cargo", "npm", "vscode"]
 
 # Which group files will be used per hostname. Subject to `hostname_groups_enabled`.
 # Relative paths are relative to the groups folder.
 # Default: None
 # [hostname_groups]
 # Haseebs-Manjaro-SL3 = ["default", "personal"]
-# "Mac.lan" = ["default", "work"]
+# "haseebs-macbook.lan" = ["default", "work"]
 
 [arch]
 # Since pacman, pamac, paru, pikaur and yay all operate on the same package database
@@ -86,7 +86,7 @@ locked = false
 # metapac to use.
 # Must be one of: ["code", "codium"]
 # Default: "code"
-{{ if eq .chezmoi.fqdnHostname "Mac.lan" }}
+{{ if eq .chezmoi.fqdnHostname "haseebs-macbook.lan" }}
 variant = "code"
 {{ else }}
 variant = "codium"

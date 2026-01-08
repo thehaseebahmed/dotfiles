@@ -28,13 +28,14 @@ arch = [
 ]
 
 brew = [
-    "1password",
+    "anytype",
     "bat",
-    "bitwarden",
     "espanso",
     "font-zed-mono-nerd-font",
     "git",
+    "figma",
     "lazygit",
+    "neovim",
     "nvm",
     "orbstack",
     "podman-desktop",
@@ -71,10 +72,10 @@ vscode = [
     "tamasfe.even-better-toml",
     "pandadev.ziit",
     "yoavbls.pretty-ts-errors",
-    {{ if ne .chezmoi.fqdnHostname "Mac.lan" }}
+    {{ if ne .chezmoi.fqdnHostname "haseebs-macbook.lan" }}
     "anthropic.claude-code",
     {{ end -}}
-    {{ if eq .chezmoi.fqdnHostname "Mac.lan" }}
+    {{ if eq .chezmoi.fqdnHostname "haseebs-macbook.lan" }}
     "ms-mssql.sql-database-projects-vscode",
     "ms-windows-ai-studio.windows-ai-studio"
     {{ end -}}

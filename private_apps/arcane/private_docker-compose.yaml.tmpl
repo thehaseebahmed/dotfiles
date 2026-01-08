@@ -1,6 +1,5 @@
 # Arcane Docker Compose Configuration
 # Generated at 12/11/2025, 9:04:54 PM
-# abc
 
 services:
   arcane:
@@ -22,7 +21,3 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
-{{ if eq .chezmoi.hostname "homelab-002" }}
-    labels:
-      - "diun.enable=true"
-{{ end }}
