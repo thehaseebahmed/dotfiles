@@ -27,7 +27,7 @@ main() {
     install_espanso
     {{ end -}}
 
-    {{ if ne .chezmoi.fqdnHostname "Mac.lan" -}}
+    {{ if ne .chezmoi.fqdnHostname "haseebs-macbook.lan" -}}
     install_tsui
     {{ end -}}
 }
