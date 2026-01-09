@@ -24,6 +24,7 @@ Library/
 # Windows
 {{- if ne .osid "windows" }}
 AppData/
+OneDrive/
 **/*.ps1
 {{ end -}}
 
