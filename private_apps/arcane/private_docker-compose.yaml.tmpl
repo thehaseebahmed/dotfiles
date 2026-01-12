@@ -13,6 +13,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ~/volumes/arcane:/app/data
+      - ~/apps:/app/data/projects:ro
 
     env_file: .env
 
