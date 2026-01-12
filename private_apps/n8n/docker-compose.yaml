@@ -1,17 +1,20 @@
 services:
     n8n:
-        image: n8nio/n8n:latest
-        container_name: n8n
+      build: .
+      container_name: n8n
         
-        restart: unless-stopped
+      restart: unless-stopped
 
-        ports:
-            - 5678:5678
+      ports:
+        - 5678:5678
 
-        volumes:
-            - ~/volumes/n8n:/home/node/.n8n
-        
-        environment:
-            GENERIC_TIMEZONE: "UTC"
-            TZ: "Europe/Amsterdam"
+      volumes:
+        - ~/volumes/n8n:/home/node/.n8n
+        - ~/volumes/booklore/read_later:/home/node/.n8n-files/read_later:rw
+
+      environment:
+        PUID: 1000
+        GUID: 1000
+        GENERIC_TIMEZONE: "Europe/Amsterdam"
+        NODE_FUNCTION_ALLOW_EXTERNAL: "@mozilla/readability,linkedom,turndown"
 
