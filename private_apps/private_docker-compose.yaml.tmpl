@@ -1,6 +1,7 @@
 include:
   - path: arcane/docker-compose.yaml
   - path: resilio-sync/docker-compose.yaml
+  - path: vector/docker-compose.yaml
   - path: zerobyte/docker-compose.yaml
 {{- if eq .chezmoi.fqdnHostname "homelab-001" }}
   - path: arr-stack/network-compose.yaml

@@ -1,0 +1,18 @@
+services:
+  vector:
+    image: timberio/vector:latest-debian
+    container_name: vector-logs
+    restart: unless-stopped
+
+    volumes:
+      - ./vector.docker-to-sentry.yaml:/etc/vector/vector.yaml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    env_file: .env
+
+    # Optional: constrain CPU/mem to be nice to your homelab
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M

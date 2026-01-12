@@ -1,0 +1,132 @@
+sources:
+  docker_logs:
+    type: docker_logs
+    exclude_containers:
+      - any-sync-dockercompose-any-sync-coordinator-1
+      - any-sync-dockercompose-any-sync-filenode-1
+      - any-sync-dockercompose-any-sync-node-1-1
+      - resilio-sync
+
+transforms:
+  parse_severity:
+    type: remap
+    inputs:
+      - docker_logs
+    source: |
+      # Ensure message is a string, then strip ANSI color codes
+      .message = to_string(.message) ?? ""
+      .message = strip_ansi_escape_codes(.message)
+
+      # Default to INFO
+      .detected_severity = "INFO"
+
+      # Pattern 1: Bracketed format [ERROR], [WARN], [INFO]
+      if match(.message, r'(?i)\[(ERROR|ERR|FATAL|PANIC)\]') {
+        .detected_severity = "ERROR"
+      } else if match(.message, r'(?i)\[(WARN|WARNING|WRN)\]') {
+        .detected_severity = "WARN"
+      } else if match(.message, r'(?i)\[(INFO|INF)\]') {
+        .detected_severity = "INFO"
+
+      # Pattern 2: Word boundary format (ERROR: msg, timestamp WARN context)
+      } else if match(.message, r'(?i)\b(ERROR|ERR|FATAL|PANIC)\b') {
+        .detected_severity = "ERROR"
+      } else if match(.message, r'(?i)\b(WARN|WARNING|WRN)\b') {
+        .detected_severity = "WARN"
+      } else if match(.message, r'(?i)\b(INFO|INF)\b') {
+        .detected_severity = "INFO"
+
+      # Pattern 3: PostgreSQL-style (space + level + colon)
+      } else if match(.message, r'(?i)\s(ERROR|FATAL|PANIC):') {
+        .detected_severity = "ERROR"
+      } else if match(.message, r'(?i)\s(WARNING):') {
+        .detected_severity = "WARN"
+      } else if match(.message, r'(?i)\s(LOG|INFO):') {
+        .detected_severity = "INFO"
+
+      # Pattern 4: JSON structured logs
+      } else {
+        parsed, err = parse_json(.message)
+        if err == null {
+          # Try to find level field with various common names
+          level_field = parsed.level
+          if level_field == null {
+            level_field = parsed.severity
+          }
+          if level_field == null {
+            level_field = parsed.lvl
+          }
+
+          if level_field != null {
+            level_str = to_string(level_field) ?? ""
+            if match(level_str, r'(?i)^(ERROR|ERR|FATAL|PANIC)$') {
+              .detected_severity = "ERROR"
+            } else if match(level_str, r'(?i)^(WARN|WARNING|WRN)$') {
+              .detected_severity = "WARN"
+            } else if match(level_str, r'(?i)^(INFO|INF)$') {
+              .detected_severity = "INFO"
+            }
+          }
+        }
+      }
+
+  docker_to_otel:
+    type: remap
+    inputs:
+      - parse_severity
+    source: |
+      .resourceLogs = [
+        {
+          "resource": {
+            "attributes": [
+              { "key": "service.name", "value": { "stringValue": "docker-service" } },
+              { "key": "host.name", "value": { "stringValue": get_env_var("VECTOR_HOSTNAME") ?? "docker-host" } }
+            ]
+          },
+          "scopeLogs": [
+            {
+              "scope": { "name": "vector.docker" },
+              "logRecords": [
+                {
+                  "timeUnixNano": to_unix_timestamp(now()) * 1_000_000_000,
+                  "body": { "stringValue": .message },
+                  "severityText": .detected_severity,
+                  "attributes": [
+                    { "key": "container.name", "value": { "stringValue": .container_name } },
+                    { "key": "container.id", "value": { "stringValue": .container_id } },
+                    { "key": "image.name", "value": { "stringValue": .image } },
+                    { "key": "console.stream", "value": { "stringValue": .stream } },
+                    { "key": "format.json", "value": { "stringValue": is_json!(.message) } }
+
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+
+      . = { "resourceLogs": .resourceLogs, "stream": .stream }
+
+  filter_by_loglevel:
+    type: filter
+    inputs:
+      - docker_to_otel
+    condition: |
+      severity = .resourceLogs[0].scopeLogs[0].logRecords[0].severityText
+      severity == "WARN" || severity == "ERROR"
+
+sinks:
+  sentry_logs:
+    type: opentelemetry
+    inputs:
+      - filter_by_loglevel
+    protocol:
+      type: http
+      uri: "${SENTRY_OTLP_LOGS_URI}"
+      method: post
+      request:
+        headers:
+          x-sentry-auth: "${SENTRY_OTLP_AUTH_HEADER}"
+      encoding:
+        codec: "otlp"
