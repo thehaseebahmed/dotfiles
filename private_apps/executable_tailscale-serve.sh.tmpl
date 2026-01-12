@@ -7,6 +7,7 @@
 sudo tailscale serve --service="svc:resilio-{{ $homelabNumber }}" --https=443 http://127.0.0.1:8888
 sudo tailscale serve --service="svc:zerobyte-{{ $homelabNumber }}" --https=443 http://127.0.0.1:4096
 {{- if eq .chezmoi.fqdnHostname "homelab-002" }}
+sudo tailscale serve --service="svc:anythingllm" --https=443 http://127.0.0.1:3222
 sudo tailscale serve --service="svc:affine" --https=443 http://127.0.0.1:3010
 sudo tailscale serve --service="svc:coder" --https=443 http://127.0.0.1:7080
 sudo tailscale serve --service="svc:booklore" --https=443 http://127.0.0.1:6060
