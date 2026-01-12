@@ -5,6 +5,7 @@
 # Zerobyte service (dynamic naming based on homelab number)
 {{- $homelabNumber := trimPrefix "homelab-" .chezmoi.hostname }}
 sudo tailscale serve --service="svc:resilio-{{ $homelabNumber }}" --https=443 http://127.0.0.1:8888
+sudo tailscale serve --service="svc:netdata-{{ $homelabNumber }}" --https=443 http://127.0.0.1:19999
 sudo tailscale serve --service="svc:zerobyte-{{ $homelabNumber }}" --https=443 http://127.0.0.1:4096
 {{- if eq .chezmoi.fqdnHostname "homelab-002" }}
 sudo tailscale serve --service="svc:anythingllm" --https=443 http://127.0.0.1:3222
