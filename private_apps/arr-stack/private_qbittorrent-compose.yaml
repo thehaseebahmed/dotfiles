@@ -11,6 +11,7 @@ services:
 
     volumes:
       - ~/volumes/qbittorrent/config:/config
+      - ./wg0.conf:/config/wireguard/wg0.conf:ro
       - ~/volumes/data/torrents:/torrents
       - ~/volumes/data:/data
 
@@ -22,6 +23,6 @@ services:
       - TZ=Europe/Amsterdam
       - WEBUI_PORTS=8080/tcp,8080/udp
       - LIBTORRENT=v1
-    
+
     cap_add:
       - NET_ADMIN
