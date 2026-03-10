@@ -17,6 +17,8 @@ services:
           PUID: 1000
           PGID: 1000
           TZ: "Europe/Amsterdam"
+
+      env_file: .env
         
       cap_add:
           - SYS_ADMIN
@@ -24,13 +26,8 @@ services:
       devices:
           - /dev/fuse:/dev/fuse
         
-
       deploy:
         resources:
           limits:
             cpus: '0.5'
             memory: 512M
-{{ if eq .chezmoi.hostname "homelab-002" }}
-      labels:
-        - "diun.enable=true"
-{{ end }}
