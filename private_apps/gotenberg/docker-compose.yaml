@@ -1,0 +1,6 @@
+services:
+  gotenberg:
+    container_name: gotenberg
+    image: gotenberg/gotenberg:8
+    ports:
+      - "3111:3000"
