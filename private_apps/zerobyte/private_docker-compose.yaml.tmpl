@@ -12,6 +12,9 @@ services:
           - /etc/localtime:/etc/localtime:ro
           - /home/tha/.config/rclone:/root/.config/rclone:ro
           - ~/volumes:/volumes
+{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
+          - /mnt:/mnt
+{{- end }}
         
       environment:
           PUID: 1000
