@@ -2,19 +2,7 @@ include:
   - path: arcane/docker-compose.yaml
   - path: resilio-sync/docker-compose.yaml
   - path: zerobyte/docker-compose.yaml
-{{- if eq .chezmoi.fqdnHostname "homelab-001" }}
-  - path: arr-stack/network-compose.yaml
-  - path: arr-stack/bazarr-compose.yaml
-  - path: arr-stack/bookshelf-compose.yaml
-  - path: arr-stack/prowlarr-compose.yaml
-  - path: arr-stack/qbittorrent-compose.yaml
-  - path: arr-stack/radarr-compose.yaml
-  - path: arr-stack/sonarr-compose.yaml
-  - path: arr-stack/speedrr-compose.yaml
-  - path: jellyfin/docker-compose.yaml
-{{- else if eq .chezmoi.fqdnHostname "homelab-002" }} 
-  - path: actual-budget/docker-compose.yaml
-  - path: babybuddy/docker-compose.yaml
+{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
   - path: booklore/docker-compose.yaml
   - path: coder/docker-compose.yaml
   - path: jellyfin/docker-compose.yaml
@@ -41,6 +29,7 @@ include:
   - path: arr-stack/qui-compose.yaml
   - path: arr-stack/radarr-compose.yaml
   - path: arr-stack/sonarr-compose.yaml
+  - path: arr-stack/speedrr-compose.yaml
   - path: jellyfin/docker-compose.yaml
   - path: seerr/docker-compose.yaml
 {{- end }}
