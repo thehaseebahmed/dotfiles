@@ -10,7 +10,13 @@ services:
 
     volumes:
       - ~/volumes/resilio-sync/config:/config
+      - ~/volumes/resilio-sync/sync/authenticator:/sync/authenticator
       - ~/volumes/data/media:/sync/data/media
+{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
+      - /mnt/ssd/immich:/sync/immich
+{{- else if eq .chezmoi.fqdnHostname "homelab-003" }}
+      - /mnt/ext-hdd-01/immich:/sync/immich
+{{- end }} 
 
     ports:
       - 8888:8888
