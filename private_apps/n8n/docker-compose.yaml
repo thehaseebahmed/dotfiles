@@ -17,4 +17,7 @@ services:
         GUID: 1000
         GENERIC_TIMEZONE: "Europe/Amsterdam"
         NODE_FUNCTION_ALLOW_EXTERNAL: "@mozilla/readability,linkedom,turndown"
-
+        WEBHOOK_URL: "https://n8n.lykoi-mark.ts.net"
+        N8N_EDITOR_BASE_URL: "https://n8n.lykoi-mark.ts.net"
+        N8N_HOST: "n8n.lykoi-mark.tsn.net"
+        N8N_PROTOCOL: "https"
