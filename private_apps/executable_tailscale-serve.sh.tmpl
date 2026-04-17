@@ -9,6 +9,7 @@ sudo tailscale serve --service="svc:zerobyte-{{ $homelabNumber }}" --https=443 h
 {{- if eq .chezmoi.fqdnHostname "homelab-002" }}
 sudo tailscale serve --service="svc:actual-budget" --https=443 http://127.0.0.1:5006
 sudo tailscale serve --service="svc:arcane" --https=443 http://127.0.0.1:3552
+sudo tailscale serve --service="svc:babybuddy" --https=443 http://127.0.0.1:8100
 sudo tailscale serve --service="svc:booklore" --https=443 http://127.0.0.1:6060
 sudo tailscale serve --service="svc:homelab" --https=443 http://127.0.0.1:7080
 sudo tailscale serve --service="svc:immich" --https=443 http://127.0.0.1:2283
