@@ -18,7 +18,7 @@ sudo tailscale serve --service="svc:pocket-id" --https=443 http://127.0.0.1:1411
 sudo tailscale serve --service="svc:stirling-pdf" --https=443 http://127.0.0.1:8080
 sudo tailscale serve --service="svc:vaultwarden" --https=443 http://127.0.0.1:9080
 sudo tailscale serve --service="svc:waha" --https=443 http://127.0.0.1:3333
-sudo tailscale serve --service="svc:ziit" --https=443 http://127.0.0.1:3000
+sudo tailscale serve --service="svc:wakapi" --https=443 http://127.0.0.1:3222
 {{- else if eq .chezmoi.fqdnHostname "homelab-003" }}
 sudo tailscale serve --service="svc:bazarr" --https=443 http://127.0.0.1:6767
 sudo tailscale serve --service="svc:bookshelf" --https=443 http://127.0.0.1:8787

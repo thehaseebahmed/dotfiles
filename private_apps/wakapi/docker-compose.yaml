@@ -1,0 +1,17 @@
+services:
+  wakapi:
+    image: ghcr.io/muety/wakapi:latest
+    init: true
+    ports:
+      - 3222:3000
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      - wakapi-db
+
+  wakapi-db:
+    image: postgres:17
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ~/volumes/wakapi/db/data:/var/lib/postgresql/data
