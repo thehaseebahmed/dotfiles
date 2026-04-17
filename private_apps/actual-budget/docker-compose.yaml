@@ -1,0 +1,10 @@
+services:
+    actual-server:
+        pull_policy: daily
+        restart: unless-stopped
+        ports:
+            - 5006:5006
+        volumes:
+            - ~/volumes/actual-budget/data:/data
+        container_name: my_actual_budget
+        image: actualbudget/actual-server:latest
