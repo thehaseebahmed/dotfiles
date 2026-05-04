@@ -28,7 +28,7 @@ services:
       - meilisearch
   
   meilisearch:
-    image: getmeili/meilisearch:v1.12.8
+    image: getmeili/meilisearch:v1.43.0
     container_name: meilisearch
     restart: unless-stopped
     
