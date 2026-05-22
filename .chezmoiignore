@@ -3,6 +3,7 @@ setup-git-hooks.sh
 
 # Configs for Homelab machines, so ignored on all others
 .bashrc
+.sh-aliases
 .chezmoiscripts/homelab_*
 .ssh/authorized_keys
 apps
@@ -40,6 +41,7 @@ OneDrive/
 # Allowed configs for homelab
 !.bashrc
 !.gitconfig
+!.sh-aliases
 !.ssh
 !.ssh/authorized_keys
 !apps

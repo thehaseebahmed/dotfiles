@@ -262,16 +262,16 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Custom aliases
-alias cza='chezmoi apply -v'
-alias czd='chezmoi diff'
+# opencode
+export PATH=/home/tha/.opencode/bin:$PATH
 
-alias dcd='docker compose down'
-alias dcr='docker compose down && sudo docker compose up -d'
-alias dcu='docker compose up -d'
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="$PATH:$HOME/.npm-global/bin"
+export PATH="$PATH:$HOME/bin"
 
-alias stn='sudo systemctl start stress-weekly.service'
-alias stt='systemctl list-timers stress-weekly.timer'
+[ -f ~/.spawnrc ] && source ~/.spawnrc
+[ -f ~/.sh-aliases ] && source ~/.sh-aliases
 
-alias tssc='sudo tailscale serve set-config --all'
-alias tsss='sudo tailscale serve status --json'
+
