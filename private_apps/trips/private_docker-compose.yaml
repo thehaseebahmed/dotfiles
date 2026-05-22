@@ -1,6 +1,6 @@
 services:
     trips:
-        image: ghcr.io/itskovacs/trip:1
+        image: ghcr.io/itskovacs/trip:1.44
         container_name: trips
         restart: unless-stopped
 
