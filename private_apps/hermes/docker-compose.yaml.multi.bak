@@ -1,0 +1,57 @@
+services:
+  hermes-default:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes
+    restart: unless-stopped
+    command: gateway run
+    pull_policy: daily
+    ports:
+      - "8642:8642"   # gateway API
+      - "9119:9119"   # dashboard
+    volumes:
+      - ~/volumes/hermes/default:/opt/data
+      - ~/volumes/obsidian:/obsidian
+    env_file: .env
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: "1.0"
+
+  hermes-travel:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-travel
+    restart: unless-stopped
+    command: gateway run
+    pull_policy: daily
+    ports:
+      - "8643:8642"   # gateway API (offset port)
+      - "9120:9119"   # dashboard (offset port)
+    volumes:
+      - ~/volumes/hermes/travel:/opt/data
+      - ~/volumes/obsidian:/obsidian
+    env_file: .env
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: "0.5"
+
+  hermes-librarian:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-librarian
+    restart: unless-stopped
+    command: gateway run
+    pull_policy: daily
+    ports:
+      - "8644:8642"   # gateway API (offset port)
+      - "9121:9119"   # dashboard (offset port)
+    volumes:
+      - ~/volumes/hermes/librarian:/opt/data
+      - ~/volumes/obsidian:/obsidian
+    env_file: .env
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: "0.5"

@@ -1,12 +1,17 @@
 services:
   hermes:
-    image: nousresearch/hermes-agent:latest
+    build:
+      context: .
+    # image: nousresearch/hermes-agent:latest
     container_name: hermes
     restart: unless-stopped
     command: >
       sh -c "
       /opt/hermes/.venv/bin/python /opt/hermes/hermes gateway run &
+      /opt/hermes/.venv/bin/python /opt/hermes/hermes -p armish gateway run &
+      /opt/hermes/.venv/bin/python /opt/hermes/hermes -p butler gateway run &
       /opt/hermes/.venv/bin/python /opt/hermes/hermes -p librarian gateway run &
+      /opt/hermes/.venv/bin/python /opt/hermes/hermes -p lobster gateway run &
       wait
       "
     pull_policy: daily
@@ -15,7 +20,7 @@ services:
       - "9119:9119"   # dashboard (only reached when HERMES_DASHBOARD=1)
     volumes:
       - ~/volumes/hermes:/opt/data
-      - ~/volumes/actual-budget:/.actual
+      - ./.gitconfig:/opt/data/.gitconfig 
       - ~/volumes/obsidian:/obsidian
     env_file: .env
     deploy:
