@@ -1,6 +1,6 @@
 services:
   speedrr:
-    image: itschasa/speedrr:latest
+    image: itschasa/speedrr:v1.2.0
     container_name: speedrr
     restart: unless-stopped
 

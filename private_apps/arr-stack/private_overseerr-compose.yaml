@@ -1,6 +1,6 @@
 services:
   overseerr:
-    image: ghcr.io/hotio/overseerr
+    image: ghcr.io/hotio/overseerr:release-v1.34.0
     container_name: overseerr
     restart: unless-stopped
 

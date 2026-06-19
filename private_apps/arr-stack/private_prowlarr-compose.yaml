@@ -1,6 +1,6 @@
 services:
   prowlarr:
-    image: ghcr.io/hotio/prowlarr
+    image: ghcr.io/hotio/prowlarr:release-2.4.0.5397
     container_name: prowlarr
     restart: always
 

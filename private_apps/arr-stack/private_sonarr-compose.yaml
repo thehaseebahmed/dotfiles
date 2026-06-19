@@ -1,6 +1,6 @@
 services:
   sonarr:
-    image: ghcr.io/hotio/sonarr
+    image: ghcr.io/hotio/sonarr:release-4.0.17.2952
     container_name: sonarr
     restart: unless-stopped
 

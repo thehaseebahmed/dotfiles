@@ -1,6 +1,6 @@
 services:
   plex:
-    image: ghcr.io/hotio/plex
+    image: ghcr.io/hotio/plex:release-1.43.2.10687-563d026ea
     container_name: plex
     restart: unless-stopped
 
