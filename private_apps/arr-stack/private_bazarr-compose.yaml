@@ -1,6 +1,6 @@
 services:
   bazarr:
-    image: ghcr.io/hotio/bazarr
+    image: ghcr.io/hotio/bazarr:release-1.5.7
     container_name: bazarr
     restart: unless-stopped
 

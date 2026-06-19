@@ -1,6 +1,6 @@
 services:
   lidarr:
-    image: ghcr.io/hotio/lidarr
+    image: ghcr.io/hotio/lidarr:release-3.1.2.4938
     container_name: lidarr
     restart: unless-stopped
 

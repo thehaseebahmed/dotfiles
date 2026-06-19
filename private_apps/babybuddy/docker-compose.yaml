@@ -1,7 +1,7 @@
 services:
     babybuddy:
         container_name: babybuddy
-        image: lscr.io/linuxserver/babybuddy:latest
+        image: lscr.io/linuxserver/babybuddy:2.7.1-ls222
         restart: always
         network_mode: bridge
         ports:

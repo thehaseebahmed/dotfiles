@@ -1,6 +1,6 @@
 services:
   booklore:
-    image: booklore/booklore:latest
+    image: booklore/booklore:2.3.0
     container_name: booklore
     restart: unless-stopped
     

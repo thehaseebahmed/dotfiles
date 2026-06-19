@@ -5,7 +5,7 @@ services:
     # https://portal.devlike.pro/docker-image
     # image: devlikeapro/waha-plus
     # WAHA Core
-    image: devlikeapro/waha:latest
+    image: devlikeapro/waha:2026.5.1
     container_name: waha
 
     # Add "dns" if you have a problem with resolving "web.whatsapp.com"
