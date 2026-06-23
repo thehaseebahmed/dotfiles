@@ -14,6 +14,7 @@ alias hermes-bash='docker exec -it -u hermes hermes bash'
 alias accountant='hermes -p accountant'
 alias armish='hermes -p armish'
 alias lobster='hermes -p lobster'
+alias traveller='hermes -p traveller'
 
 alias hl1="ssh tha@homelab-001.lykoi-mark.ts.net"
 alias hl2="ssh tha@homelab-002.lykoi-mark.ts.net"
