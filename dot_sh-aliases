@@ -13,6 +13,8 @@ alias hermes='docker exec -it -u hermes hermes /opt/hermes/.venv/bin/python /opt
 alias hermes-bash='docker exec -it -u hermes hermes bash'
 alias accountant='hermes -p accountant'
 alias armish='hermes -p armish'
+alias butler='hermes -p butler'
+alias librarian='hermes -p librarian'
 alias lobster='hermes -p lobster'
 alias traveller='hermes -p traveller'
 
