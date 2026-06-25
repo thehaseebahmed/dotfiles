@@ -23,7 +23,7 @@ services:
         N8N_HOST: "n8n.lykoi-mark.tsn.net"
         N8N_PROTOCOL: "https"
     n8n-cache:
-      image: redis:7.4-alpine
+      image: redis:8.8-alpine
       container_name: n8n-cache
 
       restart: unless-stopped
