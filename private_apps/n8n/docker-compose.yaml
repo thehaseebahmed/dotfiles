@@ -1,9 +1,10 @@
 services:
     n8n:
-      build: .
+      image: ghcr.io/n8n-io/n8n:latest
       container_name: n8n
         
       restart: unless-stopped
+      pull_policy: weekly
 
       ports:
         - 5678:5678
@@ -21,3 +22,17 @@ services:
         N8N_EDITOR_BASE_URL: "https://n8n.lykoi-mark.ts.net"
         N8N_HOST: "n8n.lykoi-mark.tsn.net"
         N8N_PROTOCOL: "https"
+    n8n-cache:
+      image: redis:7.4-alpine
+      container_name: n8n-cache
+
+      restart: unless-stopped
+      
+      ports:
+        - 5679:6379
+
+      volumes:
+        - redis_data:/data
+
+volumes:
+  redis_data:
