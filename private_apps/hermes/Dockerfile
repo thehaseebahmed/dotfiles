@@ -25,3 +25,4 @@ RUN npm install --location=global @actual-app/cli
 
 RUN VIRTUAL_ENV=/opt/hermes/.venv uv pip install "git+https://github.com/thehaseebahmed/bunq-cli"
 RUN VIRTUAL_ENV=/opt/hermes/.venv uv pip install instaloader
+RUN VIRTUAL_ENV=/opt/hermes/.venv uv tool install okflint
