@@ -20,8 +20,8 @@ services:
       - "9119:9119"   # dashboard (only reached when HERMES_DASHBOARD=1)
     volumes:
       - ~/volumes/hermes:/opt/data
-      - ./.gitconfig:/opt/data/.gitconfig 
-      - ~/volumes/obsidian:/obsidian
+      - ~/volumes/obsidian:/opt/data/obsidian
+      - ./.gitconfig:/opt/data/.gitconfig  
     env_file: .env
     deploy:
       resources:
