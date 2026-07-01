@@ -1,0 +1,40 @@
+# Hindsight Memory Server — self-hosted with Xiaomi Mimo LLM
+# Ports: API = 8888, UI = 9999
+#
+# Usage:
+#   1. Copy .env.example → .env and fill in your Mimo API key
+#   2. docker compose up -d
+#   3. Open http://localhost:9999 for the web UI
+#   4. In Hermes: hermes config set memory.provider hindsight
+#
+# Docs: https://hindsight.vectorize.io
+
+services:
+  hindsight:
+    image: ghcr.io/vectorize-io/hindsight:latest
+    container_name: hindsight
+    restart: unless-stopped
+    ports:
+      - "8888:8888"   # API
+      - "9999:9999"   # Web UI
+    volumes:
+      - ~/volumes/hindsight/.pg0:/home/hindsight/.pg0   # embedded PostgreSQL
+    env_file:
+      - .env
+    environment:
+      # ── LLM: Xiaomi Mimo (OpenAI-compatible) ──
+      HINDSIGHT_API_LLM_PROVIDER: openai
+      HINDSIGHT_API_LLM_BASE_URL: ${MIMO_BASE_URL:-https://api.mimo.xiaomi.com/v1}
+      HINDSIGHT_API_LLM_API_KEY: ${MIMO_API_KEY}
+      HINDSIGHT_API_LLM_MODEL: ${MIMO_MODEL:-mimo-v2.5-pro}
+
+      # ── Embedded DB (default) ──
+      # Uncomment below + add a postgres service for external DB:
+      # HINDSIGHT_API_DATABASE_URL: postgresql://hindsight:***@postgres:5432/hindsight
+      HINDSIGHT_API_RUN_MIGRATIONS_ON_STARTUP: "true"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
