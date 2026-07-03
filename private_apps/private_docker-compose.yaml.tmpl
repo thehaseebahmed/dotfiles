@@ -5,7 +5,6 @@ include:
 {{- if eq .chezmoi.fqdnHostname "homelab-002" }}
   - path: actual-budget/docker-compose.yaml
   - path: booklore/docker-compose.yaml
-  - path: coder/docker-compose.yaml
   - path: jellyfin/docker-compose.yaml
   - path: glance/docker-compose.yml
   - path: gotenberg/docker-compose.yaml
@@ -13,6 +12,7 @@ include:
   - path: hindsight/docker-compose.yml
   - path: mcpjungle/docker-compose.yaml
   - path: immich/docker-compose.yml
+  - path: instaloader-mcp/docker-compose.yml
   - path: mempalace-mcp/docker-compose.yml
   - path: n8n/docker-compose.yaml
   - path: ntfy/docker-compose.yaml
