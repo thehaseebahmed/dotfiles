@@ -15,7 +15,7 @@ services:
     container_name: hindsight
     restart: unless-stopped
     ports:
-      - "8888:8888"   # API
+      - "9998:8888"   # API
       - "9999:9999"   # Web UI
     volumes:
       - ~/volumes/hindsight/.pg0:/home/hindsight/.pg0   # embedded PostgreSQL
