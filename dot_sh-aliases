@@ -16,6 +16,7 @@ alias armish='hermes -p armish'
 alias butler='hermes -p butler'
 alias librarian='hermes -p librarian'
 alias lobster='hermes -p lobster'
+alias ntfy='hermes -p ntfy'
 alias traveller='hermes -p traveller'
 
 alias hl1="ssh tha@homelab-001.lykoi-mark.ts.net"
