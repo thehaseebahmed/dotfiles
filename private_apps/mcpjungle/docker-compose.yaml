@@ -1,0 +1,43 @@
+# MCPJungle Docker Compose configuration for individual users.
+# Use this compose file if you want to run MCPJungle locally for your personal MCP management & Gateway.
+# The mcpjungle server runs in development mode.
+services:
+  mcpjungle-db:
+    image: postgres:17
+    container_name: mcpjungle-db
+    environment:
+      POSTGRES_USER: mcpjungle
+      POSTGRES_PASSWORD: mcpjungle
+      POSTGRES_DB: mcpjungle
+    ports:
+      - "5432:5432"
+    volumes:
+      - ~/volumes/mcpjungle-db/data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "PGPASSWORD=mcpjungle pg_isready -U mcpjungle"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  mcpjungle:
+    image: ghcr.io/mcpjungle/mcpjungle:${MCPJUNGLE_IMAGE_TAG:-latest-stdio}
+    container_name: mcpjungle-server
+    environment:
+      DATABASE_URL: postgres://mcpjungle:mcpjungle@mcpjungle-db:5432/mcpjungle
+      SERVER_MODE: ${SERVER_MODE:-development}
+      OTEL_ENABLED: ${OTEL_ENABLED:-false}
+      MCP_SERVER_INIT_REQ_TIMEOUT_SEC: ${MCP_SERVER_INIT_REQ_TIMEOUT_SEC:-10}
+    ports:
+      - "8084:8080"
+    volumes:
+      # Mount host filesystem current directory to enable filesystem MCP server access
+      - .:/host:ro
+      - ./groups:/tool-groups
+      # Other options:
+      # - ${HOME}:/host/home:ro
+      # - /tmp:/host/tmp:rw
+    depends_on:
+      mcpjungle-db:
+        condition: service_healthy
+    restart: always
