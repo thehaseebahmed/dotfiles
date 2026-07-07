@@ -23,6 +23,7 @@ services:
   mcpjungle:
     image: ghcr.io/mcpjungle/mcpjungle:${MCPJUNGLE_IMAGE_TAG:-latest-stdio}
     container_name: mcpjungle-server
+    init: true
     environment:
       DATABASE_URL: postgres://mcpjungle:mcpjungle@mcpjungle-db:5432/mcpjungle
       SERVER_MODE: ${SERVER_MODE:-development}
