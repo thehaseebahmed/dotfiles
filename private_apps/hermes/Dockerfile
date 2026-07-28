@@ -1,4 +1,4 @@
-FROM nousresearch/hermes-agent:v2026.7.7
+FROM nousresearch/hermes-agent:v2026.7.20
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bsdextrautils \
