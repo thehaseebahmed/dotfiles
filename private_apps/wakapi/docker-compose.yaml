@@ -10,7 +10,7 @@ services:
       - wakapi-db
 
   wakapi-db:
-    image: postgres:17
+    image: postgres:18
     restart: unless-stopped
     env_file: .env
     volumes:
