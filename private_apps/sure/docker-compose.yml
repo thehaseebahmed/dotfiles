@@ -1,0 +1,165 @@
+# ===========================================================================
+# Example Docker Compose file
+# ===========================================================================
+#
+# Purpose:
+# --------
+#
+# This file is an example Docker Compose configuration for self hosting
+# Sure on your local machine or on a cloud VPS.
+#
+# The configuration below is a "standard" setup that works out of the box,
+# but if you're running this outside of a local network, it is recommended
+# to set the environment variables for extra security.
+#
+# Setup:
+# ------
+#
+# To run this, you should read the setup guide:
+#
+# https://github.com/we-promise/sure/blob/main/docs/hosting/docker.md
+#
+# Troubleshooting:
+# ----------------
+#
+# Problems? Swing by our Discord or open a Discussion here:
+#
+# https://github.com/we-promise/sure/discussions/categories/general
+#
+# IPv6 Note (Yahoo Finance Sync, others?):
+# ----------------------------------------
+# If you encounter "Failed to open TCP connection" errors to hosts like
+# fc.yahoo.com in your environment, the issue may be that DNS resolves
+# to an IPv6 address first. Since IPv6 may not be configured in the container,
+# the connection hangs. To work around this, you can hardcode the IPv4
+# addresses in your container's /etc/hosts or set custom DNS:
+#
+#   extra_hosts:
+#     - "fc.yahoo.com:173.223.12.81"
+#     - "query1.finance.yahoo.com:98.136.48.169"
+#     - "query2.finance.yahoo.com:98.136.48.169"
+#
+# Or use explicit DNS servers that prefer IPv4 (already configured below).
+#
+
+x-db-env: &db_env
+  POSTGRES_USER: ${POSTGRES_USER:-sure_user}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sure_password}
+  POSTGRES_DB: ${POSTGRES_DB:-sure_production}
+
+x-rails-env: &rails_env
+  <<: *db_env
+  SECRET_KEY_BASE: ${SECRET_KEY_BASE:-a7523c3d0ae56415046ad8abae168d71074a79534a7062258f8d1d51ac2f76d3c3bc86d86b6b0b307df30d9a6a90a2066a3fa9e67c5e6f374dbd7dd4e0778e13}
+  SELF_HOSTED: "true"
+  RAILS_FORCE_SSL: "false"
+  RAILS_ASSUME_SSL: "false"
+  DB_HOST: db
+  DB_PORT: 5432
+  REDIS_URL: redis://redis:6379/1
+  # NOTE: enabling OpenAI will incur costs when you use AI-related features in the app (chat, rules).  Make sure you have set appropriate spend limits on your account before adding this.
+  OPENAI_ACCESS_TOKEN: ${OPENAI_ACCESS_TOKEN}
+
+services:
+  web:
+    image: ghcr.io/we-promise/sure:0.7.3
+    volumes:
+      - app-storage:/rails/storage
+      #- ./auth.yml:/rails/config/auth.yml
+    ports:
+      - ${PORT:-3333}:3000
+      # To also publish on IPv6 (dual-stack), uncomment the line below AND
+      # set BINDING=:: in the environment block. See docs/hosting/docker.md
+      # "Binding to IPv6" for details.
+      # - "[::]:${PORT:-3000}:3000"
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      <<: *rails_env
+      # BINDING: "::"  # Uncomment for IPv6 dual-stack inside the container
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    networks:
+      - sure_net
+
+  worker:
+    image: ghcr.io/we-promise/sure:0.7.3
+    command: bundle exec sidekiq
+    volumes:
+      - app-storage:/rails/storage
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    environment:
+      <<: *rails_env
+    networks:
+      - sure_net
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      <<: *db_env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sure_net
+
+  backup:
+    profiles:
+      - backup
+    image: prodrigestivill/postgres-backup-local
+    restart: unless-stopped
+    volumes:
+      - /opt/sure-data/backups:/backups # Change this path to your desired backup location on the host machine
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=${POSTGRES_DB:-sure_production}
+      - POSTGRES_USER=${POSTGRES_USER:-sure_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-sure_password} # pipelock:ignore
+      - SCHEDULE=@daily # Runs once a day at midnight
+      - BACKUP_KEEP_DAYS=7 # Keeps the last 7 days of backups
+      - BACKUP_KEEP_WEEKS=4 # Keeps 4 weekly backups
+      - BACKUP_KEEP_MONTHS=6 # Keeps 6 monthly backups
+    depends_on:
+      - db
+    networks:
+      - sure_net
+
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sure_net
+
+volumes:
+  app-storage:
+  postgres-data:
+  redis-data:
+
+networks:
+  sure_net:
+    driver: bridge
