@@ -3,7 +3,7 @@
 # The mcpjungle server runs in development mode.
 services:
   mcpjungle-db:
-    image: postgres:17
+    image: postgres:18
     container_name: mcpjungle-db
     environment:
       POSTGRES_USER: mcpjungle
