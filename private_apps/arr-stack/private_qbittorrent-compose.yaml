@@ -26,3 +26,16 @@ services:
 
     cap_add:
       - NET_ADMIN
+  seedboxapi:
+    container_name: seedboxapi
+    image: myanonamouse/seedboxapi
+    restart: unless-stopped
+    user: 1000:1000
+    network_mode: "service:qbittorrent"
+    volumes:
+      - ~/volumes/seedboxapi/config:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - DEBUG=1
+      - mam_id=${MAM_ID}
