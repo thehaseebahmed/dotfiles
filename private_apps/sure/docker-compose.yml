@@ -101,7 +101,7 @@ services:
       <<: *rails_env
 
   sure_db:
-    image: postgres:16
+    image: postgres:18
     container_name: sure_db
     restart: unless-stopped
     volumes:
