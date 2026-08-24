@@ -1,0 +1,97 @@
+- name: Services
+  width: slim
+  hide-desktop-navigation: false
+  center-vertically: true
+  columns:
+    - size: full
+      widgets:
+        - type: monitor
+          cache: 15m
+          title: Failing
+          hide-header: true
+          show-failing-only: true
+          sites:
+            - $include: services/a.yml
+            - $include: services/b.yml
+            - $include: services/h.yml
+            - $include: services/i.yml
+            - $include: services/j.yml
+            - $include: services/n.yml
+            - $include: services/p.yml
+            - $include: services/q.yml
+            - $include: services/r.yml
+            - $include: services/s.yml
+            - $include: services/w.yml
+            - $include: services/z.yml
+
+        - type: monitor
+          cache: 15m
+          title: A
+          sites:
+            $include: services/a.yml
+
+        - type: monitor
+          cache: 15m
+          title: B
+          sites:
+            $include: services/b.yml
+
+        - type: monitor
+          cache: 15m
+          title: H
+          sites:
+            $include: services/h.yml
+
+        - type: monitor
+          cache: 15m
+          title: I
+          sites:
+            $include: services/i.yml
+
+        - type: monitor
+          cache: 15m
+          title: J
+          sites:
+            $include: services/j.yml
+
+        - type: monitor
+          cache: 15m
+          title: N
+          sites:
+            $include: services/n.yml
+
+        - type: monitor
+          cache: 15m
+          title: P
+          sites:
+            $include: services/p.yml
+
+        - type: monitor
+          cache: 15m
+          title: Q
+          sites:
+            $include: services/q.yml
+
+        - type: monitor
+          cache: 15m
+          title: R
+          sites:
+            $include: services/r.yml
+
+        - type: monitor
+          cache: 15m
+          title: S
+          sites:
+            $include: services/s.yml
+
+        - type: monitor
+          cache: 15m
+          title: W
+          sites:
+            $include: services/w.yml
+
+        - type: monitor
+          cache: 15m
+          title: Z
+          sites:
+            $include: services/z.yml

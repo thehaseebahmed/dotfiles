@@ -1,0 +1,15 @@
+- title: Radarr
+  url: http://homelab-003.lykoi-mark.ts.net:7878/
+  icon: di:radarr
+- title: Resilio Sync (002)
+  url: http://100.85.95.85:8888/
+  icon: di:resiliosync
+  basic-auth:
+      username: thehaseebahmed
+      password: ${RESILIO_SYNC}
+- title: Resilio Sync (003)
+  url: http://100.122.46.68:8888/
+  icon: di:resiliosync
+  basic-auth:
+      username: thehaseebahmed
+      password: ${RESILIO_SYNC}

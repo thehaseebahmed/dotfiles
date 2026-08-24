@@ -1,0 +1,9 @@
+- title: Seerr
+  url: https://seerr.lykoi-mark.ts.net/
+  icon: di:jellyseerr
+- title: Sonarr
+  url: http://homelab-003.lykoi-mark.ts.net:8989/
+  icon: di:sonarr
+- title: Sure
+  url: https://sure.lykoi-mark.ts.net/
+  icon: di:sure

@@ -1,0 +1,6 @@
+- title: Home Assistant (AMS)
+  url: http://homeassistant-ams.lykoi-mark.ts.net:8123/
+  icon: di:home-assistant
+- title: Home Assistant (LHE)
+  url: http://homeassistant-lhr.lykoi-mark.ts.net:8123/
+  icon: di:home-assistant

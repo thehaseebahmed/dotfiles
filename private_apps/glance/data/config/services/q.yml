@@ -1,0 +1,6 @@
+- title: qBittorrent
+  url: http://homelab-003.lykoi-mark.ts.net:8080/
+  icon: di:qbittorrent
+- title: qui
+  url: https://qui.lykoi-mark.ts.net/
+  icon: di:qui
