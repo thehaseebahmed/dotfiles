@@ -6,8 +6,6 @@ services:
       - 3222:3000
     restart: unless-stopped
     env_file: .env
-    depends_on:
-      - wakapi-db
 
   wakapi-db:
     image: postgres:17

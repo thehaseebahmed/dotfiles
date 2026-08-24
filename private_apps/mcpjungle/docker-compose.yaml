@@ -24,8 +24,10 @@ services:
     image: ghcr.io/mcpjungle/mcpjungle:${MCPJUNGLE_IMAGE_TAG:-latest-stdio}
     container_name: mcpjungle-server
     init: true
+    env_file:
+      - .env
     environment:
-      DATABASE_URL: postgres://mcpjungle:mcpjungle@mcpjungle-db:5432/mcpjungle
+      DATABASE_URL: postgres://${MCPJUNGLE_DB_USER}:${MCPJUNGLE_DB_PASSWORD}@postgres:5432/mcpjungle
       SERVER_MODE: ${SERVER_MODE:-development}
       OTEL_ENABLED: ${OTEL_ENABLED:-false}
       MCP_SERVER_INIT_REQ_TIMEOUT_SEC: ${MCP_SERVER_INIT_REQ_TIMEOUT_SEC:-10}
@@ -38,7 +40,4 @@ services:
       # Other options:
       # - ${HOME}:/host/home:ro
       # - /tmp:/host/tmp:rw
-    depends_on:
-      mcpjungle-db:
-        condition: service_healthy
     restart: always

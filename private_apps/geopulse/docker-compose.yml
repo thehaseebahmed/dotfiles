@@ -43,8 +43,6 @@ services:
     depends_on:
       geopulse-keygen:
         condition: service_completed_successfully
-      geopulse-postgres:
-        condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
       interval: 3s
