@@ -11,7 +11,7 @@
 
 services:
   hindsight:
-    image: ghcr.io/vectorize-io/hindsight:latest
+    image: ghcr.io/vectorize-io/hindsight:0.9.1
     container_name: hindsight
     restart: unless-stopped
     ports:
@@ -24,9 +24,9 @@ services:
     environment:
       # ── LLM: Xiaomi Mimo (OpenAI-compatible) ──
       HINDSIGHT_API_LLM_PROVIDER: openai
-      HINDSIGHT_API_LLM_BASE_URL: ${MIMO_BASE_URL:-https://api.mimo.xiaomi.com/v1}
-      HINDSIGHT_API_LLM_API_KEY: ${MIMO_API_KEY}
-      HINDSIGHT_API_LLM_MODEL: ${MIMO_MODEL:-mimo-v2.5-pro}
+      HINDSIGHT_API_LLM_BASE_URL: ${LLM_BASE_URL:-https://api.mimo.xiaomi.com/v1}
+      HINDSIGHT_API_LLM_API_KEY: ${LLM_API_KEY}
+      HINDSIGHT_API_LLM_MODEL: ${LLM_MODEL:-mimo-v2.5-pro}
 
       # ── Embedded DB (default) ──
       # Uncomment below + add a postgres service for external DB:
