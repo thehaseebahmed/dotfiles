@@ -1,0 +1,22 @@
+services:
+    instagram-reel-processor:
+        container_name: instagram-reel-processor
+        build:
+            context: .
+        restart: always
+        network_mode: bridge
+        ports:
+            - 8420:8000
+        volumes:
+            - instagram-reel-processor_data:/data
+        environment:
+            TZ: "Europe/Amsterdam"
+            WORK_DIR: "/data"
+            WHISPER_MODEL: "base"
+            KEEP_FILES: "false"
+            # Optional authenticated Instagram session (see README).
+            # IG_USERNAME: "your_ig_username"
+            # IG_SESSION_FILE: "/data/session-your_ig_username"
+volumes:
+    instagram-reel-processor_data:
+        name: instagram-reel-processor_data
