@@ -12,7 +12,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
 
-ENV WORK_DIR=/data
+# Unbuffered so logs reach `docker logs` immediately, and HF_HOME on the data
+# volume so the whisper model isn't re-downloaded on every container recreate.
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    WORK_DIR=/data \
+    HF_HOME=/data/.cache/huggingface
+
 RUN mkdir -p /data
 
 EXPOSE 8000

@@ -1,6 +1,6 @@
 services:
-    instagram-reel-processor:
-        container_name: instagram-reel-processor
+    insta-parser:
+        container_name: insta-parser
         build:
             context: .
         restart: always
@@ -8,15 +8,24 @@ services:
         ports:
             - 8420:8000
         volumes:
-            - instagram-reel-processor_data:/data
+            - insta-parser_data:/data
         environment:
             TZ: "Europe/Amsterdam"
             WORK_DIR: "/data"
             WHISPER_MODEL: "base"
             KEEP_FILES: "false"
+            JOB_TTL_HOURS: "24"
             # Optional authenticated Instagram session (see README).
             # IG_USERNAME: "your_ig_username"
             # IG_SESSION_FILE: "/data/session-your_ig_username"
+            # Tuning knobs, defaults shown:
+            # TRANSCRIBE_CONCURRENCY: "1"
+            # FFMPEG_TIMEOUT: "300"
+            # MAX_FRAMES: "60"
+            # FRAME_SCALE_HEIGHT: "720"
+            # SCENE_THRESHOLD: "0.3"
+            # OCR_DEDUPE_THRESHOLD: "90"
+            # LOG_LEVEL: "INFO"
 volumes:
-    instagram-reel-processor_data:
-        name: instagram-reel-processor_data
+    insta-parser_data:
+        name: insta-parser_data
