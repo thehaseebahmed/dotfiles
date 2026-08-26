@@ -8,6 +8,9 @@ Each job gets its own subfolder under `WORK_DIR` (a random `job_id`), so the
 per-step endpoints can be called independently and re-run without stepping
 on each other.
 
+Agent-facing docs live in [`skills/`](skills/) — `insta-parser-api` for calling
+the service, `insta-parser-ops` for running it.
+
 ## Endpoints
 
 | Method | Path | Notes |
