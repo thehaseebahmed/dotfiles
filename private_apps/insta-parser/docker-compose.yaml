@@ -4,11 +4,10 @@ services:
         build:
             context: .
         restart: always
-        network_mode: bridge
         ports:
             - 8420:8000
         volumes:
-            - insta-parser_data:/data
+            - ~/volumes/insta-parser/data:/data
         environment:
             TZ: "Europe/Amsterdam"
             WORK_DIR: "/data"
@@ -26,6 +25,3 @@ services:
             # SCENE_THRESHOLD: "0.3"
             # OCR_DEDUPE_THRESHOLD: "90"
             # LOG_LEVEL: "INFO"
-volumes:
-    insta-parser_data:
-        name: insta-parser_data
