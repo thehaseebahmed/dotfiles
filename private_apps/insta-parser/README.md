@@ -104,7 +104,7 @@ curl -sX POST $BASE/process \
 # Poll until status is "done" (or "error")
 curl -s $BASE/jobs/3f1c...
 # => {"job_id":"3f1c...","status":"running","step":"transcribe","result":null,"error":null}
-# => {"job_id":"3f1c...","status":"done","step":null,"result":{"metadata":{...},
+# => {"job_id":"3f1c...","status":"done","step":null,"result":{"metadata":{"username":"...", ...},
 #     "transcript":{"text":"...","segments":[...]},"ocr_results":[...]},"error":null}
 ```
 
@@ -119,7 +119,7 @@ checking `status == "done"`.
 curl -sX POST $BASE/download \
   -H 'Content-Type: application/json' \
   -d '{"url": "https://www.instagram.com/reel/ABC123xyz/"}'
-# => {"job_id": "...", "metadata": {"caption": "...", "timestamp": "...", ...}}
+# => {"job_id": "...", "metadata": {"username": "...", "caption": "...", "timestamp": "...", ...}}
 
 JOB_ID=<job_id from above>
 

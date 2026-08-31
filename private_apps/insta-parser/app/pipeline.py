@@ -102,8 +102,15 @@ def download_post(url: str, job_dir: Path) -> dict:
         location = None
 
     try:
+        username = post.owner_username
+    except instaloader.exceptions.InstaloaderException as exc:
+        logger.warning("Could not fetch owner username for %s: %s", shortcode, exc)
+        username = "Unknown"
+
+    try:
         metadata = {
             "shortcode": shortcode,
+            "username": username,
             "caption": post.caption or "",
             "timestamp": post.date_utc.isoformat(),
             "like_count": post.likes,
