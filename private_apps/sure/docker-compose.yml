@@ -61,7 +61,7 @@ x-rails-env: &rails_env
 
 services:
   sure_web:
-    image: ghcr.io/we-promise/sure:0.7.3
+    image: ghcr.io/we-promise/sure:0.7.4
     container_name: sure_web
     volumes:
       - sure_app-storage:/rails/storage
@@ -85,7 +85,7 @@ services:
       - 1.1.1.1
 
   sure_worker:
-    image: ghcr.io/we-promise/sure:0.7.3
+    image: ghcr.io/we-promise/sure:0.7.4
     container_name: sure_worker
     command: bundle exec sidekiq
     volumes:
