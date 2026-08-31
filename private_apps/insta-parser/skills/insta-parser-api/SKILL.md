@@ -75,7 +75,7 @@ curl -s http://localhost:8420/jobs/3f1c9a2b...
   "status": "done",
   "step": null,
   "result": {
-    "metadata": { "shortcode": "ABC123xyz", "caption": "...",
+    "metadata": { "shortcode": "ABC123xyz", "username": "some_account", "caption": "...",
                   "timestamp": "2026-01-02T03:04:05", "like_count": 1234,
                   "comment_count": 56, "location": "Amsterdam" },
     "transcript": { "text": "full transcript ...", "language": "en",
@@ -122,6 +122,8 @@ it.) `/process` cleans up after itself automatically.
 
 ## Interpreting the output
 
+- **`username`** is the reel's owner. Falls back to `"Unknown"` if Instagram's
+  API failed to return it (rare, but the video/transcript/OCR are unaffected).
 - **`caption`** is the poster's own text. Often the single most informative
   field — check it before assuming you need the transcript.
 - **`transcript.text`** is the spoken audio. Empty or gibberish means the reel
