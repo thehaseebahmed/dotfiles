@@ -27,6 +27,7 @@ services:
       NODE_MAX_OLD_SPACE_SIZE: ${NODE_MAX_OLD_SPACE_SIZE:-auto}
       BOOK_DOCK_PATH: ${BOOK_DOCK_PATH:-}
       LIBRARY_BROWSE_ROOT: ${LIBRARY_BROWSE_ROOT:-}
+      OIDC_ALLOW_LOCAL_ISSUERS: true
     volumes:
       - ${BOOKS_HOST_PATH:-./books}:/books
       - ~/volumes/bookorbit/books:/books_uploaded
