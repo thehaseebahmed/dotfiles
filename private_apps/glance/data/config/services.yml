@@ -17,12 +17,30 @@
             - $include: services/i.yml
             - $include: services/j.yml
             - $include: services/n.yml
+            - $include: services/o.yml
             - $include: services/p.yml
             - $include: services/q.yml
             - $include: services/r.yml
             - $include: services/s.yml
             - $include: services/w.yml
             - $include: services/z.yml
+
+        - type: bookmarks
+          groups:
+            - title: Reading
+              links:
+                - title: Hardcover
+                  url: https://hardcover.app/home
+                - title: Currently Reading
+                  url: https://hardcover.app/@thehaseebahmed/books/currently-reading
+                - title: Want to Read
+                  url: https://hardcover.app/@thehaseebahmed/books/want-to-read
+            - title: Networking
+              links:
+                - title: Machines
+                  url: https://console.tailscale.com/admin/machines
+                - title: Services
+                  url: https://console.tailscale.com/admin/services
 
         - type: monitor
           cache: 15m
@@ -59,6 +77,12 @@
           title: N
           sites:
             $include: services/n.yml
+
+        - type: monitor
+          cache: 15m
+          title: O
+          sites:
+            $include: services/o.yml
 
         - type: monitor
           cache: 15m

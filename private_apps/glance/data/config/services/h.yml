@@ -1,3 +1,9 @@
+- title: Hermes Agent
+  url: https://hermes.lykoi-mark.ts.net/
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/hermes-agent.png
+- title: Hindsight
+  url: https://hindsight.lykoi-mark.ts.net/
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/hindsight.png
 - title: Home Assistant (AMS)
   url: http://homeassistant-ams.lykoi-mark.ts.net:8123/
   icon: di:home-assistant

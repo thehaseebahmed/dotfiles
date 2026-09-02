@@ -1,3 +1,6 @@
+- title: Pocket ID
+  url: https://pocket-id.lykoi-mark.ts.net/
+  icon: di:pocket-id
 - title: Prowlarr
   url: http://homelab-003.lykoi-mark.ts.net:9696/
   icon: di:prowlarr
