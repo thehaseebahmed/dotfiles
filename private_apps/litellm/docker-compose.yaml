@@ -1,0 +1,16 @@
+services:
+  litellm:
+    build:
+      context: .
+    image: litellm-mcp:local
+    container_name: litellm
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      STORE_MODEL_IN_DB: "True"
+      PROXY_BASE_URL: "https://litellm.lykoi-mark.ts.net"
+      LITELLM_DISABLE_NO_REDIS_WARNING: true
