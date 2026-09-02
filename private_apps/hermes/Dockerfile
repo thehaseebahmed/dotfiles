@@ -21,8 +21,5 @@ RUN chmod go+r /etc/apt/keyrings/acli-archive-keyring.gpg
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/acli-archive-keyring.gpg] https://acli.atlassian.com/linux/deb stable main" | tee /etc/apt/sources.list.d/acli.list > /dev/null
 RUN apt-get update && apt-get install -y acli
 
-RUN npm install --location=global @actual-app/cli
-
 RUN VIRTUAL_ENV=/opt/hermes/.venv uv pip install "git+https://github.com/thehaseebahmed/bunq-cli"
-RUN VIRTUAL_ENV=/opt/hermes/.venv uv pip install instaloader
-RUN VIRTUAL_ENV=/opt/hermes/.venv uv tool install okflint
+RUN VIRTUAL_ENV=/opt/hermes/.venv uv pip install okflint
