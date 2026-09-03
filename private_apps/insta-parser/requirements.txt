@@ -4,4 +4,4 @@ instaloader>=4.13,<5.0
 faster-whisper>=1.0,<2.0
 pytesseract>=0.3.10,<1.0
 rapidfuzz>=3.9,<4.0
-pillow>=10.3,<11.0
+pillow>=12.3,<12.4
