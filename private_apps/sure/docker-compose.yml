@@ -117,7 +117,7 @@ services:
   sure_backup:
     profiles:
       - backup
-    image: prodrigestivill/postgres-backup-local
+    image: prodrigestivill/postgres-backup-local:16-alpine
     container_name: sure_backup
     restart: unless-stopped
     volumes:
@@ -137,7 +137,7 @@ services:
       - sure_db
 
   sure_redis:
-    image: redis:latest
+    image: redis:8.8.0
     container_name: sure_redis
     restart: unless-stopped
     volumes:
