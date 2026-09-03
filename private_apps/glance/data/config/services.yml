@@ -13,6 +13,7 @@
           sites:
             - $include: services/a.yml
             - $include: services/b.yml
+            - $include: services/g.yml
             - $include: services/h.yml
             - $include: services/i.yml
             - $include: services/j.yml
@@ -54,6 +55,12 @@
           title: B
           sites:
             $include: services/b.yml
+
+        - type: monitor
+          cache: 15m
+          title: G
+          sites:
+            $include: services/g.yml
 
         - type: monitor
           cache: 15m
