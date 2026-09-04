@@ -29,6 +29,12 @@
 
         - type: bookmarks
           groups:
+            - title: Agent Toolkit
+              links:
+                - title: AgentMail
+                  url: https://console.agentmail.to/dashboard/inboxes/thehermesagent@agentmail.to
+                - title: Ollama Cloud
+                  url: https://ollama.com/settings
             - title: Reading
               links:
                 - title: Hardcover
@@ -37,11 +43,11 @@
                   url: https://hardcover.app/@thehaseebahmed/books/currently-reading
                 - title: Want to Read
                   url: https://hardcover.app/@thehaseebahmed/books/want-to-read
-            - title: Networking
+            - title: Network
               links:
-                - title: Machines
+                - title: Tailscale Machines
                   url: https://console.tailscale.com/admin/machines
-                - title: Services
+                - title: Tailscale Services
                   url: https://console.tailscale.com/admin/services
 
         - type: monitor
