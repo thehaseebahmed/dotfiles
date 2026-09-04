@@ -17,6 +17,12 @@ services:
             # Optional authenticated Instagram session (see README).
             # IG_USERNAME: "your_ig_username"
             # IG_SESSION_FILE: "/data/session-your_ig_username"
+            # Optional place-metadata enrichment (see README). Both independent of
+            # each other; leave either unset to skip that piece.
+            # LITELLM_BASE_URL: "http://172.17.0.1:4000"
+            # LITELLM_API_KEY: "sk-..."
+            # LITELLM_MODEL: "your-model-alias"
+            # GOOGLE_MAPS_API_KEY: "..."
             # Tuning knobs, defaults shown:
             # TRANSCRIBE_CONCURRENCY: "1"
             # FFMPEG_TIMEOUT: "300"

@@ -21,6 +21,7 @@ the service, `insta-parser-ops` for running it.
 | `POST` | `/transcribe` | Transcribe the audio with faster-whisper |
 | `POST` | `/extract-frames` | Grab scene-change frames as PNGs |
 | `POST` | `/ocr` | OCR the extracted frames, deduping near-identical results |
+| `POST` | `/extract-places` | Extract place mentions and resolve them via Google Maps (optional, see below) |
 | `POST` | `/process` | **Async.** Queues the full pipeline, returns `202` + a `job_id` |
 | `GET` | `/jobs/{job_id}` | Status/result of a `/process` run |
 | `DELETE` | `/jobs/{job_id}` | Delete a job's files |
@@ -48,6 +49,13 @@ minutes, so it returns immediately and you poll `/jobs/{job_id}`.
 | `SCENE_THRESHOLD` | `0.3` | ffmpeg scene-change sensitivity (higher = fewer frames) |
 | `OCR_DEDUPE_THRESHOLD` | `90` | rapidfuzz similarity (0-100) above which consecutive OCR text is dropped as a duplicate |
 | `LOG_LEVEL` | `INFO` | Python logging level |
+| `LITELLM_BASE_URL` | unset | Base URL of the self-hosted litellm proxy, **without** a `/v1` suffix (e.g. `http://172.17.0.1:4000`) |
+| `LITELLM_API_KEY` | unset | Bearer key for the litellm proxy, if it requires one |
+| `LITELLM_MODEL` | unset | Model alias already registered in litellm (e.g. a local Ollama model) to use for place extraction |
+| `LITELLM_TIMEOUT` | `60` | Timeout (seconds) for the litellm extraction call |
+| `PLACE_EXTRACTION_MAX_CHARS` | `4000` | How much combined caption/transcript/OCR text to send to the model |
+| `GOOGLE_MAPS_API_KEY` | unset | Google Maps Places API (New) key, used to resolve extracted places to a rating + Maps URL |
+| `GOOGLE_MAPS_TIMEOUT` | `10` | Timeout (seconds) for each Places API lookup |
 
 ### Optional authenticated Instagram session
 
@@ -104,7 +112,9 @@ curl -sX POST $BASE/process \
 # Poll until status is "done" (or "error")
 curl -s $BASE/jobs/3f1c...
 # => {"job_id":"3f1c...","status":"running","step":"transcribe","result":null,"error":null}
-# => {"job_id":"3f1c...","status":"done","step":null,"result":{"metadata":{"username":"...", ...},
+# => {"job_id":"3f1c...","status":"done","step":null,"result":{"metadata":{"username":"...",
+#     "places":[{"name":"Joe's Pizza","city":"Rome","country":"Italy","rating":4.6,
+#                "maps_url":"https://maps.google.com/?cid=..."}], ...},
 #     "transcript":{"text":"...","segments":[...]},"ocr_results":[...]},"error":null}
 ```
 
@@ -147,6 +157,36 @@ curl -sX POST $BASE/ocr \
 curl -sX DELETE $BASE/jobs/$JOB_ID
 # => {"job_id": "...", "status": "deleted"}
 ```
+
+## Place-metadata enrichment (optional)
+
+If configured, `/process` (and the standalone `/extract-places` step) pull
+place mentions — restaurants, landmarks, cities — out of the reel's caption,
+tagged location, transcript, and OCR text, and attach them as
+`metadata.places`: an array of `{name, city, country, rating, maps_url}`.
+
+This is two independent, optional pieces:
+
+1. **Extraction** goes through the existing self-hosted `litellm` proxy
+   (`private_apps/litellm`) rather than adding a new model dependency to this
+   service — point `LITELLM_MODEL` at whatever model alias you've registered
+   there (a local Ollama model or otherwise). Set `LITELLM_BASE_URL` to the
+   proxy's base URL. **Note:** insta-parser runs on the default bridge
+   network and litellm sits on its own compose network, so — same caveat as
+   reaching insta-parser itself from n8n (see "Reaching the service" in the
+   API skill) — a container name won't resolve; use the host's `docker0`
+   gateway IP (typically `172.17.0.1`) or LAN/Tailscale address instead.
+2. **Resolution** looks each extracted place up via the [Google Maps Places
+   API (New)](https://developers.google.com/maps/documentation/places/web-service/text-search)
+   for a rating and canonical Maps URL. Requires a `GOOGLE_MAPS_API_KEY` with
+   that API enabled on its Google Cloud project — each lookup is a billable
+   request.
+
+Leave either unset and that piece is simply omitted: no `LITELLM_MODEL` means
+`places` extraction doesn't run at all (no `places` key added); no
+`GOOGLE_MAPS_API_KEY` means extracted places still come back but with
+`rating`/`maps_url` set to `null`. A failed litellm or Maps call is logged and
+treated the same as unconfigured — it never fails `/process`.
 
 ## Notes
 

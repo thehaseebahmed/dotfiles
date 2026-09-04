@@ -39,3 +39,32 @@ SCENE_THRESHOLD = os.environ.get("SCENE_THRESHOLD", "0.3")
 OCR_DEDUPE_THRESHOLD = float(os.environ.get("OCR_DEDUPE_THRESHOLD", "90"))
 
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
+
+# Optional place-metadata enrichment. Both are independent and optional: leave
+# either unset and that piece of enrichment is skipped rather than failing
+# /process, since this is metadata on top of the core result, not a hard
+# dependency of it.
+#
+# Extraction goes through the existing self-hosted litellm proxy so it can
+# point at whatever model you have registered there (a local Ollama model or
+# otherwise) rather than adding a new dependency to this service. Set
+# LITELLM_BASE_URL to the proxy's OpenAI-compatible base URL *without* a /v1
+# suffix (e.g. "http://172.17.0.1:4000" — see the litellm/n8n cross-container
+# networking note in the README for why the docker0 gateway IP is usually
+# needed instead of a container name), and LITELLM_MODEL to a model alias
+# already registered in litellm. LITELLM_API_KEY is only needed if the proxy
+# requires one.
+LITELLM_BASE_URL = os.environ.get("LITELLM_BASE_URL")
+LITELLM_API_KEY = os.environ.get("LITELLM_API_KEY")
+LITELLM_MODEL = os.environ.get("LITELLM_MODEL")
+LITELLM_TIMEOUT = int(os.environ.get("LITELLM_TIMEOUT", "60"))
+
+# How much combined text (caption + tagged location + transcript + OCR) to send
+# to the model, in characters — bounds token usage/latency on long reels.
+PLACE_EXTRACTION_MAX_CHARS = int(os.environ.get("PLACE_EXTRACTION_MAX_CHARS", "4000"))
+
+# Google Maps Places API (New) key, used to resolve each extracted place to a
+# rating and canonical Maps URL. Needs the "Places API (New)" enabled on the
+# associated Google Cloud project; each lookup is a billable request.
+GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
+GOOGLE_MAPS_TIMEOUT = int(os.environ.get("GOOGLE_MAPS_TIMEOUT", "10"))

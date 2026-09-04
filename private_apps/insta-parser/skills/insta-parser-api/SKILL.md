@@ -77,7 +77,9 @@ curl -s http://localhost:8420/jobs/3f1c9a2b...
   "result": {
     "metadata": { "shortcode": "ABC123xyz", "username": "some_account", "caption": "...",
                   "timestamp": "2026-01-02T03:04:05", "like_count": 1234,
-                  "comment_count": 56, "location": "Amsterdam" },
+                  "comment_count": 56, "location": "Amsterdam",
+                  "places": [ { "name": "Joe's Pizza", "city": "Rome", "country": "Italy",
+                                "rating": 4.6, "maps_url": "https://maps.google.com/?cid=..." } ] },
     "transcript": { "text": "full transcript ...", "language": "en",
                     "segments": [ { "start": 0.0, "end": 1.5, "text": "..." } ] },
     "ocr_results": [ { "text": "ON SCREEN TEXT", "confidence": 92.4 } ]
@@ -111,6 +113,7 @@ All take `{"job_id": "..."}` except `/download`, which starts the job.
 | `POST /transcribe` | `{job_id, text, segments, language}` |
 | `POST /extract-frames` | `{job_id, frames: [path, ...]}` |
 | `POST /ocr` | `{job_id, results: [{frame, text, confidence}]}` |
+| `POST /extract-places` | `{job_id, places: [{name, city, country, rating, maps_url}]}` |
 | `DELETE /jobs/{job_id}` | `{job_id, status: "deleted"}` |
 
 These are synchronous — each returns its result directly.
@@ -137,6 +140,13 @@ it.) `/process` cleans up after itself automatically.
   text. When summarizing, reconcile the three rather than concatenating them.
 - With default settings `/process` omits `video_path` and per-frame paths,
   because those files are deleted once the job completes.
+- **`metadata.places`** is optional enrichment (a local model extracts place
+  mentions, then Google Maps resolves them) — see the `insta-parser-ops`
+  skill for how it's configured. If the service isn't configured for it,
+  `places` is simply absent from `metadata`, not an error. If Maps
+  resolution isn't configured but extraction is, entries still appear with
+  `rating`/`maps_url` as `null`. Don't treat a missing/empty `places` as a
+  sign the reel has no places in it — treat it as "not verified."
 
 ## Errors
 

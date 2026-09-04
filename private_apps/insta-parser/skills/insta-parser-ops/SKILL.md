@@ -166,6 +166,37 @@ Set in `docker-compose.yaml` under `environment:`, then `docker compose up -d`.
 | `FFMPEG_TIMEOUT` | `300` | Raise only if long videos legitimately time out |
 | `WORK_DIR` | `/data` | Leave alone — must stay on the mounted volume |
 | `LOG_LEVEL` | `INFO` | `DEBUG` when diagnosing |
+| `LITELLM_BASE_URL` / `LITELLM_MODEL` | unset | Set both to enable place extraction via the self-hosted litellm proxy |
+| `GOOGLE_MAPS_API_KEY` | unset | Set to resolve extracted places to a rating + Maps URL |
+
+## Place-metadata enrichment (`metadata.places`) failing or missing
+
+This is optional, best-effort enrichment layered on top of the core pipeline
+— it never fails `/process` itself, so "places is missing/empty" is a config
+or reachability question, not a crash to chase in the main logs.
+
+- **`places` key never appears at all** — `LITELLM_BASE_URL` and/or
+  `LITELLM_MODEL` aren't set. Check `docker compose config` for both.
+- **`places` appears but `rating`/`maps_url` are always `null`** —
+  `GOOGLE_MAPS_API_KEY` isn't set, or the "Places API (New)" isn't enabled on
+  its Google Cloud project, or billing isn't enabled there. Extraction still
+  worked; only the Maps lookup didn't.
+- **Warnings like `Place extraction via litellm failed: ...`** in the logs —
+  same cross-container networking issue as reaching insta-parser itself from
+  n8n (see the ops note in `insta-parser-api`): a bare container name for
+  `LITELLM_BASE_URL` won't resolve across compose networks. Use the host's
+  `docker0` gateway IP (`172.17.0.1`) or LAN/Tailscale address, and confirm
+  with `docker compose exec insta-parser curl -s $LITELLM_BASE_URL/health`
+  (or whatever health path litellm exposes).
+- **Warnings like `Google Maps lookup failed for ...`** — check the key is
+  valid and unrestricted for server-side use, and that the project has
+  billing enabled; the Places API (New) doesn't work on a fresh key with no
+  billing account attached.
+- **`Place extraction model did not return a JSON array`** — the configured
+  model isn't following the extraction prompt's JSON-only instruction (common
+  with very small/instruction-weak models). Try a larger or more
+  instruction-tuned model alias in litellm; nothing to fix here in
+  insta-parser itself.
 
 ## Debugging one specific job
 

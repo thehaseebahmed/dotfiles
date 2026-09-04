@@ -17,6 +17,7 @@ from PIL import Image
 from rapidfuzz import fuzz
 
 from . import config
+from . import places as places_module
 
 logger = logging.getLogger("insta_parser")
 
@@ -303,3 +304,20 @@ def run_ocr(job_dir: Path) -> list[dict]:
 
     (job_dir / "ocr.json").write_text(json.dumps(results, indent=2))
     return results
+
+
+def build_places(job_dir: Path) -> list[dict]:
+    metadata_path = job_dir / "metadata.json"
+    if not metadata_path.exists():
+        raise PipelineError(f"No downloaded metadata for this job (expected {metadata_path}); call /download first")
+    metadata = json.loads(metadata_path.read_text())
+
+    transcript_path = job_dir / "transcript.json"
+    transcript = json.loads(transcript_path.read_text()) if transcript_path.exists() else None
+
+    ocr_path = job_dir / "ocr.json"
+    ocr_results = json.loads(ocr_path.read_text()) if ocr_path.exists() else None
+
+    places = places_module.build_places_metadata(metadata, transcript, ocr_results)
+    (job_dir / "places.json").write_text(json.dumps(places, indent=2))
+    return places
