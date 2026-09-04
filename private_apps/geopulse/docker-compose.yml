@@ -24,7 +24,7 @@ services:
         fi
 
   geopulse-backend:
-    image: tess1o/geopulse-backend:1.33.0-native
+    image: tess1o/geopulse-backend:1.38.1-native
     #image: ghcr.io/tess1o/geopulse-backend:${GEOPULSE_VERSION}-native
     # For old CPUs (x86-64-v2) or Raspberry Pi 3/4, use compatible image:
     #image: tess1o/geopulse-backend:${GEOPULSE_VERSION}-native-compat
