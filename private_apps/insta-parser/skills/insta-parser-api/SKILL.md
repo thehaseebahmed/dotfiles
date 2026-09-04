@@ -34,6 +34,14 @@ Confirm reachability before anything else:
 curl -s http://localhost:8420/health     # => {"status":"ok"}
 ```
 
+**A CLI wrapper exists** at `../../cli/` (`insta-parser job start/status/wait/delete`,
+`insta-parser health`) covering the `/process`+`/jobs` path below with
+built-in polling (`job wait`) — see `cli/README.md`. It's not published to
+npm; run it from a clone of this repo (`npm link` inside `cli/`, or
+`node cli/bin/insta-parser.js ...` directly). Prefer it over hand-rolling
+`curl` + a poll loop when working from a shell; use `curl` directly for the
+per-step endpoints below, which the CLI doesn't cover.
+
 ## Decide which path to take
 
 **Want everything (the normal case)?** Use `POST /process` and poll. It runs

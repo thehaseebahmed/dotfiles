@@ -9,7 +9,9 @@ per-step endpoints can be called independently and re-run without stepping
 on each other.
 
 Agent-facing docs live in [`skills/`](skills/) — `insta-parser-api` for calling
-the service, `insta-parser-ops` for running it.
+the service, `insta-parser-ops` for running it. A minimal CLI wrapper over the
+`/process`+`/jobs` path lives in [`cli/`](cli/) — see its README for setup;
+it's not published to npm, run it from a clone of this repo.
 
 ## Endpoints
 
