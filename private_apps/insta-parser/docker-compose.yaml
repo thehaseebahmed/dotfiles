@@ -1,7 +1,7 @@
 services:
     insta-parser:
         container_name: insta-parser
-        image: ghcr.io/thehaseebahmed/insta-parser:v0.1.0
+        image: ghcr.io/thehaseebahmed/insta-parser:pr-1-93c84ed
         restart: always
         ports:
             - 8420:8000
