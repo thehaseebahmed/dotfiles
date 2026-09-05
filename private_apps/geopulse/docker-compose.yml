@@ -53,7 +53,7 @@ services:
       start_period: 5s
 
   geopulse-ui:
-    image: tess1o/geopulse-ui:1.33.0
+    image: tess1o/geopulse-ui:1.38.1
     #image: ghcr.io/tess1o/geopulse-ui:${GEOPULSE_VERSION}
     container_name: geopulse-ui
     restart: unless-stopped
