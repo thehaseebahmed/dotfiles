@@ -47,6 +47,9 @@ services:
     security_opt:
       - no-new-privileges:true
     stop_grace_period: 30s
+    depends_on:
+      postgres:
+        condition: service_healthy
     healthcheck:
       test:
         [
@@ -58,23 +61,4 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 20s
-
-  bookorbit_db:
-    container_name: bookorbit-db
-    image: pgvector/pgvector:pg18
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER?required}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?required}
-      POSTGRES_DB: ${POSTGRES_DB?required}
-      PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      - ./data/postgres:/var/lib/postgresql/data
-    healthcheck:
-      test:
-        ["CMD-SHELL", 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
-      interval: 10s
-      timeout: 5s
-      retries: 10
       start_period: 20s

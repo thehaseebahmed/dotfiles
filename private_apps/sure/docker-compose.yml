@@ -80,6 +80,8 @@ services:
     depends_on:
       sure_redis:
         condition: service_healthy
+      postgres:
+        condition: service_healthy
     dns:
       - 8.8.8.8
       - 1.1.1.1
@@ -94,25 +96,13 @@ services:
     depends_on:
       sure_redis:
         condition: service_healthy
+      postgres:
+        condition: service_healthy
     dns:
       - 8.8.8.8
       - 1.1.1.1
     environment:
       <<: *rails_env
-
-  sure_db:
-    image: postgres:16
-    container_name: sure_db
-    restart: unless-stopped
-    volumes:
-      - sure_postgres-data:/var/lib/postgresql/data
-    environment:
-      <<: *db_env
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
   sure_backup:
     profiles:
@@ -123,18 +113,18 @@ services:
     volumes:
       - /opt/sure-data/backups:/backups # Change this path to your desired backup location on the host machine
     environment:
-      # sure_db's own (pre-rotation) credentials — not the shared instance's
-      # POSTGRES_USER/PASSWORD above, since this targets the old local db.
-      - POSTGRES_HOST=sure_db
-      - POSTGRES_DB=sure_production
-      - POSTGRES_USER=sure_user
-      - POSTGRES_PASSWORD=sure_password # pipelock:ignore
+      # Backs up sure's own database on the shared `postgres` instance.
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - SCHEDULE=@daily # Runs once a day at midnight
       - BACKUP_KEEP_DAYS=7 # Keeps the last 7 days of backups
       - BACKUP_KEEP_WEEKS=4 # Keeps 4 weekly backups
       - BACKUP_KEEP_MONTHS=6 # Keeps 6 monthly backups
     depends_on:
-      - sure_db
+      postgres:
+        condition: service_healthy
 
   sure_redis:
     image: redis:8.8.0
@@ -152,9 +142,6 @@ volumes:
   sure_app-storage:
     external: true
     name: sure_app-storage
-  sure_postgres-data:
-    external: true
-    name: sure_postgres-data
   sure_redis-data:
     external: true
     name: sure_redis-data
