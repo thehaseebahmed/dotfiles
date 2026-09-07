@@ -127,7 +127,7 @@ services:
         condition: service_healthy
 
   sure_redis:
-    image: redis:8.8.0
+    image: redis:8.10.1
     container_name: sure_redis
     restart: unless-stopped
     volumes:
