@@ -45,6 +45,8 @@
                   url: https://hardcover.app/@thehaseebahmed/books/want-to-read
             - title: Network
               links:
+                - title: ngrok Endpoints
+                  url: https://dashboard.ngrok.com/endpoints/
                 - title: Tailscale Machines
                   url: https://console.tailscale.com/admin/machines
                 - title: Tailscale Services

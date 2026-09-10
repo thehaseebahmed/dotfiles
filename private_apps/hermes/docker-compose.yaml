@@ -13,6 +13,7 @@ services:
     volumes:
       - ~/volumes/hermes:/opt/data
       - ~/volumes/obsidian:/opt/data/obsidian
+      - ./.env.default:/opt/data/.env
       - ./.gitconfig:/opt/data/.gitconfig  
     env_file: .env
     deploy:
