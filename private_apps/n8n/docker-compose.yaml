@@ -13,15 +13,8 @@ services:
         - ~/volumes/n8n:/home/node/.n8n
         - ~/volumes/booklore/read_later:/home/node/.n8n-files/read_later:rw
 
-      environment:
-        PUID: 1000
-        GUID: 1000
-        GENERIC_TIMEZONE: "Europe/Amsterdam"
-        NODE_FUNCTION_ALLOW_EXTERNAL: "@mozilla/readability,linkedom,turndown"
-        WEBHOOK_URL: "https://n8n.lykoi-mark.ts.net"
-        N8N_EDITOR_BASE_URL: "https://n8n.lykoi-mark.ts.net"
-        N8N_HOST: "n8n.lykoi-mark.tsn.net"
-        N8N_PROTOCOL: "https"
+      env_file: .env
+      
     n8n-cache:
       image: redis:7.4-alpine
       container_name: n8n-cache
