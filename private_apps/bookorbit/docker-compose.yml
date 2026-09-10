@@ -2,7 +2,7 @@ name: bookorbit
 services:
   bookorbit:
     container_name: bookorbit-app
-    image: ghcr.io/bookorbit/bookorbit:2.8.1
+    image: ghcr.io/bookorbit/bookorbit:2.9.0
     restart: unless-stopped
     init: true
     env_file:
