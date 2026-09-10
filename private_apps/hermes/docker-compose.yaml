@@ -10,6 +10,7 @@ services:
     ports:
       - "8642:8642"   # gateway API
       - "9119:9119"   # dashboard (only reached when HERMES_DASHBOARD=1)
+      - "8644:8644"
     volumes:
       - ~/volumes/hermes:/opt/data
       - ~/volumes/obsidian:/opt/data/obsidian
