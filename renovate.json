@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    "mergeConfidence:all-badges",
-    "github>thehaseebahmed/dotfiles:smart-merge"
+    "mergeConfidence:all-badges"
   ]
 }
