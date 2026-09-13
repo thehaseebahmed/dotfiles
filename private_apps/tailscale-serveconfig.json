@@ -1,0 +1,133 @@
+{
+  "version": "0.0.1",
+  "services": {
+    "svc:actual-budget": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:5006"
+      }
+    },
+    "svc:airtrail": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:3000"
+      }
+    },
+    "svc:arcane": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:3552"
+      }
+    },
+    "svc:bento-pdf": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:3004"
+      }
+    },
+    "svc:bookorbit": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:3003"
+      }
+    },
+    "svc:geopulse": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:5555"
+      }
+    },
+    "svc:hermes": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:9119",
+        "tcp:8644": "http://127.0.0.1:8644"
+      }
+    },
+    "svc:hindsight": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:9999",
+        "tcp:8888": "http://127.0.0.1:9998"
+      }
+    },
+    "svc:homelab": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:7080"
+      }
+    },
+    "svc:homelable": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:8083"
+      }
+    },
+    "svc:immich": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:2283"
+      }
+    },
+    "svc:it-tools": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:8082"
+      }
+    },
+    "svc:jellyfin": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:8096"
+      }
+    },
+    "svc:litellm": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:4000"
+      }
+    },
+    "svc:n8n": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:5678"
+      }
+    },
+    "svc:ntfy": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:8111"
+      }
+    },
+    "svc:ollama": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:11434"
+      }
+    },
+    "svc:open-wearables": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:3010"
+      }
+    },
+    "svc:openclaw": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:18789"
+      }
+    },
+    "svc:pocket-id": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:1411"
+      }
+    },
+    "svc:resilio-002": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:8888",
+        "tcp:55555": "http://127.0.0.1:55555"
+      }
+    },
+    "svc:sure": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:3333"
+      }
+    },
+    "svc:vaultwarden": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:9080"
+      }
+    },
+    "svc:wakapi": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:3222"
+      }
+    },
+    "svc:zerobyte-002": {
+      "endpoints": {
+        "tcp:443": "http://127.0.0.1:4096"
+      }
+    }
+  }
+}
