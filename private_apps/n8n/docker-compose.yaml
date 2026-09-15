@@ -16,7 +16,7 @@ services:
       env_file: .env
       
     n8n-cache:
-      image: redis:7.4-alpine
+      image: redis:8.10-alpine
       container_name: n8n-cache
 
       restart: unless-stopped
