@@ -1,21 +1,12 @@
 # Place a copy of this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
 
-# Config version for compatibility and deprecations
-# See: https://nikitabobko.github.io/AeroSpace/guide#config-version
-# Fallback value (if you omit the key): config-version = 1
-config-version = 2
-
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = []
 
 # Start AeroSpace at login
 start-at-login = false
-
-# Automatically reload the config when the config file is saved
-# After setting this to true, reload once manually to start the auto-reloading
-auto-reload-config = false
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -46,21 +37,6 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 # Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
 automatically-unhide-macos-hidden-apps = false
 
-# List of workspaces that should stay alive even when they contain no windows,
-# even when they are invisible.
-# This config option is only available since 'config-version = 2'
-# Fallback value (if you omit the key): persistent-workspaces = []
-persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
-                         "C", "D", "E", "F", "G", "I", "M", "N", "O", "P", "Q",
-                         "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-
-# A callback that runs every time binding mode changes
-# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
-# See: https://nikitabobko.github.io/AeroSpace/commands#mode
-on-mode-changed = []
-
-focus-follows-mouse.enabled = false
-
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 key-mapping.preset = 'qwerty'
@@ -84,16 +60,16 @@ gaps.outer.right =      0
 # See: https://nikitabobko.github.io/AeroSpace/guide#on-window-detected-callback
 on-window-detected = [
     {
-        if = 'test %{app-bundle-id} = com.bitwarden.desktop',
+        if.app-id = 'com.bitwarden.desktop',
         run = 'layout floating',
     },
     {
-        if = 'test %{app-bundle-id} = com.google.Chrome',
+        if.app-id = 'com.google.Chrome',
         run = 'move-node-to-workspace 1',
     },
     {
         # TODO: verify Zen's real bundle id with `aerospace list-apps` and fix if different
-        if = 'test %{app-bundle-id} = app.zen-browser.zen',
+        if.app-id = 'app.zen-browser.zen',
         run = 'move-node-to-workspace 1',
     },
 ]
