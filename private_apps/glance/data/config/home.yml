@@ -5,6 +5,16 @@
   columns:
     - size: full
       widgets:
+        - type: rss
+          title: News
+          style: horizontal-cards-2
+          feeds:
+            - url: https://adjusted-allegedly-coyote.ngrok-free.app/webhook/daily-dispatch/rss.xml
+              title: Daily Dispatch
+              limit: 10
+              headers:
+                X-API-KEY: ${RSS_FEED_TOKEN}
+
         - type: custom-api
           title: Routers
           cache: 5m
