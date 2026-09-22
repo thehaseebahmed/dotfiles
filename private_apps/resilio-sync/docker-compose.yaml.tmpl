@@ -11,11 +11,8 @@ services:
     volumes:
       - ~/volumes/resilio-sync/config:/config
       - ~/volumes/resilio-sync/sync/authenticator:/sync/authenticator
-      - ~/volumes/data/media:/sync/data/media
+      - ~/volumes/data:/sync/data
       - ~/volumes/obsidian:/sync/obsidian
-{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
-      - ~/volumes/data/ai-models:/sync/data/ai-models
-{{- end }} 
 
     ports:
       - 8888:8888
