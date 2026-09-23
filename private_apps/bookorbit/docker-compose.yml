@@ -33,6 +33,7 @@ services:
       - ~/volumes/bookorbit/books:/books_uploaded
       - ~/volumes/bookorbit/read_later:/read_later
       - ./data/app:/data
+      - ~/volumes/data/torrents:/data/torrents
     read_only: true
     tmpfs:
       - /tmp
