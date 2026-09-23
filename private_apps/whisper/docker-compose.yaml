@@ -1,0 +1,14 @@
+services:
+  whisper:
+    image: hwdsl2/whisper-server
+    container_name: whisper
+    restart: always
+    
+    ports:
+      - "127.0.0.1:9000:9000/tcp"
+    
+    env_file: .env
+    volumes:
+      - ~/volumes/whisper:/var/lib/whisper
+      - ./.env:/whisper.env:ro
+      
