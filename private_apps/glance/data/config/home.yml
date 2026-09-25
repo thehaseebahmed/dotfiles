@@ -9,7 +9,7 @@
           title: News
           style: horizontal-cards-2
           feeds:
-            - url: https://adjusted-allegedly-coyote.ngrok-free.app/webhook/daily-dispatch/rss.xml
+            - url: https://n8n.thehaseebahmed.com/webhook/daily-dispatch/rss.xml
               title: Daily Dispatch
               limit: 15
               headers:

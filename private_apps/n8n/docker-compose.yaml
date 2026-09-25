@@ -2,30 +2,40 @@ services:
     n8n:
       image: ghcr.io/n8n-io/n8n:2.41.3
       container_name: n8n
-        
       restart: unless-stopped
-      pull_policy: weekly
 
       ports:
-        - 5678:5678
+        - "127.0.0.1:5678:5678"
 
       volumes:
         - ~/volumes/n8n:/home/node/.n8n
         - ~/volumes/booklore/read_later:/home/node/.n8n-files/read_later:rw
 
       env_file: .env
-      
+
+    n8n-python-runner:
+      build:
+        context: .
+        dockerfile: Dockerfile.python-runner
+      container_name: n8n-python-runner
+      restart: unless-stopped
+      env_file: .env
+      depends_on:
+        - n8n
+      volumes:
+        - n8n_python_runner_config:/home/runner/.config
+
     n8n-cache:
       image: redis:7.4-alpine
       container_name: n8n-cache
-
       restart: unless-stopped
-      
+
       ports:
-        - 5679:6379
+        - "127.0.0.1:5679:6379"
 
       volumes:
         - redis_data:/data
 
 volumes:
   redis_data:
+  n8n_python_runner_config:
