@@ -6,7 +6,7 @@ alias cza='chezmoi apply -v'
 alias czd='chezmoi diff'
 
 alias dcd='docker compose down'
-alias dcr='docker compose down && sudo docker compose up -d'
+alias dcr='docker compose restart'
 alias dcu='docker compose up -d'
 
 alias hermes='docker exec -it -u hermes hermes /opt/hermes/.venv/bin/python /opt/hermes/hermes'
