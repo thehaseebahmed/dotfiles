@@ -26,7 +26,7 @@ services:
         - n8n_python_runner_config:/home/runner/.config
 
     n8n-cache:
-      image: redis:7.4-alpine
+      image: redis:8.10-alpine
       container_name: n8n-cache
       restart: unless-stopped
 
