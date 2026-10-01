@@ -29,11 +29,13 @@
 
         - type: bookmarks
           groups:
-            - title: Agent Toolkit
+            - title: AI Toolkit
               links:
+                - title: AgentChat
+                  url: https://app.agentchat.me/
                 - title: AgentMail
                   url: https://console.agentmail.to/dashboard/inboxes/thehermesagent@agentmail.to
-                - title: Ollama Cloud
+                - title: Ollama
                   url: https://ollama.com/settings
             - title: Reading
               links:
@@ -43,12 +45,12 @@
                   url: https://hardcover.app/@thehaseebahmed/books/currently-reading
                 - title: Want to Read
                   url: https://hardcover.app/@thehaseebahmed/books/want-to-read
-            - title: Network
+            - title: Cloud
               links:
-                - title: Cloudflare Tunnels
+                - title: Cloudflared
                   url: https://dash.cloudflare.com/4c9507243477265b69336f2d1fc3883e/tunnels
-                - title: ngrok Endpoints
-                  url: https://dashboard.ngrok.com/endpoints/
+                - title: Netlify
+                  url: https://app.netlify.com/teams/thehaseebahmed/projects
                 - title: Tailscale
                   url: https://console.tailscale.com/admin
 
