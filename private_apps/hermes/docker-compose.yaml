@@ -2,20 +2,22 @@ services:
   hermes:
     build:
       context: .
-    # image: nousresearch/hermes-agent:latest
     container_name: hermes
     restart: unless-stopped
     command: hermes gateway run
-    pull_policy: daily
     ports:
-      - "8642:8642"   # gateway API
-      - "9119:9119"   # dashboard (only reached when HERMES_DASHBOARD=1)
-      - "8644:8644"
+      - "127.0.0.1:8642:8642"   # gateway API
+      - "127.0.0.1:9119:9119"   # dashboard (only reached when HERMES_DASHBOARD=1)
+      - "127.0.0.1:8644:8644"
     volumes:
       - ~/volumes/hermes:/opt/data
       - ~/volumes/obsidian:/opt/data/obsidian
       - ./.env.default:/opt/data/.env
       - ./.env.lobster:/opt/data/profiles/lobster/.env
+      - ./.env.coder:/opt/data/profiles/coder/.env
+      - ./.env.ops:/opt/data/profiles/ops/.env
+      - ./homelab-id_ed25519:/opt/data/.ssh/id_ed25519
+      - ./.env.zero:/opt/data/profiles/zero/.env
       - ./.gitconfig:/opt/data/.gitconfig  
     env_file: .env
     deploy:
