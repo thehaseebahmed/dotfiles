@@ -17,8 +17,6 @@ services:
     ports:
       - "9998:8888"   # API
       - "9999:9999"   # Web UI
-    volumes:
-      - ~/volumes/hindsight/.pg0:/home/hindsight/.pg0   # embedded PostgreSQL
     env_file:
       - .env
     environment:
@@ -28,9 +26,8 @@ services:
       HINDSIGHT_API_LLM_API_KEY: ${LLM_API_KEY}
       HINDSIGHT_API_LLM_MODEL: ${LLM_MODEL:-mimo-v2.5-pro}
 
-      # ── Embedded DB (default) ──
-      # Uncomment below + add a postgres service for external DB:
-      # HINDSIGHT_API_DATABASE_URL: postgresql://hindsight:***@postgres:5432/hindsight
+      # ── Shared PostgreSQL ──
+      HINDSIGHT_API_DATABASE_URL: ${DATABASE_URL}
       HINDSIGHT_API_RUN_MIGRATIONS_ON_STARTUP: "true"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8888/health"]
