@@ -11,7 +11,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
        > /etc/apt/sources.list.d/github-cli.list \
     && apt-get update \
     && apt-get install -y gh \
-    && apt-get install -y chromium \
     && rm -rf /var/lib/apt/lists/*
 
 # JIRA CLI
@@ -25,4 +24,4 @@ RUN apt-get update && apt-get install -y acli
 RUN VIRTUAL_ENV=/opt/hermes/.venv uv pip install "git+https://github.com/thehaseebahmed/bunq-cli"
 RUN VIRTUAL_ENV=/opt/hermes/.venv uv pip install okflint
 
-RUN npm install -g chromedriver
+RUN npx playwright install chrome

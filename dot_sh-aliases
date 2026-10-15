@@ -4,20 +4,19 @@ alias awsume="source awsume"
 
 alias cza='chezmoi apply -v'
 alias czd='chezmoi diff'
+alias cze='chezmoi edit'
 
 alias dcd='docker compose down'
 alias dcr='docker compose restart'
 alias dcu='docker compose up -d'
+alias dcuf='docker compose up -d --force-recreate'
 
 alias hermes='docker exec -it -u hermes hermes /opt/hermes/.venv/bin/python /opt/hermes/hermes'
 alias hermes-bash='docker exec -it -u hermes hermes bash'
-alias accountant='hermes -p accountant'
 alias armish='hermes -p armish'
-alias butler='hermes -p butler'
-alias librarian='hermes -p librarian'
+alias coder='hermes -p coder'
 alias lobster='hermes -p lobster'
-alias ntfy='hermes -p ntfy'
-alias traveller='hermes -p traveller'
+alias ops='hermes -p ops'
 
 alias hl1="ssh tha@homelab-001.lykoi-mark.ts.net"
 alias hl2="ssh tha@homelab-002.lykoi-mark.ts.net"
