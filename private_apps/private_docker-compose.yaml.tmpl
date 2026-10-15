@@ -1,8 +1,12 @@
 include:
   - path: arcane/docker-compose.yaml
+{{- if hasPrefix "homelab-" .chezmoi.fqdnHostname }}
   - path: resilio-sync/docker-compose.yaml
   - path: zerobyte/docker-compose.yaml
-{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
+{{- end }}
+{{- if eq .chezmoi.fqdnHostname "Haseebs-SER9" }}
+  - path: hermes/docker-compose.yaml
+{{- else if eq .chezmoi.fqdnHostname "homelab-002" }}
   - path: actual-budget/docker-compose.yaml
   - path: airtrail/docker-compose.yml
   - path: bento-pdf/docker-compose.yml

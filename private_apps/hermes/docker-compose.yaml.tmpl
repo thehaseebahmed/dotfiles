@@ -10,6 +10,8 @@ services:
       - "127.0.0.1:9119:9119"   # dashboard (only reached when HERMES_DASHBOARD=1)
       - "127.0.0.1:8644:8644"
     volumes:
+      - ./.gitconfig:/opt/data/.gitconfig
+{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
       - ~/volumes/hermes:/opt/data
       - ~/volumes/obsidian:/opt/data/obsidian
       - ./.env.default:/opt/data/.env
@@ -18,10 +20,19 @@ services:
       - ./.env.ops:/opt/data/profiles/ops/.env
       - ./homelab-id_ed25519:/opt/data/.ssh/id_ed25519
       - ./.env.zero:/opt/data/profiles/zero/.env
-      - ./.gitconfig:/opt/data/.gitconfig  
+{{- else if eq .chezmoi.fqdnHostname "Haseebs-SER9" }}
+      - hermes-data:/opt/data
+      - ./.env.coder:/opt/data/.env
+{{- end }}
     env_file: .env
+{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
     deploy:
       resources:
         limits:
           memory: 4G
           cpus: "2.0"
+{{- end }}
+{{ if eq .chezmoi.fqdnHostname "Haseebs-SER9" }}
+volumes:
+  hermes-data:
+{{- end }}
