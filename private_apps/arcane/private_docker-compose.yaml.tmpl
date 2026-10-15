@@ -3,7 +3,7 @@
 
 services:
   arcane:
-    image: ghcr.io/getarcaneapp/arcane:v2.10.1
+    image: ghcr.io/getarcaneapp/arcane:v2.16.1
     container_name: arcane
     restart: unless-stopped
     
@@ -19,5 +19,5 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
-          memory: 512M
+          cpus: '1'
+          memory: 1G
