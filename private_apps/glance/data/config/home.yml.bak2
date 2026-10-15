@@ -1,0 +1,157 @@
+- name: Home
+  width: slim
+  hide-desktop-navigation: false
+  center-vertically: true
+  columns:
+    - size: full
+      widgets:
+        - type: monitor
+          cache: 15m
+          title: Failing
+          hide-header: true
+          show-failing-only: true
+          sites:
+            - $include: services/a.yml
+            - $include: services/b.yml
+            - $include: services/g.yml
+            - $include: services/h.yml
+            - $include: services/i.yml
+            - $include: services/j.yml
+            - $include: services/l.yml
+            - $include: services/n.yml
+            - $include: services/o.yml
+            - $include: services/p.yml
+            - $include: services/q.yml
+            - $include: services/r.yml
+            - $include: services/s.yml
+            - $include: services/w.yml
+            - $include: services/z.yml
+
+        - type: bookmarks
+          groups:
+            - title: AI Toolkit
+              links:
+                - title: AgentMail
+                  url: https://console.agentmail.to/dashboard/inboxes/thehermesagent@agentmail.to
+                - title: Nous
+                  url: https://portal.nousresearch.com
+                - title: Ollama
+                  url: https://ollama.com/settings
+            - title: AI Usage Limits
+              links:
+                - title: OpenAI Usage
+                  url: https://platform.openai.com/usage
+                - title: Anthropic Console
+                  url: https://console.anthropic.com/settings/usage
+                - title: Google AI Studio
+                  url: https://aistudio.google.com/app/usage
+                - title: OpenRouter Credits
+                  url: https://openrouter.ai/credits
+                - title: Groq Usage
+                  url: https://console.groq.com/settings/usage
+            - title: Reading
+              links:
+                - title: Hardcover
+                  url: https://hardcover.app/home
+                - title: Currently Reading
+                  url: https://hardcover.app/@thehaseebahmed/books/currently-reading
+                - title: Want to Read
+                  url: https://hardcover.app/@thehaseebahmed/books/want-to-read
+            - title: Cloud
+              links:
+                - title: Cloudflared
+                  url: https://dash.cloudflare.com/4c9507243477265b69336f2d1fc3883e/tunnels
+                - title: Netlify
+                  url: https://app.netlify.com/teams/thehaseebahmed/projects
+                - title: Tailscale
+                  url: https://console.tailscale.com/admin
+
+        - type: monitor
+          cache: 15m
+          title: A
+          sites:
+            $include: services/a.yml
+
+        - type: monitor
+          cache: 15m
+          title: B
+          sites:
+            $include: services/b.yml
+
+        - type: monitor
+          cache: 15m
+          title: G
+          sites:
+            $include: services/g.yml
+
+        - type: monitor
+          cache: 15m
+          title: H
+          sites:
+            $include: services/h.yml
+
+        - type: monitor
+          cache: 15m
+          title: I
+          sites:
+            $include: services/i.yml
+
+        - type: monitor
+          cache: 15m
+          title: J
+          sites:
+            $include: services/j.yml
+
+        - type: monitor
+          cache: 15m
+          title: L
+          sites:
+            $include: services/l.yml
+
+        - type: monitor
+          cache: 15m
+          title: N
+          sites:
+            $include: services/n.yml
+
+        - type: monitor
+          cache: 15m
+          title: O
+          sites:
+            $include: services/o.yml
+
+        - type: monitor
+          cache: 15m
+          title: P
+          sites:
+            $include: services/p.yml
+
+        - type: monitor
+          cache: 15m
+          title: Q
+          sites:
+            $include: services/q.yml
+
+        - type: monitor
+          cache: 15m
+          title: R
+          sites:
+            $include: services/r.yml
+
+        - type: monitor
+          cache: 15m
+          title: S
+          sites:
+            $include: services/s.yml
+
+        - type: monitor
+          cache: 15m
+          title: W
+          sites:
+            $include: services/w.yml
+
+        - type: monitor
+          cache: 15m
+          title: Z
+          sites:
+            $include: services/z.yml
