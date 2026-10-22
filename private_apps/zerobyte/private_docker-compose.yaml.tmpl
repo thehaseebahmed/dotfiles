@@ -10,7 +10,7 @@ services:
       volumes:
           - /var/lib/zerobyte:/var/lib/zerobyte:rshared
           - /etc/localtime:/etc/localtime:ro
-          - /home/tha/.config/rclone:/root/.config/rclone:ro
+          - /home/tha/.config/rclone:/root/.config/rclone
           - ~/volumes:/volumes
 {{- if eq .chezmoi.fqdnHostname "homelab-002" }}
           - /mnt:/mnt
@@ -28,3 +28,8 @@ services:
 
       devices:
           - /dev/fuse:/dev/fuse
+
+      deploy:
+        resources:
+          limits:
+            memory: 2G
