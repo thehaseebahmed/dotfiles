@@ -21,6 +21,7 @@ alias ops='hermes -p ops'
 alias hl1="ssh tha@homelab-001.lykoi-mark.ts.net"
 alias hl2="ssh tha@homelab-002.lykoi-mark.ts.net"
 alias hl3="ssh tha@homelab-003.lykoi-mark.ts.net"
+alias ser9="ssh 'haseeb ahmed'@haseebs-ser9.lykoi-mark.ts.net"
 
 alias stn='sudo systemctl start stress-weekly.service'
 alias stt='systemctl list-timers stress-weekly.timer'
