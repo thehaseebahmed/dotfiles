@@ -23,15 +23,9 @@ services:
 {{- else if eq .chezmoi.fqdnHostname "Haseebs-SER9" }}
       - hermes-data:/opt/data
       - ./.env.coder:/opt/data/.env
+      - /var/run/docker.sock:/var/run/docker.sock
 {{- end }}
     env_file: .env
-{{- if eq .chezmoi.fqdnHostname "homelab-002" }}
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-          cpus: "2.0"
-{{- end }}
 {{ if eq .chezmoi.fqdnHostname "Haseebs-SER9" }}
 volumes:
   hermes-data:
