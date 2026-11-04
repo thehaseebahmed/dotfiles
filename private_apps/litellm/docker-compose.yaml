@@ -1,8 +1,6 @@
 services:
   litellm:
-    build:
-      context: .
-    image: litellm-mcp:local
+    image: docker.litellm.ai/berriai/litellm:main-latest
     container_name: litellm
     restart: unless-stopped
     ports:
@@ -11,6 +9,20 @@ services:
       - .env
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      STORE_MODEL_IN_DB: "True"
+      STORE_MODEL_IN_DB: "false"
       PROXY_BASE_URL: "https://litellm.lykoi-mark.ts.net"
       LITELLM_DISABLE_NO_REDIS_WARNING: true
+      GITHUB_COPILOT_TOKEN_DIR: "/app/copilot-auth"
+    volumes:
+       - ./config.yaml:/app/config.yaml
+       - ./copilot-token:/app/copilot-auth
+    command:
+       - "--config=/app/config.yaml"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - python3 -c "import urllib.request; urllib.request.urlopen('http://localhost:4000/health/liveliness')"
+      interval: 30s  # Perform health check every 30 seconds
+      timeout: 10s   # Health check command times out after 10 seconds
+      retries: 3     # Retry up to 3 times if health check fails
+      start_period: 40s  # Wait 40 seconds after container start before beginning health checks

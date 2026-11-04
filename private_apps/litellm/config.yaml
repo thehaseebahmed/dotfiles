@@ -1,0 +1,229 @@
+model_list:
+  # ---------- Ollama (ollama.com cloud) ----------
+  - model_name: ollama/deepseek-v4.1-flash
+    litellm_params:
+      model: ollama_chat/deepseek-v4.1-flash
+      api_key: os.environ/OLLAMA_API_KEY
+      api_base: "https://ollama.com"
+    model_info:
+      max_input_tokens: 1000000
+  - model_name: ollama/minimax-m3.1-flash
+    litellm_params:
+      model: ollama_chat/minimax-m3.1-flash
+      api_key: os.environ/OLLAMA_API_KEY
+      api_base: "https://ollama.com"
+    model_info:
+      max_input_tokens: 1000000
+  - model_name: ollama/mimo-v2.6-pro
+    litellm_params:
+      model: ollama_chat/mimo-v2.6-pro
+      api_key: os.environ/OLLAMA_API_KEY
+      api_base: "https://ollama.com"
+    model_info:
+      max_input_tokens: 1048576
+
+  # ---------- OpenCode Go ----------
+  - model_name: opencode-go/glm-5.3-flash
+    litellm_params:
+      model: opencode_go/glm-5.3-flash
+      api_key: os.environ/OPENCODE_API_KEY
+  - model_name: opencode-go/deepseek-v4.1-flash
+    litellm_params:
+      model: opencode_go/deepseek-v4.1-flash
+      api_key: os.environ/OPENCODE_API_KEY
+      rpm: 288
+  - model_name: opencode-go/minimax-m3.1-flash
+    litellm_params:
+      model: opencode_go/minimax-m3.1-flash
+      api_key: os.environ/OPENCODE_API_KEY
+  - model_name: opencode-go/kimi-k3.1-pro
+    litellm_params:
+      model: opencode_go/kimi-k3.1-pro
+      api_key: os.environ/OPENCODE_API_KEY
+      rpm: 20
+  - model_name: opencode-go/mimo-v2.6-pro
+    litellm_params:
+      model: opencode_go/mimo-v2.6-pro
+      api_key: os.environ/OPENCODE_API_KEY
+      rpm: 43
+  - model_name: opencode-go/gpt-5.6-luna
+    litellm_params:
+      model: opencode_go/gpt-5.6-luna
+      api_key: os.environ/OPENCODE_API_KEY
+      rpm: 27
+  - model_name: opencode-go/gemini-4-argon
+    litellm_params:
+      model: opencode_go/gemini-4-argon
+      api_key: os.environ/OPENCODE_API_KEY
+      rpm: 5
+  - model_name: opencode-go/claude-haiku-5-5
+    litellm_params:
+      model: opencode_go/claude-haiku-5-5
+      api_key: os.environ/OPENCODE_API_KEY
+      rpm: 51
+  - model_name: opencode-go/qwen3.8-max
+    litellm_params:
+      model: opencode_go/qwen3.8-max
+      api_key: os.environ/OPENCODE_API_KEY
+      rpm: 20
+
+  # ---------- Shared aliases: 2 deployments each, balanced by least-busy ----------
+  - model_name: deepseek-v4.1-flash
+    litellm_params:
+      model: ollama_chat/deepseek-v4.1-flash
+      api_key: os.environ/OLLAMA_API_KEY
+      api_base: "https://ollama.com"
+      weight: 4
+    model_info:
+      max_input_tokens: 1000000
+  - model_name: deepseek-v4.1-flash
+    litellm_params:
+      model: opencode_go/deepseek-v4.1-flash
+      api_key: os.environ/OPENCODE_API_KEY
+      rpm: 288
+      weight: 6
+  - model_name: minimax-m3.1-flash
+    litellm_params:
+      model: ollama_chat/minimax-m3.1-flash
+      api_key: os.environ/OLLAMA_API_KEY
+      api_base: "https://ollama.com"
+      weight: 4
+    model_info:
+      max_input_tokens: 1000000
+  - model_name: minimax-m3.1-flash
+    litellm_params:
+      model: opencode_go/minimax-m3.1-flash
+      api_key: os.environ/OPENCODE_API_KEY
+      weight: 6
+  - model_name: mimo-v2.6-flash
+    litellm_params:
+      model: ollama_chat/mimo-v2.6-flash
+      api_key: os.environ/OLLAMA_API_KEY
+      api_base: "https://ollama.com"
+      weight: 4
+    model_info:
+      max_input_tokens: 1048576
+  - model_name: mimo-v2.6-flash
+    litellm_params:
+      model: opencode_go/mimo-v2.6-flash
+      api_key: os.environ/OPENCODE_API_KEY
+      rpm: 200
+      weight: 6
+    model_info:
+      max_input_tokens: 1048576
+  - model_name: mimo-v2.6-pro
+    litellm_params:
+      model: ollama_chat/mimo-v2.6-pro
+      api_key: os.environ/OLLAMA_API_KEY
+      api_base: "https://ollama.com"
+      weight: 4
+    model_info:
+      mode: chat
+      max_tokens: 32768
+      max_input_tokens: 1048576
+      input_cost_per_token: 0.0
+      output_cost_per_token: 0.0
+  - model_name: mimo-v2.6-pro
+    litellm_params:
+      model: opencode_go/mimo-v2.6-pro
+      api_key: os.environ/OPENCODE_API_KEY
+      rpm: 43
+      weight: 6
+
+  # ---------- GitHub Copilot (OAuth token from the one-time device login) ----------
+  - model_name: copilot/gpt-5.6-luna
+    litellm_params:
+      model: github_copilot/gpt-5.6-luna
+  - model_name: copilot/gpt-5.6-sol
+    litellm_params:
+      model: github_copilot/gpt-5.6-sol
+  - model_name: copilot/gpt-5.3-codex
+    litellm_params:
+      model: github_copilot/gpt-5.3-codex
+  - model_name: copilot/claude-sonnet-5
+    litellm_params:
+      model: github_copilot/claude-sonnet-5
+  - model_name: copilot/claude-opus-5
+    litellm_params:
+      model: github_copilot/claude-opus-5
+
+  # ---------- Coding router (clef:27b decision model via /v1/systemone) ----------
+  - model_name: coding-router
+    model_info:
+      max_input_tokens: 1000000
+    litellm_params:
+      model: auto_router/complexity_router
+      drop_params: true
+      complexity_router_config:
+        classifier_fallback: heuristic
+        classifier_context_window_size: 3
+        classifier_context_budget_chars: 8000
+        classifier_context_include_assistant_turns: false
+        session_affinity: true
+        session_affinity_ttl_seconds: 3600
+        tiers:
+          SIMPLE:    mimo-v2.6-pro
+          MEDIUM:    deepseek-v4.1-flash
+          COMPLEX:   deepseek-v4.1-flash
+          REASONING: opencode-go/gemini-4-argon
+        classifier_type: oss_classifier
+        opensource_classifier_config:
+          provider: jev
+          model: clef:27b
+          api_base: "https://ollama.com"
+          api_key: os.environ/OLLAMA_API_KEY
+          timeout_ms: 3000
+          circuit_breaker_enabled: true
+          circuit_breaker_cooldown_seconds: 30
+      complexity_router_default_model: ollama/deepseek-v4.1-flash
+
+  # ---------- Ops router (same clef:27b decision model) ----------
+  - model_name: ops-router
+    model_info:
+      max_input_tokens: 1000000
+    litellm_params:
+      model: auto_router/complexity_router
+      drop_params: true
+      complexity_router_config:
+        classifier_fallback: heuristic
+        classifier_context_window_size: 3
+        classifier_context_budget_chars: 8000
+        classifier_context_include_assistant_turns: false
+        session_affinity: true
+        session_affinity_ttl_seconds: 3600
+        tiers:
+          SIMPLE:    opencode-go/claude-haiku-5-5
+          MEDIUM:    opencode-go/qwen3.8-max
+          COMPLEX:   opencode-go/kimi-k3.1-pro
+          REASONING: opencode-go/gemini-4-argon
+        classifier_type: oss_classifier
+        opensource_classifier_config:
+          provider: jev
+          model: clef:27b
+          api_base: "https://ollama.com"
+          api_key: os.environ/OLLAMA_API_KEY
+          timeout_ms: 3000
+          circuit_breaker_enabled: true
+          circuit_breaker_cooldown_seconds: 30
+      complexity_router_default_model: opencode-go/claude-haiku-5-5
+
+litellm_settings:
+  drop_params: true
+
+router_settings:
+  routing_strategy: simple-shuffle
+  enable_pre_call_checks: true
+  optional_pre_call_checks:
+    - session_affinity
+    - prompt_caching
+    - enforce_model_rate_limits
+  fallbacks:
+    - opencode-go/gemini-4-argon: [deepseek-v4.1-flash]
+    - opencode-go/gpt-5.6-luna: [deepseek-v4.1-flash]
+    - opencode-go/qwen3.8-max: [mimo-v2.6-flash]
+    - opencode-go/kimi-k3.1-pro: [mimo-v2.6-flash]
+
+general_settings:
+  disable_env_credential_login: true
+  master_key: os.environ/LITELLM_MASTER_KEY
+  store_model_in_db: false
