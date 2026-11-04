@@ -16,7 +16,6 @@ services:
       - ~/volumes/obsidian:/opt/data/obsidian
       - ./.env.default:/opt/data/.env
       - ./.env.finance:/opt/data/profiles/finance/.env
-      - ./.env.lobster:/opt/data/profiles/lobster/.env
       - ./.env.coder:/opt/data/profiles/coder/.env
       - ./.env.ops:/opt/data/profiles/ops/.env
       - ./homelab-id_ed25519:/opt/data/.ssh/id_ed25519
@@ -24,6 +23,7 @@ services:
 {{- else if eq .chezmoi.fqdnHostname "Haseebs-SER9" }}
       - hermes-data:/opt/data
       - ./.env.coder:/opt/data/.env
+      - ./.env.lobster:/opt/data/profiles/lobster/.env
       - /var/run/docker.sock:/var/run/docker.sock
 {{- end }}
     env_file: .env
