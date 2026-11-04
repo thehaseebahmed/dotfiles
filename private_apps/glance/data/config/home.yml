@@ -31,16 +31,12 @@
           groups:
             - title: AI Usage
               links:
-                - title: Google AI Studio
+                - title: Google AI
                   url: https://aistudio.google.com/app/rate-limit?timeRange=this-month
-                - title: Nous
-                  url: https://portal.nousresearch.com
                 - title: Ollama
                   url: https://ollama.com/settings
-                - title: Opencode
-                  url: https://opencode.ai/console/
-                - title: OpenRouter
-                  url: https://openrouter.ai/activity
+                - title: Opencode Go
+                  url: https://opencode.ai/console
             - title: Reading
               links:
                 - title: Hardcover
