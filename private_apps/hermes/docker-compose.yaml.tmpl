@@ -15,6 +15,7 @@ services:
       - ~/volumes/hermes:/opt/data
       - ~/volumes/obsidian:/opt/data/obsidian
       - ./.env.default:/opt/data/.env
+      - ./.env.finance:/opt/data/profiles/finance/.env
       - ./.env.lobster:/opt/data/profiles/lobster/.env
       - ./.env.coder:/opt/data/profiles/coder/.env
       - ./.env.ops:/opt/data/profiles/ops/.env
